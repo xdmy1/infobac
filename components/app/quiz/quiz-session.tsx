@@ -179,8 +179,21 @@ export function QuizSession({
     submittedRef.current = true;
 
     let correctCount = 0;
+    const perQuestion: {
+      qid: string;
+      topic: string;
+      qtype: "single" | "multi" | "yesno";
+      correct: boolean;
+    }[] = [];
     for (const q of questions) {
-      if (isCorrect(q, answers[q.id])) correctCount++;
+      const ok = isCorrect(q, answers[q.id]);
+      if (ok) correctCount++;
+      perQuestion.push({
+        qid: q.id,
+        topic: q.topic,
+        qtype: q.type,
+        correct: ok,
+      });
     }
     const total = questions.length;
     const score = total === 0 ? 0 : Math.round((correctCount / total) * 100);
@@ -196,6 +209,7 @@ export function QuizSession({
         score,
         correctCount,
         totalQuestions: total,
+        perQuestion,
       }).catch(() => {
         // server action best-effort; don't break the result UI
       });

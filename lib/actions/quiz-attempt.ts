@@ -5,12 +5,28 @@ import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { createClient } from "@/lib/supabase/server";
 import { isPreviewMode } from "@/lib/preview-mode";
 
+export interface PerQuestionResult {
+  /** Question id (e.g. "python-042"). */
+  qid: string;
+  /** Topic / category tag, used for aggregation. */
+  topic: string;
+  /** Question type — single / multi / yesno. */
+  qtype: "single" | "multi" | "yesno";
+  /** Whether the user got it right. */
+  correct: boolean;
+}
+
 export type ExamSubmitInput = {
   courseSlug: string;
   mode: "exam";
   score: number;
   correctCount: number;
   totalQuestions: number;
+  /**
+   * Per-question breakdown — used to compute strengths/weaknesses
+   * stats on the dashboard. Optional so older clients keep working.
+   */
+  perQuestion?: PerQuestionResult[];
 };
 
 export type ExamSubmitResult =
@@ -61,6 +77,7 @@ export async function submitExamAttemptAction(
       answers: {
         correctCount: input.correctCount,
         totalQuestions: input.totalQuestions,
+        perQuestion: input.perQuestion ?? [],
       },
     });
 
