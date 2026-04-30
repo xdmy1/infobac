@@ -6,7 +6,7 @@ export const meta: CourseMeta = {
   blurb:
     "De la tipuri de date și operatori la funcții, fișiere și gestiunea erorilor — exact ce intră la examen.",
   description:
-    "Curs complet pentru certificarea Certiport Python ITS. Acoperim tipurile de date, operatorii și precedența, controlul fluxului, lucrul cu fișiere, funcțiile, modulele standard (math, random, datetime, sys, os) și gestiunea erorilor. Fiecare capitol are exemple, capcane reale de la examen și un test cu peste 120 de întrebări reale.",
+    "Limbajul de bază pentru BAC. De la tipuri și operatori până la funcții, fișiere și gestiunea erorilor — exact ce intră la examen, fără teorie de prisos.",
   duration: "8–12 ore",
   difficulty: "începător",
   icon: "/courses/python.png",

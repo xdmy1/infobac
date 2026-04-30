@@ -6,7 +6,7 @@ export const meta: CourseMeta = {
   blurb:
     "Sisteme de fișiere, conturi, registry, hardware, rețea, securitate. Cea mai rapidă cale spre 10 din oficiu.",
   description:
-    "Cursul Certiport Device Configuration & Management este cel mai accesibil dintre toate. Învățăm sistemele de fișiere (NTFS / FAT32 / exFAT), backup și restore, registry, conturi și UAC, hardware (RAM, GPU, motherboard), conectori, rețea, firewall, malware, power settings, BitLocker, MDM, Active Directory și Event Viewer. Cheat-sheet final cu toate capcanele examen.",
+    "Cea mai accesibilă certificare Certiport. Materie compactă, fără concepte abstracte — perfect ca să prinzi 10 din oficiu rapid.",
   duration: "5–8 ore",
   difficulty: "începător",
   icon: "/courses/networking-devices.png",
