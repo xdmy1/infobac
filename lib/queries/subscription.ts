@@ -12,13 +12,22 @@ export type SubscriptionRow =
  * Returns the highest-tier active row when multiple exist.
  */
 export async function getActiveSubscription(
-  client: Client
+  client: Client,
 ): Promise<SubscriptionRow | null> {
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  if (!user) return null;
+
+  // Admin policies on subscriptions let admins read all rows. Filter
+  // explicitly so the dashboard "your subscription" card doesn't pick up
+  // someone else's row when the caller is an admin.
   const { data, error } = await client
     .from("subscriptions")
     .select("*")
+    .eq("user_id", user.id)
     .in("status", ["active", "trialing"])
-    .order("plan", { ascending: false }) // 'standard' < 'lifetime' alphabetically; tweak if needed
+    .order("plan", { ascending: false })
     .limit(1)
     .maybeSingle();
 
@@ -30,9 +39,15 @@ export async function getActiveSubscription(
  * All subscription rows for the current user (history).
  */
 export async function getAllSubscriptions(client: Client) {
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  if (!user) return [];
+
   const { data, error } = await client
     .from("subscriptions")
     .select("*")
+    .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
   if (error) throw error;

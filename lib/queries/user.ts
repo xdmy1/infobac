@@ -9,10 +9,19 @@ export type ProfileRow = Database["public"]["Tables"]["profiles"]["Row"];
 export async function getCurrentProfile(
   client: Client
 ): Promise<ProfileRow | null> {
+  const {
+    data: { user },
+  } = await client.auth.getUser();
+  if (!user) return null;
+
+  // Filter explicitly by id — admins (per migration 0006) can see every
+  // profile via profiles_select_admin, so we can't rely on RLS to narrow
+  // down to the caller's row.
   const { data, error } = await client
     .from("profiles")
     .select("*")
-    .maybeSingle(); // RLS: profiles_select_own already filters to current user
+    .eq("id", user.id)
+    .maybeSingle();
 
   if (error) throw error;
   return data;
