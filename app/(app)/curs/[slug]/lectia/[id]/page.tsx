@@ -106,7 +106,13 @@ export default async function LessonPage({ params }: PageProps) {
         </Reveal>
 
         <Reveal variant="fade-up" delay={0.4} className="mt-10">
-          <LessonContent markdown={lesson.markdown} />
+          <div data-md-len={lesson.markdown.length} data-slug={lesson.slug}>
+            <LessonContent markdown={lesson.markdown} />
+          </div>
+          <p className="mt-4 text-[10px] font-mono text-muted-foreground">
+            DEBUG · slug={lesson.slug} · md len={lesson.markdown.length} ·
+            head={lesson.markdown.slice(0, 60).replace(/\n/g, "↵")}
+          </p>
         </Reveal>
 
         <hr className="my-12 border-border" />
