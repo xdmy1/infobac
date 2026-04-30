@@ -154,6 +154,124 @@ export async function unsuspendUserAction(
 }
 
 // -----------------------------------------------------------------------------
+// grantCourseAccessAction — give a single user access to one specific course
+// for N days (or lifetime). Used from /admin/<userId> when the admin wants to
+// hand-pick a course outside the standard "approve a payment request" flow —
+// e.g. a scholarship, a bug-bounty thank-you, or a friend.
+// -----------------------------------------------------------------------------
+
+const VALID_COURSE_SLUGS = new Set(["python", "sql", "devices"]);
+const VALID_DURATIONS = new Set([30, 180, 0]); // 0 = lifetime
+const VALID_SOURCES = new Set([
+  "manual",
+  "gift",
+  "scholarship",
+] as const);
+
+type GrantCourseSource = "manual" | "gift" | "scholarship";
+
+export interface GrantCourseInput {
+  userId: string;
+  courseSlug: string;
+  /** Days until expiry. 0 = lifetime (no expires_at). */
+  durationDays: number;
+  source: GrantCourseSource;
+  note?: string;
+}
+
+export async function grantCourseAccessAction(
+  input: GrantCourseInput,
+): Promise<ActionResult<"granted">> {
+  if (
+    typeof input.userId !== "string" ||
+    !VALID_COURSE_SLUGS.has(input.courseSlug) ||
+    !VALID_DURATIONS.has(input.durationDays) ||
+    !VALID_SOURCES.has(input.source)
+  ) {
+    return { ok: false, error: "Date invalide." };
+  }
+
+  const guard = await assertAdmin();
+  if (!guard.ok) return guard;
+
+  // Look up the course UUID from the slug.
+  const { data: course, error: courseErr } = await guard.supabase
+    .from("courses")
+    .select("id")
+    .eq("slug", input.courseSlug)
+    .maybeSingle();
+  if (courseErr || !course) {
+    return { ok: false, error: "Cursul nu există în baza de date." };
+  }
+
+  const now = new Date();
+  const expiresAt =
+    input.durationDays === 0
+      ? null
+      : new Date(now.getTime() + input.durationDays * 24 * 60 * 60 * 1000)
+          .toISOString();
+
+  const { error } = await guard.supabase
+    .from("course_access")
+    .upsert(
+      {
+        user_id: input.userId,
+        course_id: course.id,
+        granted_at: now.toISOString(),
+        expires_at: expiresAt,
+        source: input.source,
+        source_id: null,
+        note: input.note?.trim() || null,
+      },
+      { onConflict: "user_id,course_id" },
+    );
+
+  if (error) {
+    console.error("[admin] grant course error:", error);
+    return { ok: false, error: "Nu am putut acorda accesul." };
+  }
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/${input.userId}`);
+  revalidatePath("/dashboard");
+  return { ok: true, mode: "granted" };
+}
+
+// -----------------------------------------------------------------------------
+// revokeCourseAccessAction — remove a single (user, course) row from
+// course_access. Less destructive than suspendUserAction (which wipes all).
+// -----------------------------------------------------------------------------
+export async function revokeCourseAccessAction(input: {
+  userId: string;
+  accessId: string;
+}): Promise<ActionResult<"revoked">> {
+  if (
+    typeof input.userId !== "string" ||
+    typeof input.accessId !== "string"
+  ) {
+    return { ok: false, error: "Date invalide." };
+  }
+
+  const guard = await assertAdmin();
+  if (!guard.ok) return guard;
+
+  const { error } = await guard.supabase
+    .from("course_access")
+    .delete()
+    .eq("id", input.accessId)
+    .eq("user_id", input.userId);
+
+  if (error) {
+    console.error("[admin] revoke course error:", error);
+    return { ok: false, error: "Nu am putut revoca accesul." };
+  }
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/${input.userId}`);
+  return { ok: true, mode: "revoked" };
+}
+
+// -----------------------------------------------------------------------------
 // notifyPaymentAction — email the target user a "you must pay" reminder.
 // -----------------------------------------------------------------------------
 export async function notifyPaymentAction(

@@ -2,6 +2,7 @@ import type { AdminUserDetail } from "@/lib/queries/admin";
 import { Badge } from "@/components/ui/badge";
 import { SubscriptionPlanLabels } from "@/lib/supabase/types";
 import { UserActionsMenu } from "@/components/admin/user-actions-menu";
+import { GrantCourseControls } from "@/components/admin/grant-course-controls";
 import { cn } from "@/lib/utils";
 
 function formatDate(iso: string | null | undefined): string {
@@ -117,35 +118,18 @@ export function UserDetailCard({ data }: { data: AdminUserDetail }) {
         )}
       </Section>
 
-      {/* Course access */}
+      {/* Course access — admin can grant + revoke individual courses here */}
       <Section title="Acces la cursuri" count={courseAccess.length}>
-        {courseAccess.length === 0 ? (
-          <Empty text="Niciun curs accesibil — acces suspendat." />
-        ) : (
-          <ul className="space-y-2">
-            {courseAccess.map((ca) => (
-              <li
-                key={ca.id}
-                className="flex items-center justify-between rounded-lg border border-border bg-card px-3 py-2.5 text-sm"
-              >
-                <div>
-                  <p className="font-medium">
-                    {ca.course?.title ?? ca.course_id}
-                  </p>
-                  <p className="font-mono text-[11px] text-muted-foreground">
-                    {ca.course?.slug ?? "—"} · sursa: {ca.source}
-                    {ca.expires_at
-                      ? ` · expiră ${formatDate(ca.expires_at)}`
-                      : " · pe viață"}
-                  </p>
-                </div>
-                <span className="font-mono text-[10px] text-muted-foreground">
-                  {formatDate(ca.granted_at)}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
+        <GrantCourseControls
+          userId={profile.id}
+          currentAccess={courseAccess.map((ca) => ({
+            id: ca.id,
+            courseSlug: ca.course?.slug ?? "—",
+            courseTitle: ca.course?.title ?? ca.course_id,
+            expiresAt: ca.expires_at,
+            source: ca.source,
+          }))}
+        />
       </Section>
 
       {/* Quiz attempts */}
