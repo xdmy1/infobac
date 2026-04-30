@@ -5,7 +5,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { CourseIcon } from "@/components/shared/course-icon";
 import { cn } from "@/lib/utils";
 import {
-  pathway,
+  allCourses,
   courseSyllabi,
   type CourseColor,
   type PathwayStep,
@@ -34,12 +34,18 @@ const colorStyles: Record<
     weight: "text-foreground",
     bullet: "text-warning",
   },
+  success: {
+    badge: "bg-success/15 text-foreground border-success/30",
+    ring: "ring-success/20",
+    weight: "text-foreground",
+    bullet: "text-success",
+  },
 };
 
 export function CoursesDetail() {
   return (
     <>
-      {pathway.map((step, index) => (
+      {allCourses.map((step, index) => (
         <CourseDetailSection
           key={step.slug}
           step={step}

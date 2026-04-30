@@ -36,9 +36,8 @@ create table if not exists public.course_access (
 
 create index if not exists course_access_user_idx on public.course_access (user_id);
 create index if not exists course_access_course_idx on public.course_access (course_id);
-create index if not exists course_access_active_idx
-  on public.course_access (user_id, course_id)
-  where expires_at is null or expires_at > now();
+-- (No partial index on expires_at — `now()` is STABLE not IMMUTABLE.
+--  The UNIQUE (user_id, course_id) above already provides fast lookup.)
 
 -- -----------------------------------------------------------------------------
 -- has_course_access(course_id) — replaces has_active_subscription() in policies

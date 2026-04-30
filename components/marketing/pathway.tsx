@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRef } from "react";
 import {
   motion,
@@ -13,64 +12,10 @@ import { cn } from "@/lib/utils";
 import {
   pathway,
   courseSyllabi,
-  type CourseColor,
   type PathwayStep,
 } from "@/lib/content";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
-
-const colorStyles: Record<
-  CourseColor,
-  {
-    bg: string;
-    accent: string;
-    image: string;
-    badgeBorder: string;
-    badgeText: string;
-    ctaBorder: string;
-    ctaBg: string;
-    ctaText: string;
-    ctaHoverBg: string;
-    ctaHoverText: string;
-  }
-> = {
-  primary: {
-    bg: "bg-[#0f172a]",
-    accent: "text-primary",
-    image: "/courses/python.png",
-    badgeBorder: "border-primary/40",
-    badgeText: "text-primary",
-    ctaBorder: "border-primary/40",
-    ctaBg: "bg-primary/10",
-    ctaText: "text-primary",
-    ctaHoverBg: "hover:bg-primary",
-    ctaHoverText: "hover:text-white",
-  },
-  accent: {
-    bg: "bg-[#1a2418]",
-    accent: "text-accent",
-    image: "/courses/sql.png",
-    badgeBorder: "border-accent/50",
-    badgeText: "text-accent",
-    ctaBorder: "border-accent/50",
-    ctaBg: "bg-accent/15",
-    ctaText: "text-accent",
-    ctaHoverBg: "hover:bg-accent",
-    ctaHoverText: "hover:text-accent-foreground",
-  },
-  warning: {
-    bg: "bg-[#1f1815]",
-    accent: "text-warning",
-    image: "/courses/networking-devices.png",
-    badgeBorder: "border-warning/50",
-    badgeText: "text-warning",
-    ctaBorder: "border-warning/50",
-    ctaBg: "bg-warning/15",
-    ctaText: "text-warning",
-    ctaHoverBg: "hover:bg-warning",
-    ctaHoverText: "hover:text-warning-foreground",
-  },
-};
 
 export function Pathway() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -102,9 +47,7 @@ export function Pathway() {
           <RevealItem variant="fade-blur">
             <h2 className="mt-2 text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
               3 capitole. 1 ordine.{" "}
-              <span className="bg-gradient-to-br from-accent to-accent-hover bg-clip-text text-transparent">
-                Nota 10.
-              </span>
+              <span className="text-muted-foreground">Nota 10.</span>
             </h2>
           </RevealItem>
         </Reveal>
@@ -133,56 +76,20 @@ export function Pathway() {
   );
 }
 
-function PathwayCard({
-  step,
-  index,
-}: {
-  step: PathwayStep;
-  index: number;
-}) {
-  const styles = colorStyles[step.color];
+function PathwayCard({ step, index }: { step: PathwayStep; index: number }) {
   const syllabus = courseSyllabi[step.slug];
   const previewTopics = syllabus.topics.slice(0, 4);
 
   return (
     <li className="flex w-screen shrink-0 items-center justify-center px-12">
       <article
-        className={cn(
-          "relative flex w-full max-w-5xl items-stretch overflow-hidden rounded-[2rem] text-white shadow-2xl",
-          styles.bg
-        )}
+        className="relative flex w-full max-w-5xl items-stretch overflow-hidden rounded-3xl border border-border bg-card"
         style={{ minHeight: "min(560px, 70vh)" }}
       >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -left-3 top-2 font-mono text-[18rem] font-black leading-none tracking-tighter md:text-[22rem]"
-          style={{
-            WebkitTextStroke: "2px currentColor",
-            color: "transparent",
-            mixBlendMode: "overlay",
-            opacity: 0.3,
-          }}
-        >
-          0{index + 1}
-        </span>
-
+        {/* Subtle dot pattern background */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-20 top-1/2 size-[480px] -translate-y-1/2 opacity-15 md:-right-12"
-        >
-          <Image
-            src={styles.image}
-            alt=""
-            width={480}
-            height={480}
-            className="size-full object-contain"
-            unoptimized
-          />
-        </div>
-
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.06]"
+          className="pointer-events-none absolute inset-0 opacity-[0.04]"
           style={{
             backgroundImage:
               "radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)",
@@ -191,42 +98,36 @@ function PathwayCard({
         />
 
         <div className="relative z-10 flex w-full flex-col justify-between gap-8 p-10 md:p-14 lg:p-16">
+          {/* TOP — eyebrow + title */}
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <span
-                className={cn(
-                  "inline-flex items-center gap-1.5 rounded-full border px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest",
-                  styles.badgeBorder,
-                  styles.badgeText
-                )}
-              >
+              <span className="font-mono text-xs font-bold tabular-nums text-muted-foreground">
+                {String(index + 1).padStart(2, "0")} / 03
+              </span>
+              <span className="inline-flex items-center rounded-full border border-border px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                 {step.tag}
               </span>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
-                Examen {step.examLetter} · IT Specialist
+              <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                Examen {step.examLetter}
               </span>
             </div>
 
             <div className="flex items-end gap-5">
-              <CourseIcon slug={step.slug} size={88} alt="" />
-              <h3 className="text-balance text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl">
+              <CourseIcon slug={step.slug} size={84} alt="" />
+              <h3 className="text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
                 {step.title}
               </h3>
             </div>
 
-            <p className="max-w-xl text-pretty text-base text-white/70 md:text-lg">
+            <p className="max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
               {syllabus.intro}
             </p>
           </div>
 
+          {/* BOTTOM — topic preview + duration + cta */}
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-7">
-              <p
-                className={cn(
-                  "mb-3 font-mono text-[10px] font-bold uppercase tracking-widest",
-                  styles.accent
-                )}
-              >
+              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                 Capitole · {syllabus.topics.length} total
               </p>
               <ol className="space-y-2.5">
@@ -235,29 +136,27 @@ function PathwayCard({
                     key={i}
                     className="flex items-baseline gap-3 text-sm md:text-base"
                   >
-                    <span className="font-mono text-xs font-bold tabular-nums text-white/40">
+                    <span className="font-mono text-xs font-medium tabular-nums text-muted-foreground/60">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="flex-1 font-medium text-white/90">
+                    <span className="flex-1 font-medium text-foreground">
                       {topic.title}
                     </span>
-                    <span className="font-mono text-xs text-white/40">
+                    <span className="font-mono text-xs text-muted-foreground/60">
                       {topic.weight}
                     </span>
                   </li>
                 ))}
                 {syllabus.topics.length > previewTopics.length && (
-                  <li className="ml-7 flex items-baseline gap-2 text-xs text-white/40">
-                    <span>
-                      + {syllabus.topics.length - previewTopics.length} mai
-                    </span>
+                  <li className="ml-7 text-xs text-muted-foreground/60">
+                    + {syllabus.topics.length - previewTopics.length} mai
                   </li>
                 )}
               </ol>
             </div>
 
             <div className="space-y-3 lg:col-span-5 lg:items-end lg:text-right">
-              <div className="inline-flex items-center gap-2 text-white/60">
+              <div className="inline-flex items-center gap-2 text-muted-foreground">
                 <Clock className="size-4" />
                 <span className="font-mono text-sm font-medium tabular-nums">
                   {step.duration}
@@ -267,15 +166,11 @@ function PathwayCard({
                 <a
                   href="/cursuri"
                   className={cn(
-                    "group/cta inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-all hover:scale-105",
-                    styles.ctaBorder,
-                    styles.ctaBg,
-                    styles.ctaText,
-                    styles.ctaHoverBg,
-                    styles.ctaHoverText
+                    "group/cta inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-semibold transition-colors",
+                    "hover:border-foreground hover:bg-foreground hover:text-background"
                   )}
                 >
-                  Vezi programa completă
+                  Vezi programa
                   <ArrowRight className="size-3.5 transition-transform group-hover/cta:translate-x-0.5" />
                 </a>
               </div>

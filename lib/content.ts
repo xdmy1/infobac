@@ -7,9 +7,9 @@
 // PATHWAY — 3 certificări Certiport în ordinea recomandată
 // -----------------------------------------------------------------------------
 
-export type CourseSlug = "python" | "sql" | "networking";
+export type CourseSlug = "python" | "sql" | "devices" | "networking";
 
-export type CourseColor = "primary" | "accent" | "warning";
+export type CourseColor = "primary" | "accent" | "warning" | "success";
 
 export interface PathwayStep {
   slug: CourseSlug;
@@ -50,18 +50,40 @@ export const pathway: readonly PathwayStep[] = [
     examLetter: "B",
   },
   {
-    slug: "networking",
+    slug: "devices",
     image: "/courses/networking-devices.png",
-    title: "Networking & Devices",
-    duration: "1 zi (serios)",
+    title: "Devices",
+    duration: "2–3 zile",
     description:
-      "Structura calculatorului și rețele. E cel mai ușor — îl înveți într-o zi dacă te concentrezi. Memorare + înțelegere de bază.",
-    tag: "Quick win",
+      "Componente, sisteme de operare, software, mentenanță. Cea mai accesibilă dintre cele 3 — materie compactă, fără concepte abstracte.",
+    tag: "Cea mai accesibilă",
     color: "warning",
-    certName: "IT Specialist: Networking & Devices",
+    certName: "IT Specialist: Devices",
     examLetter: "C",
   },
 ] as const;
+
+// Alternative — shown in /cursuri but NOT in main 3-step pathway.
+// Pentru BAC e suficient să iei UNA dintre Devices sau Networking.
+export const alternativeCourses: readonly PathwayStep[] = [
+  {
+    slug: "networking",
+    image: "/courses/networking.png",
+    title: "Networking",
+    duration: "1–2 săptămâni",
+    description:
+      "Conectivitate, IP, DNS, routere, modelul OSI. Mai dificil decât Devices, dar relevant dacă te interesează rețele.",
+    tag: "Alternativă",
+    color: "success",
+    certName: "IT Specialist: Networking",
+    examLetter: "C",
+  },
+] as const;
+
+export const allCourses: readonly PathwayStep[] = [
+  ...pathway,
+  ...alternativeCourses,
+];
 
 // -----------------------------------------------------------------------------
 // COMPARISON — Why Us (problem/solution side-by-side)
@@ -482,14 +504,14 @@ export const courseSyllabi: Record<CourseSlug, CourseSyllabus> = {
       },
     ],
   },
-  networking: {
+  devices: {
     intro:
-      "Cel mai ușor dintre cele 3. E mai mult memorare decât gândire — termeni, concepte, structuri. Dacă ai 4-6 ore libere și un cap clar, îl învingi într-o zi. Două maxim.",
+      "Cea mai accesibilă certificare din pathway. Materie aplicată — componente hardware, sisteme de operare, software și mentenanță. Conținutul e compact și se acoperă în 2–3 zile de studiu serios.",
     examFormat: "40 întrebări · 50 minute · scor minim 700/1000",
     topics: [
       {
         title: "Componente hardware",
-        weight: "25%",
+        weight: "30%",
         bullets: [
           "CPU, RAM, HDD vs SSD, GPU — rol și diferențe",
           "Periferice: monitor, tastatură, mouse, imprimantă",
@@ -498,43 +520,77 @@ export const courseSyllabi: Record<CourseSlug, CourseSyllabus> = {
         ],
       },
       {
-        title: "Software — sisteme și aplicații",
-        weight: "20%",
+        title: "Sisteme de operare",
+        weight: "25%",
         bullets: [
-          "Sisteme de operare: Windows, macOS, Linux — diferențe",
-          "Software de sistem vs aplicații",
-          "Licențiere: open source, freeware, comercial",
+          "Windows, macOS, Linux — diferențe principale",
+          "File system, foldere, permisiuni",
+          "Procese și manager de task-uri",
           "Drivere și update-uri",
         ],
       },
       {
-        title: "Conectivitate de rețea",
-        weight: "25%",
+        title: "Software și aplicații",
+        weight: "20%",
         bullets: [
-          "LAN vs WAN, ethernet vs Wi-Fi",
-          "Adrese IP (IPv4 vs IPv6), DNS",
-          "Routere, switch-uri, modem-uri",
-          "Modelul OSI (la nivel de concepte, nu detalii)",
-        ],
-      },
-      {
-        title: "Internet și browsere",
-        weight: "15%",
-        bullets: [
-          "HTTP vs HTTPS, certificate SSL",
-          "Cookies, cache, istoric",
-          "URL-uri, domenii, subdomenii",
-          "Securitate browser: phishing, malware",
+          "Software de sistem vs aplicații",
+          "Licențiere: open source, freeware, comercial",
+          "Mobile apps și cloud apps",
+          "Securitate: antivirus, firewall",
         ],
       },
       {
         title: "Mentenanță și troubleshooting",
-        weight: "15%",
+        weight: "25%",
         bullets: [
           "Backup și restore",
-          "Probleme comune și soluții (calculator nu pornește, fără internet)",
-          "Antivirus, firewall, parole sigure",
-          "Cleanup disc și update sistem",
+          "Probleme comune și soluții",
+          "Cleanup disc, optimizare",
+          "Parole sigure, autentificare în 2 pași",
+        ],
+      },
+    ],
+  },
+  networking: {
+    intro:
+      "Conectivitate, rețele, internet. Mai dificil decât Devices — dacă ai bază tehnică sau te interesează rețelele, alegi acesta. Altfel, mergi pe Devices.",
+    examFormat: "40 întrebări · 50 minute · scor minim 700/1000",
+    topics: [
+      {
+        title: "Modelul OSI și TCP/IP",
+        weight: "25%",
+        bullets: [
+          "Cele 7 straturi OSI",
+          "TCP vs UDP",
+          "Cum interacționează aplicațiile cu rețeaua",
+        ],
+      },
+      {
+        title: "Adresare și protocoale",
+        weight: "30%",
+        bullets: [
+          "IPv4, IPv6, subnetting de bază",
+          "DNS, DHCP, NAT",
+          "HTTP, HTTPS, FTP, SSH",
+        ],
+      },
+      {
+        title: "Hardware de rețea",
+        weight: "20%",
+        bullets: [
+          "Routere, switch-uri, modem-uri, access point-uri",
+          "Cabluri și topologii",
+          "LAN vs WAN vs MAN",
+        ],
+      },
+      {
+        title: "Wireless și securitate",
+        weight: "25%",
+        bullets: [
+          "Wi-Fi standards (a/b/g/n/ac/ax)",
+          "WPA2, WPA3, criptare",
+          "Atacuri comune: MITM, phishing",
+          "Best practices",
         ],
       },
     ],

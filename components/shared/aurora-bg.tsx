@@ -14,7 +14,7 @@ interface AuroraBackgroundProps {
 
 export function AuroraBackground({
   className,
-  intensity = 0.55,
+  intensity = 0.25,
 }: AuroraBackgroundProps) {
   return (
     <div

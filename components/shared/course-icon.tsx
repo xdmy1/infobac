@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 const courseImages: Record<string, string> = {
   python: "/courses/python.png",
   sql: "/courses/sql.png",
-  networking: "/courses/networking-devices.png",
+  devices: "/courses/networking-devices.png",
+  networking: "/courses/networking.png",
 };
 
 interface CourseIconProps {
