@@ -38,6 +38,8 @@ interface QuizSessionProps {
   examDurationSeconds?: number;
   /** Pass threshold for exam mode (0-100). */
   passingScore: number;
+  /** Which exam set this is (1, 2, 3...) — exam mode only. */
+  examSetNumber?: number;
 }
 
 function shuffle<T>(arr: readonly T[]): T[] {
@@ -56,6 +58,7 @@ export function QuizSession({
   questions: rawQuestions,
   examDurationSeconds,
   passingScore,
+  examSetNumber,
 }: QuizSessionProps) {
   const router = useRouter();
 
@@ -210,6 +213,7 @@ export function QuizSession({
         correctCount,
         totalQuestions: total,
         perQuestion,
+        setNumber: examSetNumber,
       }).catch(() => {
         // server action best-effort; don't break the result UI
       });

@@ -250,7 +250,7 @@ export default async function CoursePage({ params }: PageProps) {
             <ArrowRight className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
           </Link>
           <Link
-            href={`/curs/${meta.slug}/test/examen`}
+            href={`/curs/${meta.slug}/test`}
             className="group flex items-start gap-4 rounded-2xl border border-primary/30 bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md hover:shadow-primary/10"
           >
             <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">

@@ -53,13 +53,6 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: [siteConfig.ogImage],
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/brand/icon.svg", type: "image/svg+xml" },
-    ],
-    apple: "/brand/icon.svg",
-  },
   robots: {
     index: true,
     follow: true,

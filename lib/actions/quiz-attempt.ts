@@ -27,6 +27,11 @@ export type ExamSubmitInput = {
    * stats on the dashboard. Optional so older clients keep working.
    */
   perQuestion?: PerQuestionResult[];
+  /**
+   * Which exam set the attempt belongs to (1, 2, 3...). Lets the mode
+   * picker surface a per-exam best-score badge.
+   */
+  setNumber?: number;
 };
 
 export type ExamSubmitResult =
@@ -78,6 +83,7 @@ export async function submitExamAttemptAction(
         correctCount: input.correctCount,
         totalQuestions: input.totalQuestions,
         perQuestion: input.perQuestion ?? [],
+        setNumber: input.setNumber ?? null,
       },
     });
 
