@@ -45,8 +45,16 @@ interface RevealProps {
   variant?: RevealVariant;
   delay?: number;
   duration?: number;
-  /** 0..1 — how much of the element must be in view to trigger. */
-  amount?: number;
+  /**
+   * How much of the element must be visible to trigger.
+   *  - `"some"` (default): any pixel visible. Robust for tall elements
+   *    (lesson bodies, long markdown) where a percentage threshold like
+   *    `0.3` would never be met because the element is taller than the
+   *    viewport.
+   *  - `"all"`: entire element in view.
+   *  - `0..1`: fraction of the element visible.
+   */
+  amount?: number | "some" | "all";
   /** Stagger reveal of direct children when set. */
   staggerChildren?: number;
   className?: string;
@@ -75,7 +83,7 @@ export function Reveal({
   variant = "fade-up",
   delay = 0,
   duration = 0.8,
-  amount = 0.3,
+  amount = "some",
   staggerChildren,
   className,
   as = "div",
