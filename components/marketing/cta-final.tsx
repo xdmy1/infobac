@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { Magnetic } from "@/components/shared/magnetic";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { AuroraBackground } from "@/components/shared/aurora-bg";
@@ -61,22 +60,20 @@ export function CtaFinal() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-12 flex flex-col items-center gap-5"
         >
-          <Magnetic strength={0.3}>
-            <Link
-              href="/preturi"
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "group relative h-14 gap-2 overflow-hidden px-8 text-base font-bold shadow-2xl shadow-primary/30",
-                "before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:via-primary-hover before:to-primary before:bg-[length:200%_100%] before:bg-left",
-                "before:transition-[background-position] before:duration-700 hover:before:bg-right"
-              )}
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Alege un plan
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </span>
-            </Link>
-          </Magnetic>
+          <Link
+            href="/preturi"
+            className={cn(
+              buttonVariants({ size: "lg" }),
+              "group relative h-14 gap-2 overflow-hidden px-8 text-base font-bold shadow-2xl shadow-primary/30",
+              "before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary before:via-primary-hover before:to-primary before:bg-[length:200%_100%] before:bg-left",
+              "before:transition-[background-position] before:duration-700 hover:before:bg-right"
+            )}
+          >
+            <span className="relative z-10 flex items-center gap-2">
+              Alege un plan
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </span>
+          </Link>
 
           <p className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
             <ShieldCheck className="size-3.5 text-success" />

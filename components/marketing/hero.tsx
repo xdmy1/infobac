@@ -6,7 +6,6 @@ import { useRef } from "react";
 import { ArrowRight, ArrowDown, CheckCircle2, MapPin } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Magnetic } from "@/components/shared/magnetic";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { AnimatedText } from "@/components/shared/animated-text";
@@ -109,22 +108,20 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 1.4 }}
               className="flex flex-col gap-3 sm:flex-row"
             >
-              <Magnetic strength={0.25}>
-                <Link
-                  href="/inregistrare"
-                  className={cn(
-                    buttonVariants({ size: "lg" }),
-                    "h-13 gap-2 px-7 text-base font-semibold shadow-lg shadow-primary/25",
-                    "before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-primary before:to-primary-hover before:opacity-0 before:transition-opacity hover:before:opacity-100",
-                    "relative overflow-hidden"
-                  )}
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Vezi prețuri
-                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                </Link>
-              </Magnetic>
+              <Link
+                href="/inregistrare"
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-13 gap-2 px-7 text-base font-semibold shadow-lg shadow-primary/25",
+                  "before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-primary before:to-primary-hover before:opacity-0 before:transition-opacity hover:before:opacity-100",
+                  "relative overflow-hidden"
+                )}
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Vezi prețuri
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                </span>
+              </Link>
               <Link
                 href="#pathway"
                 className={cn(
@@ -166,33 +163,6 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
-
-      <motion.div
-        aria-hidden
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2"
-      >
-        <style>{`
-@keyframes scroll-indicator {
-  0%, 100% { transform: translate3d(0, -100%, 0); }
-  50% { transform: translate3d(0, 100%, 0); }
-}
-        `}</style>
-        <div className="flex flex-col items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60">
-          <span>scroll</span>
-          <div className="h-8 w-px overflow-hidden bg-muted-foreground/20">
-            <div
-              className="h-full w-px bg-foreground"
-              style={{
-                animation:
-                  "scroll-indicator 1.8s ease-in-out infinite",
-              }}
-            />
-          </div>
-        </div>
-      </motion.div>
     </section>
   );
 }
