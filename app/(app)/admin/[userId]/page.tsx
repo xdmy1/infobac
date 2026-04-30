@@ -22,7 +22,7 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
   if (!detail) notFound();
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8 md:px-6 md:py-10 lg:px-8">
+    <div className="pb-10">
       <Link
         href="/admin"
         className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"

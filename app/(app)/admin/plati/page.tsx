@@ -33,15 +33,17 @@ export default async function AdminPlatiPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 px-3 py-8 sm:px-4 sm:py-10 md:px-6 md:py-14 lg:px-8">
+    <div className="space-y-8 pb-10">
       <header>
-        <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          Admin · Plăți
-        </p>
-        <h1 className="mt-1 text-balance text-3xl font-bold tracking-tight md:text-4xl">
-          Cereri de abonament
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <div className="flex items-baseline justify-between gap-4">
+          <h1 className="text-balance text-3xl font-bold tracking-tight md:text-4xl">
+            Cereri de abonament
+          </h1>
+          <span className="font-mono text-sm tabular-nums text-muted-foreground">
+            {pending.length} pending
+          </span>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground md:text-base">
           Aprobă cererea după ce verifici plata MIA. La aprobare, sistemul
           atribuie cursurile + perioada automat.
         </p>

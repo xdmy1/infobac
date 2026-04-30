@@ -14,11 +14,8 @@ export default async function AdminPage() {
   const users = await listAllUsers(supabase);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-10 lg:px-8">
-      <header className="mb-8 flex flex-col gap-2 md:mb-10">
-        <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Admin
-        </p>
+    <div className="pb-10">
+      <header className="mb-6 flex flex-col gap-2 md:mb-8">
         <div className="flex items-baseline justify-between gap-4">
           <h1 className="text-balance text-3xl font-bold tracking-tight md:text-4xl">
             Utilizatori
