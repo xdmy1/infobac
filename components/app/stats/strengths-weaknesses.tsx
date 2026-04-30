@@ -90,7 +90,7 @@ function Panel({
           {items.map((t, i) => (
             <li key={`${t.courseSlug}-${t.topic}`}>
               <Link
-                href={`/curs/${t.courseSlug}/test/practice`}
+                href={`/curs/${t.courseSlug}/test`}
                 className={cn(
                   "group flex items-center gap-3 rounded-xl border bg-card p-3 transition-all hover:-translate-y-0.5 hover:shadow-sm",
                   isStrong

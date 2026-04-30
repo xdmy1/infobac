@@ -34,7 +34,7 @@ export default async function ExamPage({ params }: PageProps) {
     <QuizSession
       mode="exam"
       courseSlug={content.meta.slug}
-      courseTitle={`${content.meta.title.split(" — ")[0]} · ${set.label}`}
+      courseTitle={`${content.meta.title.split(" — ")[0]} · Examen ${set.number}`}
       questions={set.questions}
       examDurationSeconds={set.durationMin * 60}
       passingScore={content.meta.passingScore}

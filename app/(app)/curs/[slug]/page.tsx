@@ -137,7 +137,7 @@ export default async function CoursePage({ params }: PageProps) {
               )}
             >
               <Target className="size-3.5" />
-              <span className="truncate">Test ({questions.length} întrebări)</span>
+              <span className="truncate">Toate testele · {questions.length} întrebări</span>
             </Link>
           </div>
         </Reveal>
@@ -237,7 +237,7 @@ export default async function CoursePage({ params }: PageProps) {
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <Link
-            href={`/curs/${meta.slug}/test/practice`}
+            href={`/curs/${meta.slug}/test`}
             className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md"
           >
             <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
