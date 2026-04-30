@@ -30,17 +30,17 @@ export function StatementRow({
   return (
     <li
       className={cn(
-        "flex flex-col gap-3 rounded-xl border p-3.5 transition-colors sm:flex-row sm:items-start",
+        "flex flex-col gap-3 rounded-xl border p-3 transition-colors sm:flex-row sm:items-start sm:p-3.5",
         revealed && userCorrect && "border-success/60 bg-success/5",
         revealed && !userCorrect && "border-destructive/60 bg-destructive/5",
         !revealed && "border-border bg-background",
       )}
     >
-      <span className="flex flex-1 items-start gap-2 leading-relaxed">
-        <span className="mt-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+      <span className="flex min-w-0 flex-1 items-start gap-2 leading-relaxed">
+        <span className="mt-0.5 shrink-0 font-mono text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="flex-1 whitespace-pre-wrap break-words text-sm">{text}</span>
+        <span className="min-w-0 flex-1 whitespace-pre-wrap break-words text-[13.5px] sm:text-sm">{text}</span>
       </span>
 
       <div className="flex shrink-0 gap-2">

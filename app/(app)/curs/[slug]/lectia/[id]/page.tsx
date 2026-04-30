@@ -57,7 +57,7 @@ export default async function LessonPage({ params }: PageProps) {
   return (
     <>
       <ReadingProgress />
-      <div className="mx-auto max-w-3xl px-4 py-10 md:px-6 md:py-14 lg:px-8">
+      <div className="mx-auto w-full max-w-3xl min-w-0 px-3 py-8 sm:px-4 md:px-6 md:py-14 lg:px-8">
         <Reveal variant="fade-down">
           <nav
             className="flex items-center gap-2 text-xs text-muted-foreground"
@@ -81,25 +81,22 @@ export default async function LessonPage({ params }: PageProps) {
           </nav>
         </Reveal>
 
-        <Reveal staggerChildren={0.1} delay={0.15} className="mt-7">
+        <Reveal staggerChildren={0.1} delay={0.15} className="mt-6 md:mt-7">
           <RevealItem variant="fade-blur">
-            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl">
+            <h1 className="text-balance break-words text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               {lesson.title}
             </h1>
           </RevealItem>
           <RevealItem variant="fade-up">
-            <div className="mt-3 flex items-center gap-3 text-sm text-muted-foreground">
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
               <span className="font-mono text-xs uppercase tracking-wider">
                 Lecția {lesson.orderIndex} din {sorted.length}
               </span>
               {lesson.durationMinutes > 0 && (
-                <>
-                  <span aria-hidden>·</span>
-                  <span className="inline-flex items-center gap-1">
-                    <Clock className="size-3.5" />
-                    {lesson.durationMinutes} min
-                  </span>
-                </>
+                <span className="inline-flex items-center gap-1">
+                  <Clock className="size-3.5" />
+                  {lesson.durationMinutes} min
+                </span>
               )}
             </div>
           </RevealItem>

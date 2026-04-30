@@ -32,22 +32,22 @@ export function QuestionCard({
   onPickStatement,
 }: QuestionCardProps) {
   return (
-    <article className="rounded-2xl border border-border bg-card p-5 shadow-sm md:p-6">
-      <header className="mb-5 flex flex-wrap items-center gap-3 text-xs">
-        <span className="rounded-full bg-muted px-2.5 py-1 font-mono font-semibold tabular-nums">
+    <article className="overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm sm:p-5 md:p-6">
+      <header className="mb-4 flex flex-wrap items-center gap-2 text-[11px] sm:gap-3 sm:text-xs">
+        <span className="rounded-full bg-muted px-2 py-1 font-mono font-semibold tabular-nums sm:px-2.5">
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </span>
-        <span className="rounded-full border border-border px-2.5 py-1 font-medium text-muted-foreground">
+        <span className="max-w-full truncate rounded-full border border-border px-2 py-1 font-medium text-muted-foreground sm:px-2.5">
           {question.topic}
         </span>
-        <span className="rounded-full bg-muted/50 px-2.5 py-1 font-medium text-muted-foreground">
+        <span className="rounded-full bg-muted/50 px-2 py-1 font-medium text-muted-foreground sm:px-2.5">
           {question.type === "single" && "Alege una"}
           {question.type === "multi" && `Alege ${(question.type === "multi" && question.min) || 2}`}
           {question.type === "yesno" && "Adevărat / Fals"}
         </span>
       </header>
 
-      <h2 className="mb-5 whitespace-pre-wrap break-words text-pretty text-base font-semibold leading-relaxed text-foreground md:text-lg">
+      <h2 className="mb-5 whitespace-pre-wrap break-words text-pretty text-[15px] font-semibold leading-relaxed text-foreground sm:text-base md:text-lg">
         {question.prompt}
       </h2>
 

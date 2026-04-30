@@ -73,8 +73,8 @@ export function RecentActivity({ byCourse }: Props) {
   );
 
   return (
-    <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
-      <header className="mb-4 flex flex-wrap items-end justify-between gap-3">
+    <section className="rounded-2xl border border-border bg-card p-4 sm:p-5 md:p-6">
+      <header className="mb-4 flex flex-wrap items-end justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="inline-flex size-8 items-center justify-center rounded-xl bg-muted text-muted-foreground">
             <Activity className="size-4" strokeWidth={2.25} />
@@ -83,7 +83,7 @@ export function RecentActivity({ byCourse }: Props) {
             Ultimele 7 zile
           </h3>
         </div>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground sm:text-xs">
           <span className="font-mono font-bold tabular-nums text-foreground">
             {totalAttempts}
           </span>{" "}
@@ -95,7 +95,7 @@ export function RecentActivity({ byCourse }: Props) {
       </header>
 
       {/* Bar chart-ish: 7 columns, score height encoded by max attempt */}
-      <div className="flex h-32 items-end gap-1.5">
+      <div className="flex h-28 items-end gap-1 sm:h-32 sm:gap-1.5">
         {days.map((d) => {
           const max =
             d.scores.length > 0

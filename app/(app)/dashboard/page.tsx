@@ -126,14 +126,14 @@ export default async function DashboardPage() {
         <PasswordResetToast />
       </Suspense>
 
-      <div className="mx-auto max-w-6xl space-y-8 px-4 py-8 md:px-6 md:py-10 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-7 px-3 py-6 sm:px-4 sm:py-8 md:px-6 md:py-10 md:space-y-8 lg:px-8">
         {/* Welcome */}
-        <header className="flex flex-wrap items-end justify-between gap-4">
-          <div>
+        <header className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-end md:justify-between">
+          <div className="min-w-0">
             <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Dashboard
             </p>
-            <h1 className="mt-1 text-balance text-3xl font-bold tracking-tight md:text-4xl">
+            <h1 className="mt-1 text-balance break-words text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
               Bun venit înapoi,{" "}
               <span className="text-accent">{firstName}</span>.
             </h1>
@@ -145,11 +145,13 @@ export default async function DashboardPage() {
           </div>
           <Link
             href={`/curs/${continueCourse.slug}`}
-            className="inline-flex items-center gap-2 rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition-all hover:-translate-y-0.5 hover:shadow-md"
+            className="inline-flex items-center gap-2 self-start rounded-full bg-foreground px-4 py-2 text-sm font-semibold text-background transition-all hover:-translate-y-0.5 hover:shadow-md md:self-auto"
           >
             <PlayCircle className="size-4" />
-            Continuă cu {continueCourse.title.split(" — ")[0]}
-            <ArrowRight className="size-3.5" />
+            <span className="truncate">
+              Continuă cu {continueCourse.title.split(" — ")[0]}
+            </span>
+            <ArrowRight className="size-3.5 shrink-0" />
           </Link>
         </header>
 

@@ -265,7 +265,7 @@ export function QuizSession({
 
   // ── ACTIVE SESSION VIEW ──────────────────────────────────────────────────
   return (
-    <div className="mx-auto flex max-w-3xl flex-col gap-5 px-4 py-6 md:py-8 lg:px-6">
+    <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col gap-5 px-3 py-5 sm:px-4 md:py-8 lg:px-6">
       <SessionHeader
         mode={mode}
         courseTitle={courseTitle}
@@ -366,40 +366,40 @@ function SessionHeader({
   const lowTime = secondsLeft <= 60;
 
   return (
-    <header className="rounded-2xl border border-border bg-card p-4 md:p-5">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
+    <header className="rounded-2xl border border-border bg-card p-3.5 md:p-5">
+      <div className="flex flex-wrap items-center justify-between gap-2.5">
+        <div className="flex min-w-0 flex-1 items-center gap-2.5">
           <Link
             href={`/curs/${courseSlug}/test`}
             className={cn(
               buttonVariants({ variant: "ghost", size: "sm" }),
-              "h-8 gap-1.5 px-2.5 text-xs",
+              "h-8 shrink-0 gap-1.5 px-2 text-xs",
             )}
           >
             <ArrowLeft className="size-3.5" />
-            Mod
+            <span className="hidden sm:inline">Mod</span>
           </Link>
-          <div className="leading-tight">
-            <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+          <div className="min-w-0 flex-1 leading-tight">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
               {mode === "practice" ? "Practice" : "Examen"}
             </p>
-            <p className="text-sm font-semibold">{courseTitle}</p>
+            <p className="truncate text-sm font-semibold">{courseTitle}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs">
+        <div className="flex shrink-0 flex-wrap items-center gap-1.5 text-xs">
           {mode === "practice" && (
-            <span className="rounded-full bg-success/10 px-2.5 py-1 font-mono font-bold tabular-nums text-success">
+            <span className="rounded-full bg-success/10 px-2 py-1 font-mono font-bold tabular-nums text-success">
               ✓ {correctSoFar}
             </span>
           )}
-          <span className="rounded-full bg-muted px-2.5 py-1 font-mono font-semibold tabular-nums">
-            {String(questionIndex + 1).padStart(2, "0")} / {String(questionTotal).padStart(2, "0")}
+          <span className="rounded-full bg-muted px-2 py-1 font-mono font-semibold tabular-nums">
+            {String(questionIndex + 1).padStart(2, "0")}/{String(questionTotal).padStart(2, "0")}
           </span>
           {showTimer && (
             <span
               className={cn(
-                "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 font-mono font-bold tabular-nums",
+                "inline-flex items-center gap-1 rounded-full border px-2 py-1 font-mono font-bold tabular-nums",
                 lowTime
                   ? "border-destructive/40 bg-destructive/10 text-destructive"
                   : "border-border bg-muted",
@@ -499,19 +499,19 @@ function ActionBar({
     isFullyAnswered(currentQ, currentA);
 
   return (
-    <div className="flex items-center justify-between gap-3">
+    <div className="sticky bottom-0 -mx-3 flex items-center justify-between gap-2 border-t border-border bg-background/90 px-3 py-3 backdrop-blur sm:-mx-4 sm:px-4 md:static md:mx-0 md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
       <button
         type="button"
         onClick={onPrev}
         disabled={!canPrev}
         className={cn(
           buttonVariants({ variant: "ghost" }),
-          "h-10 gap-1.5 px-3 text-sm",
+          "h-10 shrink-0 gap-1 px-2.5 text-sm sm:px-3",
           !canPrev && "opacity-40",
         )}
       >
         <ArrowLeft className="size-4" />
-        Înapoi
+        <span className="hidden sm:inline">Înapoi</span>
       </button>
 
       {showCheck && (
@@ -520,7 +520,7 @@ function ActionBar({
           onClick={onCommit}
           className={cn(
             buttonVariants(),
-            "h-11 gap-1.5 px-5 text-sm font-semibold",
+            "h-11 flex-1 gap-1.5 px-4 text-sm font-semibold sm:flex-none sm:px-5",
           )}
         >
           <CheckCircle2 className="size-4" />
@@ -535,7 +535,7 @@ function ActionBar({
           disabled={isSubmitting}
           className={cn(
             buttonVariants(),
-            "h-11 gap-1.5 px-5 text-sm font-semibold",
+            "h-11 flex-1 gap-1.5 px-4 text-sm font-semibold sm:flex-none sm:px-5",
             isSubmitting && "cursor-wait",
           )}
         >
@@ -553,7 +553,7 @@ function ActionBar({
                 ? { variant: "default" }
                 : { variant: "outline" },
             ),
-            "h-10 gap-1.5 px-3.5 text-sm",
+            "h-10 shrink-0 gap-1 px-2.5 text-sm sm:px-3.5",
             !canNext && "opacity-40",
           )}
         >

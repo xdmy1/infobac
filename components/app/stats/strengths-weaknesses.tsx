@@ -30,7 +30,7 @@ export function StrengthsWeaknesses({ strongest, weakest }: Props) {
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
+    <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
       <Panel
         kind="strong"
         title="Puncte forte"
@@ -63,7 +63,7 @@ function Panel({
   return (
     <div
       className={cn(
-        "rounded-2xl border p-5 md:p-6",
+        "rounded-2xl border p-4 sm:p-5 md:p-6",
         isStrong
           ? "border-success/30 bg-success/[0.03]"
           : "border-warning/30 bg-warning/[0.03]",

@@ -48,7 +48,7 @@ export function OptionRow({
       onClick={onClick}
       disabled={revealed || disabled}
       className={cn(
-        "group flex w-full items-start gap-3 rounded-xl border px-3.5 py-3 text-left text-sm transition-all",
+        "group flex w-full min-w-0 items-start gap-2.5 rounded-xl border px-3 py-3 text-left text-[13.5px] transition-all sm:gap-3 sm:px-3.5 sm:text-sm",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
         visual === "neutral" &&
           "border-border bg-background hover:-translate-y-0.5 hover:border-foreground/25 hover:bg-muted/40 hover:shadow-sm",
@@ -80,7 +80,7 @@ export function OptionRow({
       >
         {LETTERS[index] ?? String(index + 1)}
       </span>
-      <span className="flex-1 whitespace-pre-wrap break-words leading-relaxed">{text}</span>
+      <span className="min-w-0 flex-1 whitespace-pre-wrap break-words leading-relaxed">{text}</span>
       {revealed && isCorrect && (
         <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-success" />
       )}

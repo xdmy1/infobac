@@ -23,7 +23,7 @@ export function StatsHero({
   const accuracyTone = toneFor(overallAccuracy);
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-4">
       <HeroCard
         icon={<TrendingUp className="size-4" strokeWidth={2.25} />}
         label="Acuratețe generală"
@@ -106,7 +106,7 @@ function HeroCard({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-2xl border p-4 md:p-5",
+        "relative overflow-hidden rounded-2xl border p-3.5 sm:p-4 md:p-5",
         tone === "success" && "border-success/30 bg-success/[0.04]",
         tone === "warning" && "border-warning/30 bg-warning/[0.04]",
         tone === "destructive" &&
@@ -144,7 +144,7 @@ function HeroCard({
         </div>
         <p
           className={cn(
-            "mt-2 font-mono text-3xl font-bold tabular-nums tracking-tight md:text-4xl",
+            "mt-2 font-mono text-2xl font-bold tabular-nums tracking-tight sm:text-3xl md:text-4xl",
             tone === "success" && "text-success",
             tone === "warning" && "text-warning",
             tone === "destructive" && "text-destructive",
@@ -152,7 +152,7 @@ function HeroCard({
         >
           {value}
         </p>
-        <p className="mt-1 text-xs text-muted-foreground">{sub}</p>
+        <p className="mt-1 line-clamp-2 text-[11px] text-muted-foreground sm:text-xs">{sub}</p>
       </div>
     </div>
   );

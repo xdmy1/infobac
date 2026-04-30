@@ -30,13 +30,13 @@ export function ModePicker({
   bestScoreByExam,
 }: ModePickerProps) {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 md:py-14 lg:px-6">
-      <header className="mb-10 flex flex-col items-center text-center md:mb-12">
+    <div className="mx-auto max-w-5xl px-3 py-8 sm:px-4 md:py-14 lg:px-6">
+      <header className="mb-8 flex flex-col items-center text-center md:mb-12">
         <CourseIcon slug={course.slug} src={course.icon} size={56} />
         <p className="mt-4 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
           Test • {course.title.split(" — ")[0]}
         </p>
-        <h1 className="mt-2 text-balance text-3xl font-bold tracking-tight md:text-4xl">
+        <h1 className="mt-2 text-balance text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
           Cum vrei să exersezi
         </h1>
         <p className="mt-3 max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
@@ -46,17 +46,17 @@ export function ModePicker({
       </header>
 
       {/* Practice — single big card */}
-      <div className="mb-10">
+      <div className="mb-8 md:mb-10">
         <Link
           href={`/curs/${course.slug}/test/practice`}
-          className="group flex flex-col gap-5 rounded-2xl border border-accent/30 bg-card p-6 transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lg hover:shadow-accent/10 md:flex-row md:items-center md:gap-8 md:p-7"
+          className="group flex flex-col gap-4 rounded-2xl border border-accent/30 bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:shadow-lg hover:shadow-accent/10 sm:p-6 md:flex-row md:items-center md:gap-8 md:p-7"
         >
-          <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent md:size-14">
-            <Target className="size-6" strokeWidth={2} />
+          <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent sm:size-12 md:size-14">
+            <Target className="size-5 sm:size-6" strokeWidth={2} />
           </span>
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-xl font-bold tracking-tight md:text-2xl">
+              <h3 className="text-lg font-bold tracking-tight sm:text-xl md:text-2xl">
                 Practice
               </h3>
               <span className="rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent">
@@ -75,21 +75,21 @@ export function ModePicker({
         </Link>
       </div>
 
-      <div className="mb-5 flex items-end justify-between gap-3">
+      <div className="mb-5 flex flex-wrap items-end justify-between gap-2">
         <div>
           <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
             Examene simulate
           </p>
-          <h2 className="mt-1 text-xl font-bold tracking-tight md:text-2xl">
+          <h2 className="mt-1 text-lg font-bold tracking-tight sm:text-xl md:text-2xl">
             Testează-te ca la examen
           </h2>
         </div>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-[11px] text-muted-foreground sm:text-xs">
           Cronometru · prag {course.passingScore}%
         </p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {examSets.map((s, i) => (
           <ExamCard
             key={s.number}

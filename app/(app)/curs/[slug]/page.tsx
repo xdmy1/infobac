@@ -62,7 +62,7 @@ export default async function CoursePage({ params }: PageProps) {
   const currentLesson = lessons.find((l) => !completed.has(l.slug));
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14 lg:px-8">
+    <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10 md:px-6 md:py-14 lg:px-8">
       <Reveal variant="fade-down">
         <Link
           href="/dashboard"
@@ -73,11 +73,11 @@ export default async function CoursePage({ params }: PageProps) {
         </Link>
       </Reveal>
 
-      <header className="mt-7 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <header className="mt-6 flex flex-col gap-5 md:mt-7 md:flex-row md:items-start md:justify-between md:gap-6">
         <Reveal staggerChildren={0.08} className="space-y-4">
-          <RevealItem variant="scale-in" className="flex items-center gap-4">
-            <CourseIcon slug={meta.slug} src={meta.icon} size={72} alt="" />
-            <div className="flex flex-wrap items-center gap-2">
+          <RevealItem variant="scale-in" className="flex flex-wrap items-center gap-3 md:gap-4">
+            <CourseIcon slug={meta.slug} src={meta.icon} size={56} alt="" />
+            <div className="flex min-w-0 flex-wrap items-center gap-1.5">
               <Badge variant="outline" className="font-mono text-[10px]">
                 {meta.duration}
               </Badge>
@@ -93,7 +93,7 @@ export default async function CoursePage({ params }: PageProps) {
             </div>
           </RevealItem>
           <RevealItem variant="fade-blur">
-            <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl">
+            <h1 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               {meta.title}
             </h1>
           </RevealItem>
@@ -104,8 +104,8 @@ export default async function CoursePage({ params }: PageProps) {
           </RevealItem>
         </Reveal>
 
-        <Reveal variant="fade-down" delay={0.3}>
-          <div className="flex flex-col gap-2">
+        <Reveal variant="fade-down" delay={0.3} className="md:shrink-0">
+          <div className="flex flex-col gap-2 sm:flex-row md:flex-col">
             {currentLesson ? (
               <Link
                 href={`/curs/${meta.slug}/lectia/${currentLesson.slug}`}
@@ -137,7 +137,7 @@ export default async function CoursePage({ params }: PageProps) {
               )}
             >
               <Target className="size-3.5" />
-              Test ({questions.length} întrebări)
+              <span className="truncate">Test ({questions.length} întrebări)</span>
             </Link>
           </div>
         </Reveal>
@@ -179,7 +179,7 @@ export default async function CoursePage({ params }: PageProps) {
                 <Link
                   href={`/curs/${meta.slug}/lectia/${l.slug}`}
                   className={cn(
-                    "group flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-muted/40 md:px-6",
+                    "group flex items-center gap-3 px-3.5 py-3 transition-colors hover:bg-muted/40 sm:gap-4 sm:px-4 md:px-6",
                     isLocked && "pointer-events-none opacity-60",
                   )}
                 >
@@ -202,14 +202,16 @@ export default async function CoursePage({ params }: PageProps) {
                     )}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-foreground">
+                    <p className="line-clamp-2 break-words text-sm font-semibold text-foreground">
                       {l.title}
                     </p>
-                    <p className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
-                      <Clock className="size-3" />
-                      {l.durationMinutes} min
+                    <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="size-3" />
+                        {l.durationMinutes} min
+                      </span>
                       {l.isPreview && (
-                        <span className="ml-1 rounded-full bg-accent/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-accent">
+                        <span className="rounded-full bg-accent/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-accent">
                           Free preview
                         </span>
                       )}
