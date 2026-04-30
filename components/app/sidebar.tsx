@@ -18,22 +18,23 @@ import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   myCourses: { slug: string; title: string; icon: string }[];
+  isAdmin?: boolean;
 }
 
-export function DesktopSidebar({ myCourses }: SidebarProps) {
+export function DesktopSidebar({ myCourses, isAdmin }: SidebarProps) {
   return (
     <aside className="hidden w-60 shrink-0 border-r border-border bg-card md:flex md:flex-col">
       <div className="flex h-16 items-center border-b border-border px-5">
         <Logo height={28} />
       </div>
       <div className="flex-1 overflow-y-auto">
-        <SidebarNav myCourses={myCourses} />
+        <SidebarNav myCourses={myCourses} isAdmin={isAdmin} />
       </div>
     </aside>
   );
 }
 
-export function MobileSidebarTrigger({ myCourses }: SidebarProps) {
+export function MobileSidebarTrigger({ myCourses, isAdmin }: SidebarProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -59,6 +60,7 @@ export function MobileSidebarTrigger({ myCourses }: SidebarProps) {
         <div className="overflow-y-auto">
           <SidebarNav
             myCourses={myCourses}
+            isAdmin={isAdmin}
             onNavigate={() => setOpen(false)}
           />
         </div>

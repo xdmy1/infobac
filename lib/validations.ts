@@ -109,3 +109,27 @@ export const resetPasswordSubmitSchema = z
 export type ResetPasswordSubmitInput = z.infer<
   typeof resetPasswordSubmitSchema
 >;
+
+// -----------------------------------------------------------------------------
+// Admin actions
+// -----------------------------------------------------------------------------
+
+export const suspendUserSchema = z.object({
+  userId: z.string().uuid("ID de utilizator invalid."),
+});
+export type SuspendUserInput = z.infer<typeof suspendUserSchema>;
+
+export const unsuspendUserSchema = z.object({
+  userId: z.string().uuid("ID de utilizator invalid."),
+});
+export type UnsuspendUserInput = z.infer<typeof unsuspendUserSchema>;
+
+export const notifyPaymentSchema = z.object({
+  userId: z.string().uuid("ID de utilizator invalid."),
+  message: z
+    .string()
+    .trim()
+    .max(500, "Mesajul e prea lung (max. 500 caractere).")
+    .optional(),
+});
+export type NotifyPaymentInput = z.infer<typeof notifyPaymentSchema>;

@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { QuizSession } from "@/components/app/quiz/quiz-session";
+import { TestPaywall } from "@/components/app/test-paywall";
 import { getCourseContent } from "@/lib/content/courses";
 import { getTestSet } from "@/lib/content/courses/exam-sets";
+import { createClient } from "@/lib/supabase/server";
+import { isPreviewMode } from "@/lib/preview-mode";
 
 interface PageProps {
   params: Promise<{ slug: string; n: string }>;
@@ -29,6 +32,22 @@ export default async function PracticePage({ params }: PageProps) {
 
   const set = getTestSet(content.meta.slug, setNumber);
   if (!set) notFound();
+
+  let hasAccess = isPreviewMode;
+  if (!isPreviewMode) {
+    try {
+      const supabase = await createClient();
+      const { data: ok } = await supabase.rpc("has_course_access_by_slug", {
+        p_slug: slug,
+      });
+      hasAccess = ok === true;
+    } catch {
+      hasAccess = false;
+    }
+  }
+  if (!hasAccess) {
+    return <TestPaywall course={content.meta} whatLocked="Practice" />;
+  }
 
   return (
     <QuizSession

@@ -8,6 +8,7 @@ import {
   LineChart,
   CreditCard,
   Settings,
+  Shield,
   type LucideIcon,
 } from "lucide-react";
 import { CourseIcon } from "@/components/shared/course-icon";
@@ -27,6 +28,8 @@ interface SidebarCourse {
 
 interface SidebarNavProps {
   myCourses: SidebarCourse[];
+  /** Show the Admin entry only when the current user is an admin. */
+  isAdmin?: boolean;
   /** Optional callback fired when a link is clicked — used by mobile Sheet to close itself. */
   onNavigate?: () => void;
 }
@@ -38,19 +41,30 @@ const mainNav: SidebarItem[] = [
   { label: "Setări", href: "/setari", icon: Settings },
 ];
 
-export function SidebarNav({ myCourses, onNavigate }: SidebarNavProps) {
+const adminNavItem: SidebarItem = {
+  label: "Admin",
+  href: "/admin",
+  icon: Shield,
+};
+
+export function SidebarNav({ myCourses, isAdmin, onNavigate }: SidebarNavProps) {
   const pathname = usePathname();
+  const items = isAdmin ? [...mainNav, adminNavItem] : mainNav;
 
   return (
     <nav className="flex flex-col gap-6 px-3 py-4">
       <ul className="flex flex-col gap-0.5">
-        {mainNav.map((item) => (
+        {items.map((item) => (
           <li key={item.href}>
             <SidebarLink
               href={item.href}
               label={item.label}
               icon={item.icon}
-              active={pathname === item.href}
+              active={
+                item.href === "/admin"
+                  ? pathname.startsWith("/admin")
+                  : pathname === item.href
+              }
               onNavigate={onNavigate}
             />
           </li>

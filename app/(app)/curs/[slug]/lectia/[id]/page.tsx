@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, Clock, Lock, ArrowRight } from "lucide-react";
 import { LessonContent } from "@/components/app/lesson-content";
 import { LessonActions } from "@/components/app/lesson-actions";
 import { ReadingProgress } from "@/components/app/reading-progress";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { getCourseContent } from "@/lib/content/courses";
 import { getCompletedLessonSlugs } from "@/lib/queries/progress-slug";
 import { createClient } from "@/lib/supabase/server";
@@ -37,14 +39,24 @@ export default async function LessonPage({ params }: PageProps) {
   if (!lesson) notFound();
 
   let alreadyCompleted = false;
+  let hasAccess = true;
   if (!isPreviewMode) {
     try {
       const supabase = await createClient();
       const completedSet = await getCompletedLessonSlugs(supabase, slug);
       alreadyCompleted = completedSet.has(lesson.slug);
+      const { data: ok } = await supabase.rpc("has_course_access_by_slug", {
+        p_slug: slug,
+      });
+      hasAccess = ok === true;
     } catch {
-      // ignore
+      hasAccess = false;
     }
+  }
+
+  // Gate: locked lessons (past free-preview) require an active subscription.
+  if (!lesson.isPreview && !hasAccess) {
+    return <PaywallView slug={slug} courseTitle={content.meta.title} lessonTitle={lesson.title} courseIcon={content.meta.icon} courseSlug={content.meta.slug} />;
   }
 
   const sorted = [...content.lessons].sort(
@@ -119,5 +131,71 @@ export default async function LessonPage({ params }: PageProps) {
         </Reveal>
       </div>
     </>
+  );
+}
+
+function PaywallView({
+  slug,
+  courseTitle,
+  lessonTitle,
+  courseIcon,
+  courseSlug,
+}: {
+  slug: string;
+  courseTitle: string;
+  lessonTitle: string;
+  courseIcon: string;
+  courseSlug: string;
+}) {
+  return (
+    <div className="mx-auto w-full max-w-2xl px-3 py-12 sm:px-4 sm:py-16 md:px-6 md:py-20 lg:px-8">
+      <Link
+        href={`/curs/${slug}`}
+        className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <ArrowLeft className="size-3.5" />
+        {courseTitle}
+      </Link>
+
+      <div className="mt-10 rounded-3xl border border-border bg-card p-6 text-center md:p-10">
+        <span className="inline-flex size-14 items-center justify-center rounded-2xl bg-muted text-muted-foreground">
+          <Lock className="size-6" />
+        </span>
+        <p className="mt-5 font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+          Lecție blocată
+        </p>
+        <h1 className="mt-2 text-balance text-2xl font-bold tracking-tight md:text-3xl">
+          {lessonTitle}
+        </h1>
+        <p className="mt-3 text-pretty text-sm text-muted-foreground md:text-base">
+          Primele 2 lecții sunt gratuite. Pentru restul, ai nevoie de un
+          abonament — Un modul (250 MDL), Toate (550 MDL/lună) sau Pe 6 luni
+          (950 MDL).
+        </p>
+
+        <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <Link
+            href={`/abonament/cumpara/module?course=${courseSlug}`}
+            className={cn(
+              buttonVariants(),
+              "h-11 gap-2 px-5 text-sm font-semibold",
+            )}
+          >
+            <CourseIcon slug={courseSlug} src={courseIcon} size={16} />
+            Cumpără {courseTitle.split(" — ")[0]} · 250 MDL
+            <ArrowRight className="size-3.5" />
+          </Link>
+          <Link
+            href="/preturi"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-11 gap-2 px-5 text-sm",
+            )}
+          >
+            Vezi toate planurile
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

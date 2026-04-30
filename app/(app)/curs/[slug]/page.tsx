@@ -46,12 +46,18 @@ export default async function CoursePage({ params }: PageProps) {
   const { meta, lessons, questions } = content;
 
   let completed = new Set<string>();
+  let hasAccess = true; // preview mode shows everything; access gating only kicks in with real Supabase
   if (!isPreviewMode) {
     try {
       const supabase = await createClient();
       completed = await getCompletedLessonSlugs(supabase, slug);
+      const { data: ok } = await supabase.rpc("has_course_access_by_slug", {
+        p_slug: slug,
+      });
+      hasAccess = ok === true;
     } catch {
-      // ignore — show empty progress
+      // ignore — assume gated, show preview-only view
+      hasAccess = false;
     }
   }
 
@@ -59,7 +65,9 @@ export default async function CoursePage({ params }: PageProps) {
   const completedCount = lessons.filter((l) => completed.has(l.slug)).length;
   const percent =
     totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-  const currentLesson = lessons.find((l) => !completed.has(l.slug));
+  const currentLesson = lessons.find(
+    (l) => !completed.has(l.slug) && (hasAccess || l.isPreview)
+  );
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:py-10 md:px-6 md:py-14 lg:px-8">
@@ -106,7 +114,18 @@ export default async function CoursePage({ params }: PageProps) {
 
         <Reveal variant="fade-down" delay={0.3} className="md:shrink-0">
           <div className="flex flex-col gap-2 sm:flex-row md:flex-col">
-            {currentLesson ? (
+            {!hasAccess ? (
+              <Link
+                href="/preturi"
+                className={cn(
+                  buttonVariants(),
+                  "h-11 gap-2 px-5 text-sm font-semibold",
+                )}
+              >
+                <Lock className="size-4" />
+                Vezi prețuri
+              </Link>
+            ) : currentLesson ? (
               <Link
                 href={`/curs/${meta.slug}/lectia/${currentLesson.slug}`}
                 className={cn(
@@ -143,6 +162,32 @@ export default async function CoursePage({ params }: PageProps) {
         </Reveal>
       </header>
 
+      {!hasAccess && (
+        <section className="mt-8 flex flex-col gap-3 rounded-2xl border border-warning/40 bg-warning/5 p-5 md:flex-row md:items-center md:gap-5 md:p-6">
+          <Lock className="size-5 shrink-0 text-warning" />
+          <div className="flex-1">
+            <p className="text-sm font-bold tracking-tight">
+              Acces suspendat
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground md:text-sm">
+              Primele {lessons.filter((l) => l.isPreview).length} lecții rămân
+              gratuite. Pentru a continua întreg cursul și a da testele, alege
+              un plan.
+            </p>
+          </div>
+          <Link
+            href="/preturi"
+            className={cn(
+              buttonVariants({ size: "sm" }),
+              "h-9 gap-1.5 px-4 text-sm font-semibold",
+            )}
+          >
+            Vezi prețuri
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </section>
+      )}
+
       {totalCount > 0 && (
         <section className="mt-8 rounded-2xl border border-border bg-card p-5 md:p-6">
           <div className="flex items-baseline justify-between gap-3">
@@ -173,7 +218,7 @@ export default async function CoursePage({ params }: PageProps) {
         <ol className="overflow-hidden rounded-2xl border border-border bg-card">
           {lessons.map((l) => {
             const isDone = completed.has(l.slug);
-            const isLocked = false; // gating handled at higher level later
+            const isLocked = !hasAccess && !l.isPreview;
             return (
               <li key={l.slug} className="border-b border-border last:border-b-0">
                 <Link

@@ -24,6 +24,7 @@ export default async function AppLayout({
   let userEmail: string;
   let userMetaName: string | undefined;
   let avatarUrl: string | null;
+  let isAdmin = false;
   let myCoursesData: { slug: string; title: string; icon: string }[];
 
   // The course list in the sidebar comes straight from the static content
@@ -58,13 +59,14 @@ export default async function AppLayout({
       (user.user_metadata?.full_name as string | undefined) ??
       user.email?.split("@")[0];
     avatarUrl = profile?.avatar_url ?? null;
+    isAdmin = profile?.role === "admin";
   }
 
   const fullName = userMetaName ?? "Utilizator";
 
   return (
     <div className="flex min-h-dvh w-full bg-background">
-      <DesktopSidebar myCourses={myCoursesData} />
+      <DesktopSidebar myCourses={myCoursesData} isAdmin={isAdmin} />
 
       {/* min-w-0 is critical — without it a flex child grows past the
           viewport when its descendants contain wide content (e.g. long
@@ -74,7 +76,7 @@ export default async function AppLayout({
         {isPreviewMode && <PreviewBanner />}
 
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6">
-          <MobileSidebarTrigger myCourses={myCoursesData} />
+          <MobileSidebarTrigger myCourses={myCoursesData} isAdmin={isAdmin} />
           <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
             <UserMenu

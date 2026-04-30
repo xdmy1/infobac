@@ -55,6 +55,7 @@ export const previewProfile: ProfileRow = {
   avatar_url: null,
   school: "Liceul Mircea Eliade, Chișinău",
   grade: 12,
+  role: "student",
   created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
   updated_at: new Date().toISOString(),
 };

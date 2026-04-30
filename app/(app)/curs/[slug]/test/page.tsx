@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ModePicker } from "@/components/app/quiz/mode-picker";
+import { TestPaywall } from "@/components/app/test-paywall";
 import { getCourseContent } from "@/lib/content/courses";
 import { getTestSetsForCourse } from "@/lib/content/courses/exam-sets";
 import { createClient } from "@/lib/supabase/server";
@@ -36,9 +37,8 @@ export default async function TestModePage({ params }: PageProps) {
     durationMin: s.durationMin,
   }));
 
-  // Best score per set per mode. Practice attempts are not currently saved
-  // (only exam mode persists), but the UI reads both maps so we can wire
-  // practice persistence later without changing this page.
+  // Gate: tests require active course_access. Preview mode bypasses.
+  let hasAccess = isPreviewMode;
   const examBestByN: Record<number, number> = {};
   const practiceBestByN: Record<number, number> = {};
 
@@ -49,6 +49,11 @@ export default async function TestModePage({ params }: PageProps) {
         data: { user },
       } = await supabase.auth.getUser();
       if (user) {
+        const { data: ok } = await supabase.rpc("has_course_access_by_slug", {
+          p_slug: content.meta.slug,
+        });
+        hasAccess = ok === true;
+
         const { data } = await supabase
           .from("quiz_attempts")
           .select("score, mode, answers")
@@ -69,6 +74,10 @@ export default async function TestModePage({ params }: PageProps) {
     } catch {
       // best-effort; UI still renders
     }
+  }
+
+  if (!hasAccess) {
+    return <TestPaywall course={content.meta} whatLocked="Toate testele" />;
   }
 
   return (

@@ -27,6 +27,12 @@ export type AccessSource =
   | "gift"
   | "scholarship";
 
+export type UserRole = "student" | "admin";
+
+export type PaymentRequestStatus = "pending" | "approved" | "rejected";
+
+export type PaymentProofVia = "upload" | "telegram" | "none";
+
 export interface QuizOption {
   id: string;
   text: string;
@@ -43,6 +49,7 @@ export interface Database {
           avatar_url: string | null;
           school: string | null;
           grade: number | null;
+          role: UserRole;
           created_at: string;
           updated_at: string;
         };
@@ -53,6 +60,7 @@ export interface Database {
           avatar_url?: string | null;
           school?: string | null;
           grade?: number | null;
+          role?: UserRole;
           created_at?: string;
           updated_at?: string;
         };
@@ -199,6 +207,42 @@ export interface Database {
         >;
         Relationships: [];
       };
+      payment_requests: {
+        Row: {
+          id: string;
+          user_id: string;
+          plan: SubscriptionPlan;
+          selected_course_slug: string | null;
+          amount_mdl: number;
+          status: PaymentRequestStatus;
+          proof_via: PaymentProofVia;
+          proof_path: string | null;
+          user_notes: string | null;
+          reviewed_at: string | null;
+          reviewed_by: string | null;
+          reviewed_notes: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          user_id: string;
+          plan: SubscriptionPlan;
+          selected_course_slug?: string | null;
+          amount_mdl: number;
+          status?: PaymentRequestStatus;
+          proof_via?: PaymentProofVia;
+          proof_path?: string | null;
+          user_notes?: string | null;
+          reviewed_at?: string | null;
+          reviewed_by?: string | null;
+          reviewed_notes?: string | null;
+          created_at?: string;
+        };
+        Update: Partial<
+          Database["public"]["Tables"]["payment_requests"]["Insert"]
+        >;
+        Relationships: [];
+      };
       course_access: {
         Row: {
           id: string;
@@ -249,6 +293,22 @@ export interface Database {
         Args: { p_course_id: string };
         Returns: boolean;
       };
+      has_course_access_by_slug: {
+        Args: { p_slug: string };
+        Returns: boolean;
+      };
+      is_admin: {
+        Args: Record<string, never>;
+        Returns: boolean;
+      };
+      admin_grant_subscription: {
+        Args: {
+          p_user_id: string;
+          p_plan: SubscriptionPlan;
+          p_course_slug: string | null;
+        };
+        Returns: undefined;
+      };
     };
     Enums: {
       subscription_plan: SubscriptionPlan;
@@ -256,6 +316,7 @@ export interface Database {
       course_difficulty: CourseDifficulty;
       quiz_type: QuizType;
       access_source: AccessSource;
+      user_role: UserRole;
     };
     CompositeTypes: Record<string, never>;
   };
