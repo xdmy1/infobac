@@ -63,10 +63,14 @@ export default async function AppLayout({
   const fullName = userMetaName ?? "Utilizator";
 
   return (
-    <div className="flex min-h-dvh bg-background">
+    <div className="flex min-h-dvh w-full bg-background">
       <DesktopSidebar myCourses={myCoursesData} />
 
-      <div className="flex flex-1 flex-col">
+      {/* min-w-0 is critical — without it a flex child grows past the
+          viewport when its descendants contain wide content (e.g. long
+          code blocks in a lesson), forcing the whole page to scroll
+          horizontally on mobile. */}
+      <div className="flex min-w-0 flex-1 flex-col">
         {isPreviewMode && <PreviewBanner />}
 
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6">
@@ -81,7 +85,7 @@ export default async function AppLayout({
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="min-w-0 flex-1 overflow-y-auto">{children}</main>
       </div>
     </div>
   );
