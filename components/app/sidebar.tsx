@@ -23,7 +23,10 @@ interface SidebarProps {
 
 export function DesktopSidebar({ myCourses, isAdmin }: SidebarProps) {
   return (
-    <aside className="hidden w-60 shrink-0 border-r border-border bg-card md:flex md:flex-col">
+    // sticky top-0 + h-dvh keeps the sidebar pinned in the viewport while the
+    // rest of the column scrolls. self-start prevents flex from stretching it
+    // to match the (taller) main column's height.
+    <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 self-start border-r border-border bg-card md:flex md:flex-col">
       <div className="flex h-16 items-center border-b border-border px-5">
         <Logo height={28} />
       </div>

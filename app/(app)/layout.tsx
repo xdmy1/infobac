@@ -65,14 +65,20 @@ export default async function AppLayout({
   const fullName = userMetaName ?? "Utilizator";
 
   return (
-    <div className="flex min-h-dvh w-full bg-background">
+    // The outer flex grows naturally with content so the body itself is the
+    // page's scroll container. Earlier the inner <main> had overflow-y-auto,
+    // which made body never grow past 100dvh and broke Lenis (smooth-scroll
+    // hijacks wheel events on body — when body doesn't scroll, nothing does
+    // until you refresh and lose the Lenis instance). Sidebar uses sticky
+    // top-0 to stay docked while the rest scrolls.
+    <div className="flex w-full bg-background">
       <DesktopSidebar myCourses={myCoursesData} isAdmin={isAdmin} />
 
       {/* min-w-0 is critical — without it a flex child grows past the
           viewport when its descendants contain wide content (e.g. long
           code blocks in a lesson), forcing the whole page to scroll
           horizontally on mobile. */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-h-dvh min-w-0 flex-1 flex-col">
         {isPreviewMode && <PreviewBanner />}
 
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6">
@@ -87,7 +93,7 @@ export default async function AppLayout({
           </div>
         </header>
 
-        <main className="min-w-0 flex-1 overflow-y-auto">{children}</main>
+        <main className="min-w-0 flex-1">{children}</main>
       </div>
     </div>
   );
