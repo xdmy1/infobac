@@ -2,12 +2,11 @@ import { redirect } from "next/navigation";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile, getCurrentUser } from "@/lib/queries/user";
-import { getMyCourses } from "@/lib/queries/courses";
+import { allCoursesMeta } from "@/lib/content/courses";
 import {
   isPreviewMode,
   previewUser,
   previewProfile,
-  previewCourses,
 } from "@/lib/preview-mode";
 import { DesktopSidebar, MobileSidebarTrigger } from "@/components/app/sidebar";
 import { UserMenu } from "@/components/app/user-menu";
@@ -27,15 +26,19 @@ export default async function AppLayout({
   let avatarUrl: string | null;
   let myCoursesData: { slug: string; title: string; icon: string }[];
 
+  // The course list in the sidebar comes straight from the static content
+  // registry — every signed-in user sees all 3 courses there. Real "access
+  // granted" gating happens at the lesson level, not in the sidebar.
+  myCoursesData = allCoursesMeta.map((c) => ({
+    slug: c.slug,
+    title: c.title.split(" — ")[0],
+    icon: c.icon,
+  }));
+
   if (isPreviewMode) {
     userEmail = previewUser.email;
     userMetaName = previewUser.user_metadata.full_name;
     avatarUrl = previewProfile.avatar_url;
-    myCoursesData = previewCourses.map((c) => ({
-      slug: c.slug,
-      title: c.title,
-      icon: c.icon,
-    }));
   } else {
     if (!isSupabaseConfigured) {
       redirect("/login?supabase_missing=1");
@@ -47,10 +50,7 @@ export default async function AppLayout({
       redirect("/login");
     }
 
-    const [profile, myCourses] = await Promise.all([
-      getCurrentProfile(supabase),
-      getMyCourses(supabase),
-    ]);
+    const profile = await getCurrentProfile(supabase);
 
     userEmail = user.email ?? "";
     userMetaName =
@@ -58,11 +58,6 @@ export default async function AppLayout({
       (user.user_metadata?.full_name as string | undefined) ??
       user.email?.split("@")[0];
     avatarUrl = profile?.avatar_url ?? null;
-    myCoursesData = myCourses.map((c) => ({
-      slug: c.slug,
-      title: c.title,
-      icon: c.icon,
-    }));
   }
 
   const fullName = userMetaName ?? "Utilizator";

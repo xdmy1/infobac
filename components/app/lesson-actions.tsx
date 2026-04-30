@@ -10,16 +10,16 @@ import { cn } from "@/lib/utils";
 import { markLessonCompleteAction } from "@/lib/actions/lesson";
 
 interface LessonActionsProps {
-  lessonId: string;
   courseSlug: string;
+  lessonSlug: string;
   alreadyCompleted: boolean;
   prevHref: string | null;
   nextHref: string | null;
 }
 
 export function LessonActions({
-  lessonId,
   courseSlug,
+  lessonSlug,
   alreadyCompleted,
   prevHref,
   nextHref,
@@ -30,7 +30,7 @@ export function LessonActions({
 
   const onComplete = () => {
     startTransition(async () => {
-      const result = await markLessonCompleteAction(lessonId, courseSlug);
+      const result = await markLessonCompleteAction(courseSlug, lessonSlug);
       if (result.ok) {
         setCompleted(true);
         toast.success(

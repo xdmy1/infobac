@@ -138,7 +138,7 @@ export function ProfileForm({ defaults }: ProfileFormProps) {
             {...register("grade")}
           >
             <option value="">— alege —</option>
-            {[9, 10, 11, 12, 13].map((g) => (
+            {[9, 10, 11, 12].map((g) => (
               <option key={g} value={g}>
                 Clasa {g}
               </option>

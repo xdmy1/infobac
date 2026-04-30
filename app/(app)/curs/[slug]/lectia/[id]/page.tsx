@@ -7,21 +7,10 @@ import { LessonActions } from "@/components/app/lesson-actions";
 import { ReadingProgress } from "@/components/app/reading-progress";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
-import { getLesson, getCourseWithLessons } from "@/lib/queries/courses";
+import { getCourseContent } from "@/lib/content/courses";
+import { getCompletedLessonSlugs } from "@/lib/queries/progress-slug";
 import { createClient } from "@/lib/supabase/server";
-import {
-  isPreviewMode,
-  findPreviewLesson,
-  previewLessonsByCourse,
-  previewCompletedLessonIds,
-} from "@/lib/preview-mode";
-import type { Database } from "@/lib/supabase/types";
-
-type LessonRow = Database["public"]["Tables"]["lessons"]["Row"];
-type CourseLite = Pick<
-  Database["public"]["Tables"]["courses"]["Row"],
-  "id" | "slug" | "title" | "icon"
->;
+import { isPreviewMode } from "@/lib/preview-mode";
 
 interface PageProps {
   params: Promise<{ slug: string; id: string }>;
@@ -30,62 +19,40 @@ interface PageProps {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { id } = await params;
+  const { slug, id } = await params;
+  const c = getCourseContent(slug);
+  const lesson = c?.lessons.find((l) => l.slug === id);
   return {
-    title: `Lecție · ${id}`,
+    title: lesson ? `${lesson.title} · ${c?.meta.title}` : `Lecție · ${id}`,
     robots: { index: false, follow: false },
   };
 }
 
 export default async function LessonPage({ params }: PageProps) {
   const { slug, id } = await params;
+  const content = getCourseContent(slug);
+  if (!content) notFound();
 
-  let course: CourseLite | null = null;
-  let lesson: LessonRow | null = null;
-  let allLessons: Pick<LessonRow, "id" | "slug" | "order_index" | "title">[] = [];
+  const lesson = content.lessons.find((l) => l.slug === id);
+  if (!lesson) notFound();
+
   let alreadyCompleted = false;
-
-  if (isPreviewMode) {
-    const found = findPreviewLesson(slug, id);
-    if (!found) notFound();
-    course = found.course;
-    lesson = found.lesson;
-    allLessons = previewLessonsByCourse[slug] ?? [];
-    alreadyCompleted = previewCompletedLessonIds.has(found.lesson.id);
-  } else {
-    const supabase = await createClient();
-    const found = await getLesson(supabase, slug, id);
-    if (!found) notFound();
-    course = found.course;
-    lesson = found.lesson;
-
-    const courseData = await getCourseWithLessons(supabase, slug);
-    allLessons = courseData?.lessons ?? [];
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (user) {
-      const { data } = await supabase
-        .from("lesson_progress")
-        .select("completed_at")
-        .eq("user_id", user.id)
-        .eq("lesson_id", lesson.id)
-        .maybeSingle();
-      alreadyCompleted = !!data?.completed_at;
+  if (!isPreviewMode) {
+    try {
+      const supabase = await createClient();
+      const completedSet = await getCompletedLessonSlugs(supabase, slug);
+      alreadyCompleted = completedSet.has(lesson.slug);
+    } catch {
+      // ignore
     }
   }
 
-  if (!course || !lesson) notFound();
-
-  const sortedLessons = [...allLessons].sort(
-    (a, b) => a.order_index - b.order_index
+  const sorted = [...content.lessons].sort(
+    (a, b) => a.orderIndex - b.orderIndex,
   );
-  const idx = sortedLessons.findIndex((l) => l.id === lesson.id);
-  const prev = idx > 0 ? sortedLessons[idx - 1] : null;
-  const next = idx >= 0 && idx < sortedLessons.length - 1
-    ? sortedLessons[idx + 1]
-    : null;
+  const idx = sorted.findIndex((l) => l.slug === lesson.slug);
+  const prev = idx > 0 ? sorted[idx - 1] : null;
+  const next = idx >= 0 && idx < sorted.length - 1 ? sorted[idx + 1] : null;
 
   return (
     <>
@@ -101,13 +68,16 @@ export default async function LessonPage({ params }: PageProps) {
               className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
             >
               <ArrowLeft className="size-3.5" />
-              <CourseIcon slug={course.slug} src={course.icon} size={14} alt="" />
-              {course.title}
+              <CourseIcon
+                slug={content.meta.slug}
+                src={content.meta.icon}
+                size={14}
+                alt=""
+              />
+              {content.meta.title}
             </Link>
             <span aria-hidden>/</span>
-            <span className="text-foreground">
-              Lecția {lesson.order_index}
-            </span>
+            <span className="text-foreground">Lecția {lesson.orderIndex}</span>
           </nav>
         </Reveal>
 
@@ -120,15 +90,14 @@ export default async function LessonPage({ params }: PageProps) {
           <RevealItem variant="fade-up">
             <div className="mt-3 flex items-center gap-3 text-sm text-muted-foreground">
               <span className="font-mono text-xs uppercase tracking-wider">
-                Lecția {lesson.order_index}
-                {sortedLessons.length > 0 && ` din ${sortedLessons.length}`}
+                Lecția {lesson.orderIndex} din {sorted.length}
               </span>
-              {lesson.duration_minutes > 0 && (
+              {lesson.durationMinutes > 0 && (
                 <>
                   <span aria-hidden>·</span>
                   <span className="inline-flex items-center gap-1">
                     <Clock className="size-3.5" />
-                    {lesson.duration_minutes} min
+                    {lesson.durationMinutes} min
                   </span>
                 </>
               )}
@@ -137,15 +106,15 @@ export default async function LessonPage({ params }: PageProps) {
         </Reveal>
 
         <Reveal variant="fade-up" delay={0.4} className="mt-10">
-          <LessonContent markdown={lesson.content} />
+          <LessonContent markdown={lesson.markdown} />
         </Reveal>
 
         <hr className="my-12 border-border" />
 
         <Reveal variant="fade-up">
           <LessonActions
-            lessonId={lesson.id}
             courseSlug={slug}
+            lessonSlug={lesson.slug}
             alreadyCompleted={alreadyCompleted}
             prevHref={prev ? `/curs/${slug}/lectia/${prev.slug}` : null}
             nextHref={next ? `/curs/${slug}/lectia/${next.slug}` : null}

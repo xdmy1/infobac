@@ -1,32 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, BookOpen, Clock } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  CheckCircle2,
+  Clock,
+  Lock,
+  PlayCircle,
+  Target,
+  Trophy,
+} from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { LessonList, type LessonListItem } from "@/components/app/lesson-list";
-import { QuizList } from "@/components/app/quiz-list";
+import { buttonVariants } from "@/components/ui/button";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
-import {
-  getCourseWithLessons,
-  getCourseQuizzes,
-  getCompletedLessonIds,
-  checkCourseAccess,
-} from "@/lib/queries/courses";
+import { cn } from "@/lib/utils";
+import { getCourseContent } from "@/lib/content/courses";
+import { getCompletedLessonSlugs } from "@/lib/queries/progress-slug";
 import { createClient } from "@/lib/supabase/server";
-import {
-  isPreviewMode,
-  previewCoursesFull,
-  previewLessonsByCourse,
-  previewQuizzesByCourse,
-  previewCompletedLessonIds,
-} from "@/lib/preview-mode";
-import type { Database } from "@/lib/supabase/types";
-
-type LessonRow = Database["public"]["Tables"]["lessons"]["Row"];
-type QuizRow = Database["public"]["Tables"]["quizzes"]["Row"];
-type CourseRow = Database["public"]["Tables"]["courses"]["Row"];
+import { isPreviewMode } from "@/lib/preview-mode";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,80 +31,35 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const c = getCourseContent(slug);
   return {
-    title: `Curs ${slug}`,
+    title: c ? `${c.meta.title} · InfoBac` : `Curs ${slug}`,
+    description: c?.meta.blurb,
     robots: { index: false, follow: false },
   };
 }
 
 export default async function CoursePage({ params }: PageProps) {
   const { slug } = await params;
+  const content = getCourseContent(slug);
+  if (!content) notFound();
+  const { meta, lessons, questions } = content;
 
-  let course: CourseRow | null = null;
-  let lessons: LessonRow[] = [];
-  let quizzes: QuizRow[] = [];
-  let completedLessonIds: Set<string> = new Set();
-  let hasAccess = false;
-
-  if (isPreviewMode) {
-    course = previewCoursesFull[slug] ?? null;
-    lessons = previewLessonsByCourse[slug] ?? [];
-    quizzes = previewQuizzesByCourse[slug] ?? [];
-    completedLessonIds = previewCompletedLessonIds;
-    hasAccess = true;
-  } else {
-    const supabase = await createClient();
-    const result = await getCourseWithLessons(supabase, slug);
-    if (!result) notFound();
-    course = result.course;
-    lessons = result.lessons;
-
-    const [accessRes, quizzesRes, completedRes] = await Promise.all([
-      checkCourseAccess(supabase, course.id).catch(() => false),
-      getCourseQuizzes(supabase, course.id).catch(() => []),
-      getCompletedLessonIds(
-        supabase,
-        lessons.map((l) => l.id)
-      ).catch(() => new Set<string>()),
-    ]);
-    hasAccess = accessRes;
-    quizzes = quizzesRes;
-    completedLessonIds = completedRes;
+  let completed = new Set<string>();
+  if (!isPreviewMode) {
+    try {
+      const supabase = await createClient();
+      completed = await getCompletedLessonSlugs(supabase, slug);
+    } catch {
+      // ignore — show empty progress
+    }
   }
 
-  if (!course) notFound();
-
   const totalCount = lessons.length;
-  const completedCount = lessons.filter((l) =>
-    completedLessonIds.has(l.id)
-  ).length;
+  const completedCount = lessons.filter((l) => completed.has(l.slug)).length;
   const percent =
     totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
-
-  // First non-completed lesson is the "current" one.
-  const currentLessonId =
-    lessons.find((l) => !completedLessonIds.has(l.id))?.id;
-
-  const lessonListItems: LessonListItem[] = lessons.map((l) => {
-    const isCompleted = completedLessonIds.has(l.id);
-    const isPreviewLesson = l.order_index <= 2;
-    const isLocked = !hasAccess && !isPreviewLesson;
-    const state: LessonListItem["state"] = isLocked
-      ? "locked"
-      : isCompleted
-        ? "completed"
-        : l.id === currentLessonId
-          ? "current"
-          : "available";
-    return {
-      id: l.id,
-      slug: l.slug,
-      title: l.title,
-      duration_minutes: l.duration_minutes,
-      order_index: l.order_index,
-      state,
-    };
-  });
+  const currentLesson = lessons.find((l) => !completed.has(l.slug));
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 md:px-6 md:py-14 lg:px-8">
@@ -124,39 +74,73 @@ export default async function CoursePage({ params }: PageProps) {
       </Reveal>
 
       <header className="mt-7 flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-        <Reveal staggerChildren={0.1} className="space-y-4">
-          <RevealItem
-            variant="scale-in"
-            className="flex items-center gap-4"
-          >
-            <CourseIcon slug={course.slug} src={course.icon} size={72} alt="" />
-            <Badge variant="outline" className="font-mono text-[10px]">
-              {course.estimated_duration || "Durată flexibilă"}
-            </Badge>
+        <Reveal staggerChildren={0.08} className="space-y-4">
+          <RevealItem variant="scale-in" className="flex items-center gap-4">
+            <CourseIcon slug={meta.slug} src={meta.icon} size={72} alt="" />
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline" className="font-mono text-[10px]">
+                {meta.duration}
+              </Badge>
+              <Badge
+                variant="outline"
+                className="border-accent/40 bg-accent/5 font-mono text-[10px] capitalize text-accent"
+              >
+                {meta.difficulty}
+              </Badge>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
+                {totalCount} lecții · {questions.length} întrebări
+              </span>
+            </div>
           </RevealItem>
           <RevealItem variant="fade-blur">
             <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl">
-              {course.title}
+              {meta.title}
             </h1>
           </RevealItem>
           <RevealItem variant="fade-up">
             <p className="max-w-2xl text-pretty text-sm text-muted-foreground md:text-base">
-              {course.description}
+              {meta.description}
             </p>
           </RevealItem>
         </Reveal>
 
-        {!hasAccess && totalCount > 0 && (
-          <Reveal variant="fade-down" delay={0.4}>
+        <Reveal variant="fade-down" delay={0.3}>
+          <div className="flex flex-col gap-2">
+            {currentLesson ? (
+              <Link
+                href={`/curs/${meta.slug}/lectia/${currentLesson.slug}`}
+                className={cn(
+                  buttonVariants(),
+                  "h-11 gap-2 px-5 text-sm font-semibold",
+                )}
+              >
+                <PlayCircle className="size-4" />
+                Continuă lecția
+              </Link>
+            ) : (
+              <Link
+                href={`/curs/${meta.slug}/test`}
+                className={cn(
+                  buttonVariants(),
+                  "h-11 gap-2 px-5 text-sm font-semibold",
+                )}
+              >
+                <Trophy className="size-4" />
+                Mergi la test
+              </Link>
+            )}
             <Link
-              href="/preturi"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/15"
+              href={`/curs/${meta.slug}/test`}
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-10 gap-2 px-4 text-sm",
+              )}
             >
-              <BookOpen className="size-3.5" />
-              Deblochează acest curs
+              <Target className="size-3.5" />
+              Test ({questions.length} întrebări)
             </Link>
-          </Reveal>
-        )}
+          </div>
+        </Reveal>
       </header>
 
       {totalCount > 0 && (
@@ -171,49 +155,123 @@ export default async function CoursePage({ params }: PageProps) {
           </div>
           <Progress value={percent} className="mt-3 h-2" />
           <p className="mt-2 text-xs text-muted-foreground">
-            <span className="font-medium text-foreground">
-              {completedCount}
-            </span>{" "}
+            <span className="font-medium text-foreground">{completedCount}</span>{" "}
             din {totalCount} lecții completate
           </p>
         </section>
       )}
 
-      <Reveal variant="fade-up" delay={0.4} className="mt-12 space-y-4">
+      <Reveal variant="fade-up" delay={0.3} className="mt-12 space-y-4">
         <div>
           <h2 className="text-xl font-bold tracking-tight md:text-2xl">
             Lecții
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            {hasAccess
-              ? "Toate lecțiile sunt disponibile. Continuă în orice ordine vrei."
-              : "Primele 2 lecții sunt gratuite. Restul sunt disponibile după ce activezi cursul."}
+            Materialul e structurat pe capitole scurte. Primele {lessons.filter((l) => l.isPreview).length} sunt gratuite — restul sunt deblocate când activezi cursul.
           </p>
         </div>
-        <LessonList courseSlug={slug} lessons={lessonListItems} />
+        <ol className="overflow-hidden rounded-2xl border border-border bg-card">
+          {lessons.map((l) => {
+            const isDone = completed.has(l.slug);
+            const isLocked = false; // gating handled at higher level later
+            return (
+              <li key={l.slug} className="border-b border-border last:border-b-0">
+                <Link
+                  href={`/curs/${meta.slug}/lectia/${l.slug}`}
+                  className={cn(
+                    "group flex items-center gap-4 px-4 py-3.5 transition-colors hover:bg-muted/40 md:px-6",
+                    isLocked && "pointer-events-none opacity-60",
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "inline-flex size-9 shrink-0 items-center justify-center rounded-full border font-mono text-xs font-bold tabular-nums",
+                      isDone
+                        ? "border-success/50 bg-success/10 text-success"
+                        : isLocked
+                          ? "border-border bg-muted text-muted-foreground"
+                          : "border-border bg-card text-muted-foreground group-hover:border-foreground/30 group-hover:text-foreground",
+                    )}
+                  >
+                    {isDone ? (
+                      <CheckCircle2 className="size-4" />
+                    ) : isLocked ? (
+                      <Lock className="size-3.5" />
+                    ) : (
+                      String(l.orderIndex).padStart(2, "0")
+                    )}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-foreground">
+                      {l.title}
+                    </p>
+                    <p className="mt-0.5 flex items-center gap-2 text-xs text-muted-foreground">
+                      <Clock className="size-3" />
+                      {l.durationMinutes} min
+                      {l.isPreview && (
+                        <span className="ml-1 rounded-full bg-accent/10 px-1.5 py-0.5 font-mono text-[9px] font-bold uppercase tracking-wider text-accent">
+                          Free preview
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                  <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+                </Link>
+              </li>
+            );
+          })}
+        </ol>
       </Reveal>
 
       <Reveal variant="fade-up" delay={0.2} className="mt-12 space-y-4">
         <div>
           <h2 className="text-xl font-bold tracking-tight md:text-2xl">
-            Quiz-uri și simulări
+            Test pentru curs
           </h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Auto-evaluare după lecții + simulări complete identice cu examenul
-            Certiport real.
+            Două moduri: practice cu feedback instant, sau examen simulat ca la
+            Certiport.
           </p>
         </div>
-        <QuizList quizzes={quizzes} />
+        <div className="grid gap-3 md:grid-cols-2">
+          <Link
+            href={`/curs/${meta.slug}/test/practice`}
+            className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-md"
+          >
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+              <Target className="size-5" strokeWidth={2} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold">Practice</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Răspuns instant, explicație după fiecare întrebare. Fără timp.
+              </p>
+            </div>
+            <ArrowRight className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
+          </Link>
+          <Link
+            href={`/curs/${meta.slug}/test/examen`}
+            className="group flex items-start gap-4 rounded-2xl border border-primary/30 bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md hover:shadow-primary/10"
+          >
+            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <Trophy className="size-5" strokeWidth={2} />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-bold">Examen simulat</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Cronometru, rezultat la final, scor salvat. Trec ≥ {meta.passingScore}%.
+              </p>
+            </div>
+            <ArrowRight className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+          </Link>
+        </div>
       </Reveal>
 
       <section className="mt-12 flex items-center gap-3 rounded-2xl border border-border bg-muted/30 p-5">
-        <Clock className="size-5 shrink-0 text-muted-foreground" />
+        <BookOpen className="size-5 shrink-0 text-muted-foreground" />
         <p className="text-sm text-muted-foreground">
-          Estimat să termini cursul:{" "}
-          <span className="font-medium text-foreground">
-            {course.estimated_duration || "depinde de ritmul tău"}
-          </span>
-          . Mai puțin dacă ai deja experiență.
+          Materialul e bazat pe întrebări reale de la examenul Certiport. Citește
+          lecțiile, dă practice până nu mai greșești, apoi simulează examenul.
         </p>
       </section>
     </div>

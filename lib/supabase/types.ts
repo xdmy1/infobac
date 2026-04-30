@@ -125,7 +125,9 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
-          lesson_id: string;
+          lesson_id: string | null;
+          course_slug: string | null;
+          lesson_slug: string | null;
           completed_at: string | null;
           time_spent_seconds: number;
           updated_at: string;
@@ -179,11 +181,13 @@ export interface Database {
         Row: {
           id: string;
           user_id: string;
-          quiz_id: string;
+          quiz_id: string | null;
+          course_slug: string | null;
+          mode: "practice" | "exam" | null;
           started_at: string;
           completed_at: string | null;
           score: number | null;
-          answers: Record<string, string>;
+          answers: Record<string, unknown>;
           created_at: string;
         };
         Insert: Omit<

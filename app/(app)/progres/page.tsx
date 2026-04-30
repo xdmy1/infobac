@@ -2,16 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, Target, Trophy, TrendingUp } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { CourseIcon } from "@/components/shared/course-icon";
 import { createClient } from "@/lib/supabase/server";
-import { getMyCourses } from "@/lib/queries/courses";
-import { getCourseProgressMap } from "@/lib/queries/progress";
-import { getRecentQuizAttempts, type QuizAttemptWithQuiz } from "@/lib/queries/attempts";
 import {
-  isPreviewMode,
-  previewCourses,
-  previewProgressMap,
-  previewQuizAttempts,
-} from "@/lib/preview-mode";
+  getCompletedLessonSlugs,
+  getExamSummary,
+} from "@/lib/queries/progress-slug";
+import { isPreviewMode } from "@/lib/preview-mode";
+import { allCoursesMeta, getCourseContent } from "@/lib/content/courses";
 import { cn } from "@/lib/utils";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CountUp } from "@/components/shared/count-up";
@@ -20,6 +18,15 @@ export const metadata: Metadata = {
   title: "Progres",
   robots: { index: false, follow: false },
 };
+
+interface CourseProgress {
+  completedLessons: number;
+  totalLessons: number;
+  percent: number;
+  bestScore: number;
+  attempts: number;
+  lastAttemptAt: string | null;
+}
 
 function formatRelative(iso: string | null): string {
   if (!iso) return "—";
@@ -41,64 +48,53 @@ function formatRelative(iso: string | null): string {
 }
 
 export default async function ProgresPage() {
-  let courses: { id: string; slug: string; title: string; icon: string }[];
-  let progressMap: Record<
-    string,
-    { totalLessons: number; completedLessons: number; percent: number }
-  >;
-  let attempts: QuizAttemptWithQuiz[];
+  const stats: Record<string, CourseProgress> = {};
 
   if (isPreviewMode) {
-    courses = previewCourses.map((c) => ({
-      id: c.id,
-      slug: c.slug,
-      title: c.title,
-      icon: c.icon,
-    }));
-    progressMap = previewProgressMap;
-    attempts = previewQuizAttempts as unknown as QuizAttemptWithQuiz[];
+    for (const c of allCoursesMeta) {
+      const total = getCourseContent(c.slug)?.lessons.length ?? 0;
+      stats[c.slug] = {
+        completedLessons: 0,
+        totalLessons: total,
+        percent: 0,
+        bestScore: 0,
+        attempts: 0,
+        lastAttemptAt: null,
+      };
+    }
   } else {
     const supabase = await createClient();
-    const myCourses = await getMyCourses(supabase);
-    courses = myCourses.map((c) => ({
-      id: c.id,
-      slug: c.slug,
-      title: c.title,
-      icon: c.icon,
-    }));
-
-    const courseIds = courses.map((c) => c.id);
-    const [pm, recents] = await Promise.all([
-      courseIds.length
-        ? getCourseProgressMap(supabase, courseIds).catch(() => ({}))
-        : Promise.resolve({}),
-      getRecentQuizAttempts(supabase, 10).catch(() => []),
-    ]);
-    progressMap = pm as typeof progressMap;
-    attempts = recents;
+    await Promise.all(
+      allCoursesMeta.map(async (c) => {
+        const total = getCourseContent(c.slug)?.lessons.length ?? 0;
+        const [completed, exam] = await Promise.all([
+          getCompletedLessonSlugs(supabase, c.slug),
+          getExamSummary(supabase, c.slug),
+        ]);
+        stats[c.slug] = {
+          completedLessons: completed.size,
+          totalLessons: total,
+          percent: total === 0 ? 0 : Math.round((completed.size / total) * 100),
+          bestScore: exam.bestScore,
+          attempts: exam.attempts,
+          lastAttemptAt: exam.lastAttemptAt,
+        };
+      }),
+    );
   }
 
-  const totalCompleted = Object.values(progressMap).reduce(
-    (acc, p) => acc + (p.completedLessons ?? 0),
-    0
+  const totalCompleted = Object.values(stats).reduce(
+    (a, s) => a + s.completedLessons,
+    0,
   );
-  const totalLessons = Object.values(progressMap).reduce(
-    (acc, p) => acc + (p.totalLessons ?? 0),
-    0
+  const totalLessons = Object.values(stats).reduce(
+    (a, s) => a + s.totalLessons,
+    0,
   );
   const overallPercent =
     totalLessons > 0 ? Math.round((totalCompleted / totalLessons) * 100) : 0;
-  const completedAttempts = attempts.filter((a) => a.score !== null);
-  const passedCount = completedAttempts.filter(
-    (a) => (a.score ?? 0) >= 70
-  ).length;
-  const avgScore =
-    completedAttempts.length > 0
-      ? Math.round(
-          completedAttempts.reduce((acc, a) => acc + (a.score ?? 0), 0) /
-            completedAttempts.length
-        )
-      : 0;
+  const totalAttempts = Object.values(stats).reduce((a, s) => a + s.attempts, 0);
+  const bestOverall = Math.max(0, ...Object.values(stats).map((s) => s.bestScore));
 
   return (
     <div className="mx-auto max-w-5xl space-y-10 px-4 py-10 md:px-6 md:py-14 lg:px-8">
@@ -138,8 +134,7 @@ export default async function ProgresPage() {
             label="Lecții completate"
             value={
               <>
-                <CountUp to={totalCompleted} />/
-                {totalLessons || "—"}
+                <CountUp to={totalCompleted} />/{totalLessons || "—"}
               </>
             }
             accent="success"
@@ -148,28 +143,23 @@ export default async function ProgresPage() {
         <RevealItem variant="fade-up">
           <StatCard
             icon={<Target className="size-5" />}
-            label="Quiz-uri date"
-            value={<CountUp to={completedAttempts.length} />}
+            label="Examene date"
+            value={<CountUp to={totalAttempts} />}
             accent="accent"
           />
         </RevealItem>
         <RevealItem variant="fade-up">
           <StatCard
             icon={<Trophy className="size-5" />}
-            label="Scor mediu"
+            label="Cel mai bun scor"
             value={
-              completedAttempts.length > 0 ? (
+              bestOverall > 0 ? (
                 <>
-                  <CountUp to={avgScore} />%
+                  <CountUp to={bestOverall} />%
                 </>
               ) : (
                 "—"
               )
-            }
-            sub={
-              completedAttempts.length > 0
-                ? `${passedCount} promovate`
-                : "Niciun quiz încă"
             }
             accent="warning"
           />
@@ -180,100 +170,57 @@ export default async function ProgresPage() {
         <h2 className="text-xl font-bold tracking-tight md:text-2xl">
           Progres per curs
         </h2>
-        {courses.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground">
-            Niciun curs activ. Vezi{" "}
-            <Link href="/preturi" className="font-medium text-foreground underline">
-              prețurile
-            </Link>{" "}
-            ca să începi.
-          </div>
-        ) : (
-          <ul className="space-y-3">
-            {courses.map((c) => {
-              const stats = progressMap[c.id];
-              const percent = stats?.percent ?? 0;
-              return (
-                <li
-                  key={c.id}
-                  className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-4 sm:flex-row sm:items-center md:p-5"
-                >
-                  <span className="text-3xl leading-none" aria-hidden>
-                    {c.icon}
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <Link
-                        href={`/curs/${c.slug}`}
-                        className="text-sm font-semibold hover:underline md:text-base"
-                      >
-                        {c.title}
-                      </Link>
-                      <span className="font-mono text-xs font-bold tabular-nums">
-                        {percent}%
+        <ul className="space-y-3">
+          {allCoursesMeta.map((c) => {
+            const s = stats[c.slug];
+            return (
+              <li
+                key={c.slug}
+                className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-4 sm:flex-row sm:items-center md:p-5"
+              >
+                <CourseIcon slug={c.slug} src={c.icon} size={40} />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <Link
+                      href={`/curs/${c.slug}`}
+                      className="text-sm font-semibold hover:underline md:text-base"
+                    >
+                      {c.title.split(" — ")[0]}
+                    </Link>
+                    <span className="font-mono text-xs font-bold tabular-nums">
+                      {s.percent}%
+                    </span>
+                  </div>
+                  <Progress value={s.percent} className="mt-2 h-1.5" />
+                  <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+                    <span>
+                      {s.completedLessons} din {s.totalLessons} lecții
+                    </span>
+                    {s.attempts > 0 && (
+                      <span>
+                        ·{" "}
+                        <span
+                          className={cn(
+                            "font-mono font-semibold",
+                            s.bestScore >= c.passingScore
+                              ? "text-success"
+                              : "text-warning",
+                          )}
+                        >
+                          {s.bestScore}%
+                        </span>{" "}
+                        cel mai bun ({s.attempts} încercări)
                       </span>
-                    </div>
-                    <Progress value={percent} className="mt-2 h-1.5" />
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      {stats?.completedLessons ?? 0} din{" "}
-                      {stats?.totalLessons ?? 0} lecții
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </section>
-
-      <section className="space-y-4">
-        <h2 className="text-xl font-bold tracking-tight md:text-2xl">
-          Quiz-uri recente
-        </h2>
-        {attempts.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border bg-muted/20 p-6 text-center text-sm text-muted-foreground">
-            Nu ai dat niciun quiz încă. Începe cu unul din{" "}
-            <Link href="/dashboard" className="font-medium text-foreground underline">
-              dashboard
-            </Link>
-            .
-          </div>
-        ) : (
-          <ul className="overflow-hidden rounded-2xl border border-border bg-card">
-            {attempts.map((a, i) => {
-              const score = a.score ?? 0;
-              const passed = score >= 70;
-              return (
-                <li
-                  key={a.id}
-                  className={cn(
-                    "flex items-center justify-between gap-3 px-4 py-3.5 md:px-5",
-                    i !== attempts.length - 1 && "border-b border-border"
-                  )}
-                >
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">
-                      {a.quiz?.title ?? "Quiz"}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {formatRelative(a.completed_at ?? a.started_at)}
-                    </p>
-                  </div>
-                  <span
-                    className={cn(
-                      "rounded-full px-2.5 py-1 text-xs font-bold tabular-nums",
-                      passed
-                        ? "bg-success/15 text-success"
-                        : "bg-warning/15 text-warning"
                     )}
-                  >
-                    {score}%
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-        )}
+                    {s.lastAttemptAt && (
+                      <span>· ultima: {formatRelative(s.lastAttemptAt)}</span>
+                    )}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </section>
     </div>
   );
@@ -303,7 +250,7 @@ function StatCard({
       <span
         className={cn(
           "mb-3 inline-flex size-9 items-center justify-center rounded-lg",
-          accentMap[accent]
+          accentMap[accent],
         )}
         aria-hidden
       >
@@ -312,9 +259,7 @@ function StatCard({
       <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
-      <p className="mt-1 font-mono text-2xl font-bold tabular-nums">
-        {value}
-      </p>
+      <p className="mt-1 font-mono text-2xl font-bold tabular-nums">{value}</p>
       {sub && <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>}
     </div>
   );

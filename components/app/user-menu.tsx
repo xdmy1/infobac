@@ -61,35 +61,30 @@ export function UserMenu({ fullName, email, avatarUrl }: UserMenuProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <Link href="/setari">
-          <DropdownMenuItem>
-            <User className="size-4" />
-            Profil
-          </DropdownMenuItem>
-        </Link>
-        <Link href="/abonament">
-          <DropdownMenuItem>
-            <CreditCard className="size-4" />
-            Abonament
-          </DropdownMenuItem>
-        </Link>
-        <Link href="/setari">
-          <DropdownMenuItem>
-            <Settings className="size-4" />
-            Setări
-          </DropdownMenuItem>
-        </Link>
+        <DropdownMenuItem render={<Link href="/setari" />}>
+          <User className="size-4" />
+          Profil
+        </DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/abonament" />}>
+          <CreditCard className="size-4" />
+          Abonament
+        </DropdownMenuItem>
+        <DropdownMenuItem render={<Link href="/setari" />}>
+          <Settings className="size-4" />
+          Setări
+        </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
-        <form action={logoutAction}>
-          <button
-            type="submit"
-            className="group/dropdown-menu-item relative flex w-full cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm text-destructive outline-hidden hover:bg-destructive/10 focus:bg-destructive/10 focus:text-destructive"
+        <form action={logoutAction} className="contents">
+          <DropdownMenuItem
+            render={<button type="submit" />}
+            variant="destructive"
+            className="w-full"
           >
             <LogOut className="size-4" />
             Logout
-          </button>
+          </DropdownMenuItem>
         </form>
       </DropdownMenuContent>
     </DropdownMenu>

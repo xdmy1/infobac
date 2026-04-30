@@ -13,12 +13,6 @@ export const metadata: Metadata = {
   alternates: { canonical: "/cursuri" },
 };
 
-const courseImages: Record<string, string> = {
-  python: "/courses/python.png",
-  sql: "/courses/sql.png",
-  networking: "/courses/networking-devices.png",
-};
-
 export default function CursuriPage() {
   // Compute aggregates from real syllabus data
   const totalTopics = pathway.reduce(
@@ -146,7 +140,7 @@ function CourseConstellation() {
     title: p.title,
     duration: p.duration,
     examLetter: p.examLetter,
-    image: courseImages[p.slug],
+    image: p.image,
   }));
 
   // Hand-tuned positions — each course PNG floats at a different size + tilt.

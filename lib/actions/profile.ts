@@ -23,7 +23,7 @@ const profileSchema = z.object({
     .number()
     .int()
     .min(9)
-    .max(13)
+    .max(12)
     .nullable()
     .optional(),
 });

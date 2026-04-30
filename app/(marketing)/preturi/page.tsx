@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowUpRight, Mail } from "lucide-react";
 import { Pricing } from "@/components/marketing/pricing";
 import { PricingCompare } from "@/components/marketing/pricing-compare";
 import { CtaFinal } from "@/components/marketing/cta-final";
@@ -9,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
+import { cn } from "@/lib/utils";
 import { pricingFaq, pricingPlans } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -25,35 +27,68 @@ export default function PricingPage() {
       <Pricing />
       <PricingCompare />
 
-      <section className="border-t border-border bg-muted/20 py-24 md:py-32">
+      <section className="border-t border-border py-24 md:py-32">
         <div className="mx-auto max-w-3xl px-4 md:px-6 lg:px-8">
-          <div className="text-center">
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Plată
-            </p>
-            <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight md:text-4xl">
-              Întrebări despre plată.
-            </h2>
-            <p className="mt-4 text-pretty text-base text-muted-foreground md:text-lg">
-              Lucrurile concrete — refund, schimbare plan, transfer bancar.
-            </p>
-          </div>
+          <Reveal staggerChildren={0.08}>
+            <RevealItem variant="fade-up">
+              <div className="flex items-baseline gap-4 border-b border-border pb-5">
+                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  FAQ · Plată
+                </span>
+                <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+                  Despre plată
+                </h2>
+                <span className="ml-auto font-mono text-xs tabular-nums text-muted-foreground">
+                  {pricingFaq.length} întrebări
+                </span>
+              </div>
+            </RevealItem>
 
-          <Accordion
-            multiple={false}
-            className="mt-12 rounded-2xl border border-border bg-card px-2 shadow-sm md:mt-16 md:px-4"
-          >
-            {pricingFaq.map((item, i) => (
-              <AccordionItem key={i} value={`pricing-faq-${i}`}>
-                <AccordionTrigger className="px-3 py-5 text-base font-semibold md:text-lg">
-                  {item.q}
-                </AccordionTrigger>
-                <AccordionContent className="px-3 text-pretty text-sm text-muted-foreground md:text-base">
-                  {item.a}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+            <RevealItem variant="fade-up">
+              <Accordion multiple={false} className="flex flex-col">
+                {pricingFaq.map((item, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`pricing-faq-${i}`}
+                    className={cn(
+                      "border-b-0 border-t border-border/60 first:border-t-0"
+                    )}
+                  >
+                    <AccordionTrigger className="gap-4 px-1 py-5 text-base font-semibold md:text-lg">
+                      <span className="font-mono text-xs font-bold tabular-nums text-muted-foreground/70">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <span className="flex-1">{item.q}</span>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-5 pl-9 pr-1 text-pretty text-sm text-muted-foreground md:text-base">
+                      {item.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </RevealItem>
+
+            <RevealItem variant="fade-up">
+              <div className="mt-12 rounded-2xl border border-border bg-muted/30 p-6 md:p-8">
+                <p className="text-sm font-semibold tracking-tight">
+                  Mai ai o întrebare despre plată?
+                </p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Scrie-ne și răspundem în câteva ore.
+                </p>
+                <a
+                  href="mailto:hello@infobac.md"
+                  className="group/cta mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-primary"
+                >
+                  <Mail className="size-4" />
+                  <span className="underline decoration-foreground/30 underline-offset-4 group-hover/cta:decoration-primary">
+                    hello@infobac.md
+                  </span>
+                  <ArrowUpRight className="size-3.5 transition-transform group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5" />
+                </a>
+              </div>
+            </RevealItem>
+          </Reveal>
         </div>
       </section>
 

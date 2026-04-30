@@ -67,8 +67,10 @@ export function Navbar({ isLoggedIn = false }: NavbarProps) {
                 "h-8 gap-1.5 px-3.5 text-[13px] font-medium"
               )}
             >
-              <LayoutDashboard className="size-3.5" strokeWidth={2} />
-              Dashboard
+              <span className="pointer-events-none inline-flex items-center gap-1.5">
+                <LayoutDashboard className="size-3.5" strokeWidth={2} />
+                Dashboard
+              </span>
             </Link>
           ) : (
             <>
@@ -79,7 +81,7 @@ export function Navbar({ isLoggedIn = false }: NavbarProps) {
                   "h-8 px-3 text-[13px]"
                 )}
               >
-                Login
+                <span className="pointer-events-none">Login</span>
               </Link>
               <Link
                 href="/inregistrare"
@@ -88,8 +90,10 @@ export function Navbar({ isLoggedIn = false }: NavbarProps) {
                   "h-8 gap-1.5 px-3.5 text-[13px] font-medium"
                 )}
               >
-                Creează cont
-                <ArrowRight className="size-3.5" />
+                <span className="pointer-events-none inline-flex items-center gap-1.5">
+                  Creează cont
+                  <ArrowRight className="size-3.5" />
+                </span>
               </Link>
             </>
           )}
