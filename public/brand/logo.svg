@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svg-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 100" width="280" height="82" data-om-id="9cb8ea19:43"><style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@800;900&amp;display=swap');
+    text { font-family: 'Inter', sans-serif; }
+  </style>
+        <text x="0" y="62" font-family="Inter, sans-serif" font-weight="900" font-size="62" fill="#65A30D" letter-spacing="-2" data-om-id="9cb8ea19:44">&gt;</text>
+        <text x="66" y="62" font-family="Inter, sans-serif" font-weight="800" font-size="62" fill="#0F172A" letter-spacing="-2" data-om-id="9cb8ea19:45">infobac</text>
+        <text x="2" y="92" font-family="Inter, sans-serif" font-weight="700" font-size="20" fill="rgba(15,23,42,0.38)" letter-spacing="4" data-om-id="9cb8ea19:46">NOTA 10 LA BAC</text>
+      </svg>

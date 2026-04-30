@@ -1,0 +1,207 @@
+import type { Metadata } from "next";
+import { Pricing } from "@/components/marketing/pricing";
+import { PricingCompare } from "@/components/marketing/pricing-compare";
+import { CtaFinal } from "@/components/marketing/cta-final";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Reveal, RevealItem } from "@/components/shared/reveal";
+import { pricingFaq, pricingPlans } from "@/lib/content";
+
+export const metadata: Metadata = {
+  title: "Prețuri — de la 25 EUR/lună",
+  description:
+    "3 planuri pentru pregătirea BAC informatică: Basic 499 MDL/lună, Standard 899 MDL/lună (recomandat), Lifetime 1.999 MDL plată unică. Refund 7 zile.",
+  alternates: { canonical: "/preturi" },
+};
+
+export default function PricingPage() {
+  return (
+    <>
+      <PreturiHero />
+      <Pricing />
+      <PricingCompare />
+
+      <section className="border-t border-border bg-muted/20 py-24 md:py-32">
+        <div className="mx-auto max-w-3xl px-4 md:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Plată
+            </p>
+            <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight md:text-4xl">
+              Întrebări despre plată.
+            </h2>
+            <p className="mt-4 text-pretty text-base text-muted-foreground md:text-lg">
+              Lucrurile concrete — refund, schimbare plan, transfer bancar.
+            </p>
+          </div>
+
+          <Accordion
+            multiple={false}
+            className="mt-12 rounded-2xl border border-border bg-card px-2 shadow-sm md:mt-16 md:px-4"
+          >
+            {pricingFaq.map((item, i) => (
+              <AccordionItem key={i} value={`pricing-faq-${i}`}>
+                <AccordionTrigger className="px-3 py-5 text-base font-semibold md:text-lg">
+                  {item.q}
+                </AccordionTrigger>
+                <AccordionContent className="px-3 text-pretty text-sm text-muted-foreground md:text-base">
+                  {item.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      <CtaFinal />
+    </>
+  );
+}
+
+function PreturiHero() {
+  const semester = pricingPlans.find((p) => p.id === "semester")!;
+  const all = pricingPlans.find((p) => p.id === "all")!;
+  const moduleP = pricingPlans.find((p) => p.id === "module")!;
+
+  return (
+    <section className="relative overflow-hidden border-b border-border bg-background">
+      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 md:grid-cols-2 md:px-6 md:py-24 lg:px-8 lg:py-28">
+        {/* LEFT — title + value prop */}
+        <div>
+          <Reveal staggerChildren={0.1}>
+            <RevealItem variant="fade-up">
+              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Prețuri
+              </p>
+            </RevealItem>
+            <RevealItem variant="fade-blur">
+              <h1 className="mt-4 text-balance text-5xl font-bold leading-[1] tracking-tight md:text-6xl lg:text-[5.5rem]">
+                Cel mai{" "}
+                <span className="italic text-muted-foreground">ieftin</span>{" "}
+                mod de a lua{" "}
+                <span className="bg-gradient-to-br from-accent to-accent-hover bg-clip-text text-transparent">
+                  10
+                </span>
+                .
+              </h1>
+            </RevealItem>
+            <RevealItem variant="fade-up">
+              <p className="mt-6 max-w-md text-pretty text-base text-muted-foreground md:text-lg">
+                Platformele fizice cer 1.000 EUR pentru 10 luni de cursuri o
+                dată pe săptămână. Noi cerem mult mai puțin.
+              </p>
+            </RevealItem>
+          </Reveal>
+        </div>
+
+        {/* RIGHT — visual price comparison */}
+        <Reveal variant="fade-up" delay={0.3}>
+          <div className="space-y-4">
+            <ComparisonRow
+              label="Platforme fizice MD"
+              priceMDL={20000}
+              priceEUR={1000}
+              negative
+            />
+            <ComparisonRow
+              label="InfoBac · Un modul"
+              priceMDL={moduleP.priceMDL}
+              priceEUR={moduleP.priceEUR}
+              suffix="/lună"
+            />
+            <ComparisonRow
+              label="InfoBac · Toate modulele"
+              priceMDL={all.priceMDL}
+              priceEUR={all.priceEUR}
+              suffix="/lună"
+            />
+            <ComparisonRow
+              label="InfoBac · Pachet 6 luni"
+              priceMDL={semester.priceMDL}
+              priceEUR={semester.priceEUR}
+              suffix="/6 luni"
+              highlighted
+            />
+
+            <div className="mt-3 flex items-baseline justify-between border-t border-border pt-3 text-xs text-muted-foreground">
+              <span>Diferență pachet 6 luni vs platforme fizice</span>
+              <span className="font-mono text-base font-bold tabular-nums text-foreground">
+                −95%
+              </span>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function ComparisonRow({
+  label,
+  priceMDL,
+  priceEUR,
+  suffix,
+  negative,
+  highlighted,
+}: {
+  label: string;
+  priceMDL: number;
+  priceEUR: number;
+  suffix?: string;
+  negative?: boolean;
+  highlighted?: boolean;
+}) {
+  const formatMDL = new Intl.NumberFormat("ro-MD").format;
+
+  return (
+    <div
+      className={`group flex items-baseline justify-between gap-4 border-b py-3 ${
+        highlighted ? "border-accent" : "border-border"
+      }`}
+    >
+      <p
+        className={`text-sm font-semibold ${
+          negative ? "text-muted-foreground line-through" : "text-foreground"
+        }`}
+      >
+        {label}
+      </p>
+      <div className="flex items-baseline gap-1.5 text-right">
+        <span
+          className={`font-mono tabular-nums ${
+            negative
+              ? "text-2xl text-muted-foreground line-through decoration-destructive/40"
+              : highlighted
+                ? "text-3xl font-bold text-foreground md:text-4xl"
+                : "text-2xl font-semibold text-foreground"
+          }`}
+        >
+          {formatMDL(priceMDL)}
+        </span>
+        <span
+          className={`font-mono text-xs ${
+            negative ? "text-muted-foreground/60" : "text-muted-foreground"
+          }`}
+        >
+          MDL
+        </span>
+        {suffix && (
+          <span className="font-mono text-xs text-muted-foreground">
+            {suffix}
+          </span>
+        )}
+        <span
+          className={`ml-2 hidden font-mono text-[10px] md:inline ${
+            negative ? "text-muted-foreground/40" : "text-muted-foreground/60"
+          }`}
+        >
+          ≈ {priceEUR}€
+        </span>
+      </div>
+    </div>
+  );
+}

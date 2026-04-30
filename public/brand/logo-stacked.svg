@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="svg-stack-light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="160" height="128" data-om-id="9cb8ea19:204"><style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@800;900&amp;display=swap');
+    text { font-family: 'Inter', sans-serif; }
+  </style>
+        <text x="100" y="90" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="88" fill="#65A30D" letter-spacing="-4" data-om-id="9cb8ea19:205">&gt;</text>
+        <text x="100" y="136" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="34" fill="#0F172A" letter-spacing="-1" data-om-id="9cb8ea19:206">infobac</text>
+      </svg>
