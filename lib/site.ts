@@ -25,9 +25,13 @@ export const siteConfig = {
     "10 din oficiu bac",
     "pregătire bac informatică",
     "IT specialist certificare",
-    "bac 2026 informatică",
+    "bac 2026 moldova",
     "python bac moldova",
     "sql bac moldova",
+    "examen certiport chișinău",
+    "echivalare bac certiport",
+    "pathway certiport",
+    "blog bac informatică",
   ],
 } as const;
 

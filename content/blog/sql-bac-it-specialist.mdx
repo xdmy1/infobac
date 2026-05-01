@@ -1,0 +1,159 @@
+---
+slug: "sql-bac-it-specialist"
+title: "SQL pentru BAC: ce trebuie să știi despre IT Specialist Databases"
+description: "Programa Certiport pentru SQL: SELECT, JOIN, GROUP BY, normalizare. Topicele exacte care apar pe examen, cu exemple."
+publishedAt: "2026-05-01"
+updatedAt: "2026-05-01"
+category: "sql"
+tags: ["sql", "databases", "certiport", "bac", "it specialist"]
+author: "Andrei P."
+isPillar: false
+related:
+  - "python-bac-informatica-programa"
+  - "bac-informatica-moldova-ghid-2026"
+  - "examen-certiport-pas-cu-pas"
+ogImage: null
+---
+
+SQL e cea mai „logică" dintre cele 3 certificări Certiport care echivalează BAC-ul informatică. Spre deosebire de Python (unde e ușor să te încurci în sintaxă) și Devices (unde e materie de memorat), SQL recompensează gândirea declarativă: spui **ce** vrei, nu **cum**.
+
+Articolul ăsta e supportingul pillar-ului [Python pentru BAC informatică: programa Certiport](/blog/python-bac-informatica-programa). Dacă încă te uiți de pe margine, citește [BAC informatică Moldova 2026: ghidul complet](/blog/bac-informatica-moldova-ghid-2026) întâi.
+
+## Structura examenului
+
+40 întrebări, 50 minute, 70% prag de promovare. Detalii în [Cum arată un examen Certiport pe viu](/blog/examen-certiport-pas-cu-pas).
+
+## Domeniile examenate
+
+### 1. Database Concepts (≈10%)
+
+- Ce e o bază de date relațională
+- Tabel, rând, coloană, primary key, foreign key
+- Tipuri de date: `INT`, `VARCHAR`, `TEXT`, `DATE`, `DATETIME`, `BOOLEAN`, `DECIMAL`
+- Indexuri (concept, nu implementare)
+
+### 2. Database Design (≈20%)
+
+- Normalizare: 1NF, 2NF, 3NF (concept)
+- Relații: 1-1, 1-n, n-n (cu tabel de joncțiune)
+- ER diagrams basic
+
+<Callout tone="info" title="Tip de întrebare clasică">
+*„Ai un tabel `comenzi(id, user_id, produs_id, cantitate)`. E în 3NF? Dacă nu, ce ai schimba?"* — răspunsul: e dependent de ce mai e în alte tabele. De obicei DA, e în 3NF.
+</Callout>
+
+### 3. SQL — DML (Data Manipulation Language) (≈40%)
+
+Aici e nucleul examenului.
+
+- `SELECT` cu `FROM`, `WHERE`, `ORDER BY`, `LIMIT`
+- `WHERE` cu operatori: `=`, `!=`, `<`, `>`, `LIKE`, `IN`, `BETWEEN`, `IS NULL`
+- `GROUP BY` + agregări: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`
+- `HAVING` (filtrarea pe rezultatul agregat)
+- `JOIN`: `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN`, `FULL JOIN`
+- `INSERT INTO ... VALUES`
+- `UPDATE ... SET ... WHERE`
+- `DELETE FROM ... WHERE`
+- Subqueries: `SELECT ... WHERE x IN (SELECT ...)`
+
+```sql
+-- Exemplu canonic
+SELECT u.nume, COUNT(c.id) AS comenzi
+FROM utilizatori u
+LEFT JOIN comenzi c ON c.user_id = u.id
+WHERE u.activ = 1
+GROUP BY u.id, u.nume
+HAVING COUNT(c.id) > 5
+ORDER BY comenzi DESC
+LIMIT 10;
+```
+
+### 4. SQL — DDL (Data Definition Language) (≈15%)
+
+- `CREATE TABLE` cu coloane, tipuri, constraints (`NOT NULL`, `UNIQUE`, `DEFAULT`, `CHECK`)
+- `PRIMARY KEY`, `FOREIGN KEY`
+- `ALTER TABLE` (adaugă/șterge coloană)
+- `DROP TABLE`
+- `TRUNCATE TABLE` (vs `DELETE`)
+
+### 5. SQL — DCL (Data Control Language) (≈5%)
+
+- `GRANT`, `REVOKE` (concept, nu implementare exactă)
+- Roluri și permisiuni
+
+### 6. Database Management (≈10%)
+
+- Tranzacții: `BEGIN`, `COMMIT`, `ROLLBACK`
+- ACID (concept: Atomicity, Consistency, Isolation, Durability)
+- Backup și restore (concept)
+
+## Capcanele frecvente
+
+### `NULL` nu e zero
+
+`WHERE col = NULL` — **niciodată** nu returnează nimic. Trebuie `WHERE col IS NULL`.
+
+```sql
+-- Greșit
+SELECT * FROM users WHERE deleted_at = NULL;
+-- Corect
+SELECT * FROM users WHERE deleted_at IS NULL;
+```
+
+### `LEFT JOIN` vs `INNER JOIN`
+
+`INNER JOIN` returnează doar rândurile cu match. `LEFT JOIN` returnează toate rândurile din stânga, cu `NULL` unde nu e match.
+
+```sql
+-- Toți userii, inclusiv cei fără comenzi
+SELECT u.nume, COUNT(c.id) AS comenzi
+FROM utilizatori u
+LEFT JOIN comenzi c ON c.user_id = u.id
+GROUP BY u.id, u.nume;
+
+-- Doar userii cu comenzi
+SELECT u.nume, COUNT(c.id) AS comenzi
+FROM utilizatori u
+INNER JOIN comenzi c ON c.user_id = u.id
+GROUP BY u.id, u.nume;
+```
+
+### `WHERE` vs `HAVING`
+
+`WHERE` filtrează **înainte** de `GROUP BY`. `HAVING` filtrează **după**.
+
+```sql
+-- Doar userii activi, grupați după județ, mai mult de 3
+SELECT judet, COUNT(*) AS total
+FROM utilizatori
+WHERE activ = 1           -- înainte de group
+GROUP BY judet
+HAVING COUNT(*) > 3;      -- după group
+```
+
+### `COUNT(col)` vs `COUNT(*)`
+
+`COUNT(*)` numără toate rândurile, inclusiv cele cu `NULL`. `COUNT(col)` ignoră rândurile cu `col IS NULL`.
+
+## Strategie de pregătire în 2 săptămâni
+
+**Săptămâna 1**: Sintaxa de bază. Scrie 30-40 query-uri zilnic pe o bază de date demo (poți folosi DBeaver + un fișier `.sqlite`). Treci prin toate tipurile de `JOIN`, `GROUP BY`, subqueries.
+
+**Săptămâna 2**: Simulări sub timp. 40 întrebări în 50 minute, în fiecare zi. Identifici unde te încurci, recapitulezi exact pe alea.
+
+<Callout tone="tip" title="Trick care funcționează">
+La examen, citești întrebarea, și înainte să te uiți la opțiuni, **scrii mental** query-ul tău. Apoi compari cu opțiunile. De multe ori, opțiunea pe care ai compus-o tu e exact A sau B sau C — fără să fii influențat de capcane.
+</Callout>
+
+## După SQL — pasul următor
+
+Devices e ultimul examen. Materia e mult mai compactă (2-3 zile de citit). Vezi [Devices și Networking: cum diferă cele două certificări](/blog/devices-vs-networking).
+
+Înapoi la pillar-ul Python: [Python pentru BAC informatică: programa Certiport](/blog/python-bac-informatica-programa).
+
+<CTA
+  title="Vezi modulul SQL complet"
+  description="Programa exactă Certiport, cu lecții, exerciții live și sute de întrebări de simulare."
+  href="/cursuri"
+  label="Vezi modulul SQL"
+/>

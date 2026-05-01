@@ -1,0 +1,131 @@
+---
+slug: "greseli-frecvente-bac-info"
+title: "Greșeli frecvente la BAC informatică (și cum le eviți)"
+description: "Lista celor mai des întâlnite greșeli făcute de elevi în pregătirea pentru certificările Certiport care echivalează BAC-ul. Plus contrasolutia pentru fiecare."
+publishedAt: "2026-05-01"
+updatedAt: "2026-05-01"
+category: "ghid"
+tags: ["greseli", "pregatire", "bac", "tips", "certiport"]
+author: "Andrei P."
+isPillar: false
+related:
+  - "python-bac-informatica-programa"
+  - "bac-informatica-moldova-ghid-2026"
+  - "examen-certiport-pas-cu-pas"
+ogImage: null
+---
+
+Articolul ăsta strânge greșelile pe care le văd cel mai des la elevii cu care lucrăm. Toate sunt evitabile dacă le anticipezi. Pillar-ul de referință: [Python pentru BAC informatică: programa Certiport](/blog/python-bac-informatica-programa) și [BAC informatică Moldova 2026](/blog/bac-informatica-moldova-ghid-2026).
+
+## 1. Tratezi Devices ca pe un examen serios
+
+**Problema**: petreci 4 săptămâni pe Devices crezând că e la fel de greu ca Python. Pierzi timp pe care l-ai fi folosit pe SQL.
+
+**Realitatea**: Devices se învață în 2-3 zile. Materia e concretă, întrebările sunt practice (vezi [Devices vs Networking](/blog/devices-vs-networking)).
+
+**Soluția**: dă Devices ultimul, după Python și SQL. Petrece 2 zile, dă examenul, treci.
+
+## 2. Sari peste SQL crezând că e „doar baze de date"
+
+**Problema**: SQL pare plictisitor. Crezi că e doar `SELECT * FROM`. Subestimezi `JOIN`, `GROUP BY`, subqueries.
+
+**Realitatea**: SQL e cel mai logic dintre cele 3, și de multe ori cel mai răsplătitor. Capcanele de la examen sunt subtile (`WHERE` vs `HAVING`, `LEFT JOIN` vs `INNER`).
+
+**Soluția**: petrece 2 săptămâni serioase pe SQL. Detalii în [SQL pentru BAC: ce trebuie să știi](/blog/sql-bac-it-specialist).
+
+## 3. Te pregătești fără simulări
+
+**Problema**: citești manualele, urmărești video-uri, dar nu dai întrebări de simulare. La examen, te blochezi pe pattern-uri pe care nu le-ai mai văzut.
+
+**Realitatea**: examenul Certiport recompensează **viteza de recunoaștere a pattern-ului**, nu memorarea oarbă. 75 secunde / întrebare.
+
+**Soluția**: ultimele 2 săptămâni înainte de fiecare examen, fă **40 întrebări sub timp în fiecare zi**. Pe InfoBac există simulator dedicat. Pe alte platforme, caută bănci de întrebări reprezentative.
+
+<Callout tone="tip" title="Sfat practic">
+Dacă faci constant >85% pe simulări, ești gata. Dacă ești la 70-80%, mai ai de antrenament. Dacă ești sub 70%, **nu cumpăra voucher-ul** încă.
+</Callout>
+
+## 4. Plătești 1.000 EUR la o școală fizică fără să compari
+
+**Problema**: prima ofertă pe care o vezi e cea pe care o cumperi. Nu ai timp / chef să compari.
+
+**Realitatea**: conținutul e identic — programa Certiport e publică. Diferența e *cum* e predat (online vs fizic) și *cât costă*.
+
+**Soluția**: înainte să plătești orice, citește [InfoBac vs platformele fizice din Moldova](/blog/infobac-vs-platforme-fizice). Cere oferte de la 2-3 furnizori. Compară.
+
+## 5. Începi în clasa a 12-a luna decembrie
+
+**Problema**: ești elev de clasa a 12-a, BAC-ul e în iunie, începi pregătirea „la timp", adică în noiembrie-decembrie. Ai 4-5 luni.
+
+**Realitatea**: cu 4 luni se poate, dar e **stresant**. Dacă pici un examen, calendarul se rupe rapid. Vezi [Calendar BAC 2026](/blog/calendar-bac-2026).
+
+**Soluția**: începe în vara dintre a 11-a și a 12-a, sau cel târziu septembrie. Dă primul examen până în octombrie.
+
+## 6. Ignori `NULL` la SQL
+
+**Problema**: scrii `WHERE col = NULL` și nu primești niciun rezultat. Pierzi 2-3 puncte pe examen pe pattern-ul ăsta.
+
+**Realitatea**: `NULL` în SQL nu se compară cu `=`. Trebuie `IS NULL` sau `IS NOT NULL`.
+
+**Soluția**: memorează: **niciodată** `= NULL`. Mereu `IS NULL`.
+
+## 7. Confunzi `==` cu `=` la Python
+
+**Problema**: scrii `if x = 5` și primești `SyntaxError`.
+
+**Realitatea**: în Python, `=` e atribuire, `==` e comparație.
+
+**Soluția**: la examen, citește încet codul. Dacă vezi `=` în `if`, e capcană (sau e syntax error în răspunsul „Ce afișează"). Răspunsul corect e probabil „eroare".
+
+## 8. Lași telefonul în pauză și uiți să te întorci
+
+**Problema**: 10 minute pe TikTok devin 2 ore. Studiezi 30 de minute, te uiți la telefon 2 ore, te simți obosit, renunți pentru azi.
+
+**Realitatea**: notificările distrug consolidarea memoriei. Pe termen lung, mai mult timp pierdut decât învățat.
+
+**Soluția**: telefonul în alt cameră în timpul studiului. Setează timer 50 minute → 10 minute pauză → repeat (Pomodoro).
+
+## 9. Nu citești cu atenție la examen
+
+**Problema**: în panică, sari peste cuvinte. Răspunzi la ce credeai că te întreabă, nu la ce te-a întrebat.
+
+**Realitatea**: examenul Certiport are întrebări cu **negații**: „Care din opțiunile *NU* sunt valide?". Sari peste „NU" = răspunzi greșit.
+
+**Soluția**: citește întrebarea **de două ori**. La examen, asta e investiția cu cel mai mare ROI. Detalii în [Cum arată un examen Certiport pe viu](/blog/examen-certiport-pas-cu-pas).
+
+## 10. Te lași intimidat de prima încercare picată
+
+**Problema**: dai examenul, pici, intri în spirală. Te gândești că „nu sunt bun", abandonezi.
+
+**Realitatea**: ~25% dintre elevi pic prima încercare. E parte normală a procesului. Re-take cu 30 EUR > 1.000 EUR la școală fizică.
+
+**Soluția**: dacă pici, fă debrief. Vezi pe ce pattern-uri ai greșit. Mai studiezi 1-2 săptămâni. Cumperi voucher nou. Încerci din nou.
+
+## 11. Învățai pentru BAC tradițional, dar și pentru Certiport
+
+**Problema**: dublezi efortul. Materia BAC tradițional + materia Certiport. Te epuizezi.
+
+**Realitatea**: dacă obții cele 3 certificări, **NU dai BAC-ul tradițional la informatică**. E echivalat. Vezi [10 din oficiu: cum se obține](/blog/10-din-oficiu-cum-se-obtine).
+
+**Soluția**: alege o singură strategie. Recomandarea: Certiport. Costuri mai mici, control mai mare.
+
+## 12. Nu faci backup la voucher-ul tău
+
+**Problema**: cumperi voucher, salvezi codul în email, ștergi mailul din greșeală. Pierzi 30 EUR.
+
+**Realitatea**: voucher-ele sunt non-refundabile.
+
+**Soluția**: salvează codul **în 2 locuri** (email + parolar / Google Drive). Vezi [Voucher-ele Certiport: unde le cumperi](/blog/voucher-certiport-md).
+
+## Concluzie
+
+Toate aceste greșeli sunt evitabile. Cel mai important: **începe devreme și fă simulări**.
+
+Dacă ești la zi cu pregătirea și faci 40 întrebări de simulare zilnic în ultima săptămână, șansele să pici sunt minime.
+
+<CTA
+  title="Începe cu simulări reale"
+  description="Pe InfoBac, ai sute de întrebări sub timp pentru fiecare modul. Pattern-urile examenului real, în condițiile reale."
+  href="/cursuri"
+  label="Vezi cursurile"
+/>

@@ -9,6 +9,7 @@ import {
   TelegramIcon,
 } from "@/components/shared/social-icons";
 import { siteConfig } from "@/lib/site";
+import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -27,6 +28,12 @@ const socials = [
 export default function ContactPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          { name: "Contact", url: "/contact" },
+        ]}
+      />
       <section className="relative overflow-hidden border-b border-border bg-background">
         <div className="mx-auto max-w-6xl px-4 py-20 md:px-6 md:py-24 lg:px-8 lg:py-28">
           <Reveal staggerChildren={0.1} className="max-w-3xl">

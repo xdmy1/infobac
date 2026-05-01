@@ -12,6 +12,7 @@ import {
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
 import { pricingFaq, pricingPlans } from "@/lib/content";
+import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Prețuri — de la 25 EUR/lună",
@@ -23,6 +24,13 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          { name: "Prețuri", url: "/preturi" },
+        ]}
+      />
+      <FaqPageJsonLd items={pricingFaq} />
       <PreturiHero />
       <Pricing />
       <PricingCompare />

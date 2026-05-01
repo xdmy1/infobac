@@ -5,6 +5,7 @@ import { Features } from "@/components/marketing/features";
 import { Pricing } from "@/components/marketing/pricing";
 import { Testimonials } from "@/components/marketing/testimonials";
 import { FaqSection } from "@/components/marketing/faq-section";
+import { BlogStrip } from "@/components/marketing/blog-strip";
 import { CtaFinal } from "@/components/marketing/cta-final";
 import { JsonLd } from "@/components/shared/json-ld";
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       <Pricing />
       <Testimonials />
       <FaqSection />
+      <BlogStrip />
       <CtaFinal />
     </>
   );

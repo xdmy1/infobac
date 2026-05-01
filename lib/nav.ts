@@ -1,6 +1,7 @@
 export const marketingNav = [
   { label: "Cursuri", href: "/cursuri" },
   { label: "Pathway", href: "/#pathway" },
+  { label: "Blog", href: "/blog" },
   { label: "Prețuri", href: "/preturi" },
   { label: "FAQ", href: "/faq" },
 ] as const;

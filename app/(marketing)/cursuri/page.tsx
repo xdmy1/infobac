@@ -5,6 +5,7 @@ import { Pathway } from "@/components/marketing/pathway";
 import { CtaFinal } from "@/components/marketing/cta-final";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { courseSyllabi, pathway } from "@/lib/content";
+import { BreadcrumbJsonLd, CoursesJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Cursuri — Python, SQL, Networking pentru BAC",
@@ -31,6 +32,13 @@ export default function CursuriPage() {
 
   return (
     <>
+      <CoursesJsonLd />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          { name: "Cursuri", url: "/cursuri" },
+        ]}
+      />
       <CursuriHero totalTopics={totalTopics} totalBullets={totalBullets} />
 
       <CoursesDetail />

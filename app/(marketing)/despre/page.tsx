@@ -16,6 +16,7 @@ import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { SpotlightCard } from "@/components/shared/spotlight-card";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
+import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Despre noi",
@@ -79,6 +80,12 @@ const team = [
 export default function DesprePage() {
   return (
     <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          { name: "Despre noi", url: "/despre" },
+        ]}
+      />
       <DespreHero />
 
       {/* Manifesto — large editorial quote */}

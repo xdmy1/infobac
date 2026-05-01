@@ -3,6 +3,7 @@ import { FaqSection } from "@/components/marketing/faq-section";
 import { CtaFinal } from "@/components/marketing/cta-final";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { faqItems } from "@/lib/content";
+import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
   title: "Întrebări frecvente",
@@ -17,6 +18,13 @@ export default function FaqPage() {
 
   return (
     <>
+      <FaqPageJsonLd items={faqItems} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          { name: "Întrebări frecvente", url: "/faq" },
+        ]}
+      />
       <FaqHero featured={featured} />
       <FaqSection />
       <CtaFinal />
