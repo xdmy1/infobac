@@ -133,3 +133,20 @@ export const notifyPaymentSchema = z.object({
     .optional(),
 });
 export type NotifyPaymentInput = z.infer<typeof notifyPaymentSchema>;
+
+export const grantSubscriptionSchema = z
+  .object({
+    userId: z.string().uuid("ID de utilizator invalid."),
+    plan: z.enum(["module", "all", "semester"], {
+      message: "Plan invalid.",
+    }),
+    courseSlug: z.enum(["python", "sql", "devices"]).nullable().optional(),
+  })
+  .refine(
+    (d) => d.plan !== "module" || (d.courseSlug && d.courseSlug.length > 0),
+    {
+      message: `Pentru planul „Un modul" trebuie să alegi un curs.`,
+      path: ["courseSlug"],
+    },
+  );
+export type GrantSubscriptionInput = z.infer<typeof grantSubscriptionSchema>;

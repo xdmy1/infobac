@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
-import { ArrowRight, ArrowDown, CheckCircle2, MapPin } from "lucide-react";
+import { ArrowRight, ArrowDown, CheckCircle2 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { AnimatedText } from "@/components/shared/animated-text";
@@ -47,20 +46,6 @@ export function Hero() {
       <div className="mx-auto max-w-6xl px-4 pt-20 pb-28 md:px-6 md:pt-24 md:pb-32 lg:px-8 lg:pt-32 lg:pb-40">
         <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="flex flex-col items-start gap-7 lg:col-span-7">
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Badge
-                variant="outline"
-                className="gap-1.5 rounded-full border-border bg-background/40 px-3 py-1.5 text-xs font-medium backdrop-blur"
-              >
-                <MapPin className="size-3" strokeWidth={2.25} />
-                Făcut în Chișinău de elevi care au luat 10
-              </Badge>
-            </motion.div>
-
             <h1
               className="text-balance text-5xl font-bold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl"
             >

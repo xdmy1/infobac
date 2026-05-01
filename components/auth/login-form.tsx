@@ -8,9 +8,7 @@ import { toast } from "sonner";
 import { ArrowRight, AlertTriangle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";
-import { GoogleButton } from "./google-button";
 import { cn } from "@/lib/utils";
 import { loginSchema, type LoginInput } from "@/lib/validations";
 import { loginAction } from "@/lib/actions/auth";
@@ -73,15 +71,6 @@ export function LoginForm({
           </p>
         </div>
       )}
-
-      <GoogleButton redirectTo={redirectTo} />
-
-      <div className="relative">
-        <Separator />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-3 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-          sau
-        </span>
-      </div>
 
       <form onSubmit={onSubmit} className="space-y-4" noValidate>
         <div className="space-y-1.5">

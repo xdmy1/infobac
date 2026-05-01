@@ -7,9 +7,11 @@ import { isPreviewMode } from "@/lib/preview-mode";
 import { sendEmail } from "@/lib/resend";
 import PaymentReminderEmail from "@/emails/payment-reminder";
 import {
+  grantSubscriptionSchema,
   notifyPaymentSchema,
   suspendUserSchema,
   unsuspendUserSchema,
+  type GrantSubscriptionInput,
   type NotifyPaymentInput,
   type SuspendUserInput,
   type UnsuspendUserInput,
@@ -233,6 +235,45 @@ export async function grantCourseAccessAction(
 
   revalidatePath("/admin");
   revalidatePath(`/admin/${input.userId}`);
+  revalidatePath("/dashboard");
+  return { ok: true, mode: "granted" };
+}
+
+// -----------------------------------------------------------------------------
+// grantSubscriptionAction — give a user one of the 3 subscription plans
+// (module / all / semester). Wraps the SQL admin_grant_subscription RPC which
+// inserts a subscription row + the right course_access rows in one shot.
+//
+// For 'module' the admin must pass a courseSlug. For 'all' / 'semester' the
+// slug is ignored. Period: 30/30/180 days (encoded in the SQL function).
+// -----------------------------------------------------------------------------
+export async function grantSubscriptionAction(
+  input: GrantSubscriptionInput,
+): Promise<ActionResult<"granted">> {
+  const parsed = grantSubscriptionSchema.safeParse(input);
+  if (!parsed.success) {
+    return {
+      ok: false,
+      error: parsed.error.issues[0]?.message ?? "Date invalide.",
+    };
+  }
+
+  const guard = await assertAdmin();
+  if (!guard.ok) return guard;
+
+  const { error } = await guard.supabase.rpc("admin_grant_subscription", {
+    p_user_id: parsed.data.userId,
+    p_plan: parsed.data.plan,
+    p_course_slug: parsed.data.plan === "module" ? parsed.data.courseSlug! : null,
+  });
+
+  if (error) {
+    console.error("[admin] grant subscription error:", error);
+    return { ok: false, error: "Nu am putut acorda abonamentul." };
+  }
+
+  revalidatePath("/admin");
+  revalidatePath(`/admin/${parsed.data.userId}`);
   revalidatePath("/dashboard");
   return { ok: true, mode: "granted" };
 }

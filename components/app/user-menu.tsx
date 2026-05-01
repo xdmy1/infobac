@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { LogOut, Settings, CreditCard, User } from "lucide-react";
+import { useTransition } from "react";
+import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -28,8 +28,15 @@ function initialsFrom(name: string) {
     .join("");
 }
 
-export function UserMenu({ fullName, email, avatarUrl }: UserMenuProps) {
+export function UserMenu({ fullName, email }: UserMenuProps) {
   const initials = initialsFrom(fullName) || "?";
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      await logoutAction();
+    });
+  };
 
   return (
     <DropdownMenu>
@@ -38,11 +45,9 @@ export function UserMenu({ fullName, email, avatarUrl }: UserMenuProps) {
         className="inline-flex items-center gap-2 rounded-full p-1 outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         <Avatar className="size-8">
-          {avatarUrl ? null : (
-            <AvatarFallback className="bg-primary/15 text-xs font-semibold text-primary">
-              {initials}
-            </AvatarFallback>
-          )}
+          <AvatarFallback className="bg-primary/15 text-xs font-semibold text-primary">
+            {initials}
+          </AvatarFallback>
         </Avatar>
         <span className="hidden text-sm font-medium md:inline">
           {fullName.split(" ")[0]}
@@ -61,31 +66,14 @@ export function UserMenu({ fullName, email, avatarUrl }: UserMenuProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem render={<Link href="/setari" />}>
-          <User className="size-4" />
-          Profil
+        <DropdownMenuItem
+          variant="destructive"
+          disabled={isPending}
+          render={<button type="button" onClick={handleLogout} />}
+        >
+          <LogOut className="size-4" />
+          {isPending ? "Se deconectează…" : "Logout"}
         </DropdownMenuItem>
-        <DropdownMenuItem render={<Link href="/abonament" />}>
-          <CreditCard className="size-4" />
-          Abonament
-        </DropdownMenuItem>
-        <DropdownMenuItem render={<Link href="/setari" />}>
-          <Settings className="size-4" />
-          Setări
-        </DropdownMenuItem>
-
-        <DropdownMenuSeparator />
-
-        <form action={logoutAction} className="contents">
-          <DropdownMenuItem
-            render={<button type="submit" />}
-            variant="destructive"
-            className="w-full"
-          >
-            <LogOut className="size-4" />
-            Logout
-          </DropdownMenuItem>
-        </form>
       </DropdownMenuContent>
     </DropdownMenu>
   );

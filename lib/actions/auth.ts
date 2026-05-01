@@ -103,6 +103,19 @@ async function getSiteOrigin(): Promise<string> {
   return host ? `${proto}://${host}` : siteConfig.url;
 }
 
+/**
+ * Origin used for links that LEAVE the server and arrive in user inboxes
+ * (email confirmation, password reset). Pinned to the deployed app so a
+ * signup triggered from `localhost` still produces a clickable production
+ * link. Override via EMAIL_LINK_BASE_URL when the canonical domain changes
+ * — the vercel.app URL keeps working alongside any custom domain.
+ */
+function getEmailLinkOrigin(): string {
+  const env = process.env.EMAIL_LINK_BASE_URL?.replace(/\/$/, "");
+  if (env) return env;
+  return "https://infobac.vercel.app";
+}
+
 // -----------------------------------------------------------------------------
 // signupAction
 // -----------------------------------------------------------------------------
@@ -127,13 +140,13 @@ export async function signupAction(input: unknown): Promise<SignupResult> {
   }
 
   const supabase = await createClient();
-  const origin = await getSiteOrigin();
+  const emailOrigin = getEmailLinkOrigin();
 
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      emailRedirectTo: `${origin}/auth/callback`,
+      emailRedirectTo: `${emailOrigin}/auth/callback?next=/confirmare-reusita`,
       data: {
         full_name: parsed.data.fullName,
       },
@@ -263,12 +276,12 @@ export async function resetPasswordRequestAction(
   }
 
   const supabase = await createClient();
-  const origin = await getSiteOrigin();
+  const emailOrigin = getEmailLinkOrigin();
 
   const { error } = await supabase.auth.resetPasswordForEmail(
     parsed.data.email,
     {
-      redirectTo: `${origin}/auth/callback?next=/resetare-parola/noua`,
+      redirectTo: `${emailOrigin}/auth/callback?next=/resetare-parola/noua`,
     }
   );
 

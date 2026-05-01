@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { SubscriptionPlanLabels } from "@/lib/supabase/types";
 import { UserActionsMenu } from "@/components/admin/user-actions-menu";
 import { GrantCourseControls } from "@/components/admin/grant-course-controls";
+import { GrantSubscriptionControls } from "@/components/admin/grant-subscription-controls";
 import { cn } from "@/lib/utils";
 
 function formatDate(iso: string | null | undefined): string {
@@ -81,6 +82,9 @@ export function UserDetailCard({ data }: { data: AdminUserDetail }) {
 
       {/* Subscriptions */}
       <Section title="Abonamente" count={subscriptions.length}>
+        <div className="mb-3">
+          <GrantSubscriptionControls userId={profile.id} />
+        </div>
         {subscriptions.length === 0 ? (
           <Empty text="Niciun abonament." />
         ) : (
