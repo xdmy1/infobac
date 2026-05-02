@@ -7,7 +7,7 @@ import {
   TelegramIcon,
 } from "@/components/shared/social-icons";
 import { siteConfig } from "@/lib/site";
-import { footerNav, localeOptions } from "@/lib/nav";
+import { footerNav } from "@/lib/nav";
 
 const socials = [
   { label: "Instagram", href: siteConfig.social.instagram, Icon: InstagramIcon },
@@ -50,32 +50,10 @@ export function Footer() {
           <FooterColumn title={footerNav.legal.title} links={footerNav.legal.links} />
         </div>
 
-        <div className="mt-12 flex flex-col-reverse items-start justify-between gap-6 border-t border-border pt-8 md:flex-row md:items-center">
+        <div className="mt-12 border-t border-border pt-8">
           <p className="text-sm text-muted-foreground">
             © {year} {siteConfig.name}. Făcut în Chișinău, Moldova.
           </p>
-
-          <div
-            className="flex items-center gap-1 text-xs text-muted-foreground"
-            aria-label="Selectare limbă (în curând)"
-          >
-            {localeOptions.map((opt, i) => (
-              <span key={opt.code} className="inline-flex items-center gap-1">
-                <button
-                  type="button"
-                  disabled
-                  className="rounded px-1.5 py-0.5 font-medium uppercase tracking-wider transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-60 data-[active=true]:text-foreground"
-                  data-active={opt.code === "ro"}
-                  title={opt.code === "ro" ? "Română (activă)" : `${opt.label} — în curând`}
-                >
-                  {opt.label}
-                </button>
-                {i < localeOptions.length - 1 && (
-                  <span aria-hidden className="opacity-40">·</span>
-                )}
-              </span>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

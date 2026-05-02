@@ -36,8 +36,3 @@ export const footerNav = {
   },
 } as const;
 
-export const localeOptions = [
-  { code: "ro", label: "RO" },
-  { code: "ru", label: "RU" },
-  { code: "en", label: "EN" },
-] as const;
