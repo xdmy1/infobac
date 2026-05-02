@@ -12,6 +12,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { loginSchema, type LoginInput } from "@/lib/validations";
 import { loginAction } from "@/lib/actions/auth";
+import { GoogleButton, AuthDivider } from "./google-button";
 
 interface LoginFormProps {
   redirectTo?: string;
@@ -70,6 +71,13 @@ export function LoginForm({
             configurat. Marketing-ul e accesibil; te rugăm să revii curând.
           </p>
         </div>
+      )}
+
+      {!supabaseMissing && (
+        <>
+          <GoogleButton redirectTo={redirectTo} />
+          <AuthDivider />
+        </>
       )}
 
       <form onSubmit={onSubmit} className="space-y-4" noValidate>

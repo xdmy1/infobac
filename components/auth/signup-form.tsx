@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { signupSchema, type SignupInput } from "@/lib/validations";
 import { signupAction } from "@/lib/actions/auth";
 import { pricingPlans, type PlanId } from "@/lib/content";
+import { GoogleButton, AuthDivider } from "./google-button";
 
 interface SignupFormProps {
   preselectedPlan?: PlanId;
@@ -127,6 +128,9 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
           </p>
         </div>
       )}
+
+      <GoogleButton label="Înregistrează-te cu Google" />
+      <AuthDivider />
 
       <form onSubmit={onSubmit} className="space-y-4" noValidate>
         <div className="space-y-1.5">
