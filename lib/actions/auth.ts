@@ -89,18 +89,22 @@ function humanize(supabaseMessage: string | undefined): string {
 }
 
 async function getSiteOrigin(): Promise<string> {
-  // Prefer env-configured site URL (works in production); fall back to
-  // request headers (works in preview deployments without an explicit URL).
-  if (siteConfig.url && !siteConfig.url.includes("infobac.md")) {
-    return siteConfig.url;
+  // The request host is the canonical origin for THIS request — trust it
+  // over any env config. Without this, a stale NEXT_PUBLIC_SITE_URL on
+  // Vercel (e.g. left as http://localhost:3000) would send OAuth users to
+  // localhost after login.
+  const h = await headers();
+  const host = h.get("host");
+  if (host) {
+    const proto =
+      h.get("x-forwarded-proto") ??
+      (host.startsWith("localhost") ? "http" : "https");
+    return `${proto}://${host}`;
   }
   if (process.env.NEXT_PUBLIC_SITE_URL) {
     return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   }
-  const h = await headers();
-  const host = h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? "https";
-  return host ? `${proto}://${host}` : siteConfig.url;
+  return siteConfig.url;
 }
 
 /**
