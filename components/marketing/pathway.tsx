@@ -1,13 +1,9 @@
 "use client";
 
 import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
-import { ArrowRight, Clock } from "lucide-react";
+import Link from "next/link";
+import { motion, useScroll } from "motion/react";
+import { ArrowRight, Check, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   pathway,
@@ -18,123 +14,169 @@ import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
 
 export function Pathway() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
+    target: railRef,
+    offset: ["start 70%", "end 60%"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-66.666%"]);
-
   return (
-    <section
-      id="pathway"
-      ref={containerRef}
-      className="scroll-mt-20 hidden md:block"
-      style={{ height: "320vh" }}
-    >
-      <div className="sticky top-0 flex h-dvh w-full flex-col overflow-hidden">
-        <Reveal
-          staggerChildren={0.12}
-          amount={0}
-          className="absolute inset-x-0 top-12 z-10 mx-auto max-w-3xl px-6 text-center lg:px-8"
-        >
-          <RevealItem variant="fade-up">
-            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Pathway
-            </p>
-          </RevealItem>
-          <RevealItem variant="fade-blur">
-            <h2 className="mt-2 text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
-              3 capitole. 1 ordine.{" "}
-              <span className="text-muted-foreground">Nota 10.</span>
-            </h2>
-          </RevealItem>
-        </Reveal>
+    <section id="pathway" className="scroll-mt-20 py-24 md:py-32">
+      <Reveal
+        staggerChildren={0.1}
+        amount={0.3}
+        className="mx-auto mb-14 max-w-3xl px-6 text-center md:mb-20 lg:px-8"
+      >
+        <RevealItem variant="fade-up">
+          <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Pathway
+          </p>
+        </RevealItem>
+        <RevealItem variant="fade-blur">
+          <h2 className="mt-2 text-balance text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+            3 capitole. 1 ordine.{" "}
+            <span className="text-muted-foreground">Nota 10.</span>
+          </h2>
+        </RevealItem>
+        <RevealItem variant="fade-up">
+          <p className="mt-4 text-pretty text-base text-muted-foreground md:text-lg">
+            6–10 săptămâni total. Mai puțin dacă ai bază. Le poți face și în
+            altă ordine.
+          </p>
+        </RevealItem>
+      </Reveal>
 
-        <motion.ol
-          style={{ x }}
-          className="flex w-[300vw] grow items-center will-change-transform"
-        >
-          {pathway.map((step, i) => (
-            <PathwayCard key={step.slug} step={step} index={i} />
-          ))}
-        </motion.ol>
+      <div className="px-6 lg:px-8">
+        <div ref={railRef} className="relative mx-auto max-w-5xl">
+          {/* Vertical rail — passes through every node center */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute bottom-8 left-8 top-8 w-px md:bottom-14 md:left-14 md:top-14"
+          >
+            <div className="absolute inset-0 bg-border" />
+            <motion.div
+              style={{ scaleY: scrollYProgress }}
+              className="absolute inset-0 origin-top bg-foreground"
+            />
+          </div>
 
-        <ProgressIndicator progress={scrollYProgress} />
-      </div>
+          <ol className="space-y-10 md:space-y-16">
+            {pathway.map((step, i) => (
+              <PathwayRow key={step.slug} step={step} index={i} />
+            ))}
+          </ol>
 
-      <div className="bg-background py-12">
-        <p className="mx-auto max-w-3xl px-4 text-center text-sm text-muted-foreground md:text-base">
-          <span className="font-medium text-foreground">
-            Total estimat: 6–10 săptămâni.
-          </span>{" "}
-          Mai puțin dacă ai bază. Le poți face și în altă ordine.
-        </p>
+          {/* Destination — closes the rail */}
+          <Reveal
+            amount={0.5}
+            staggerChildren={0.08}
+            className="relative mt-10 flex items-center gap-5 md:mt-16 md:gap-8"
+          >
+            <RevealItem variant="scale-in">
+              <div className="relative grid size-16 shrink-0 place-items-center rounded-full border-2 border-foreground bg-background md:size-28">
+                <div className="grid size-10 place-items-center rounded-full bg-foreground text-background md:size-16">
+                  <Check className="size-5 md:size-7" strokeWidth={3} />
+                </div>
+              </div>
+            </RevealItem>
+            <RevealItem variant="fade-up">
+              <div className="min-w-0">
+                <p className="font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+                  Destinație
+                </p>
+                <p className="mt-1 text-balance text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
+                  BAC informatică ·{" "}
+                  <span className="text-muted-foreground">Nota 10</span>
+                </p>
+              </div>
+            </RevealItem>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
 }
 
-function PathwayCard({ step, index }: { step: PathwayStep; index: number }) {
+function PathwayRow({ step, index }: { step: PathwayStep; index: number }) {
   const syllabus = courseSyllabi[step.slug];
   const previewTopics = syllabus.topics.slice(0, 4);
+  const remaining = syllabus.topics.length - previewTopics.length;
 
   return (
-    <li className="flex w-screen shrink-0 items-center justify-center px-12">
-      <article
-        className="relative flex w-full max-w-5xl items-stretch overflow-hidden rounded-3xl border border-border bg-card"
-        style={{ minHeight: "min(560px, 70vh)" }}
-      >
-        {/* Subtle dot pattern background */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)",
-            backgroundSize: "24px 24px",
-          }}
-        />
+    <li className="relative flex items-start gap-5 md:gap-8">
+      {/* Node — anchored on the rail */}
+      <Reveal amount={0.4} as="div" className="shrink-0">
+        <RevealItem variant="scale-in">
+          <div className="relative grid size-16 place-items-center rounded-full border-2 border-foreground bg-background md:size-28">
+            <CourseIcon
+              slug={step.slug}
+              size={40}
+              alt=""
+              className="md:hidden"
+            />
+            <CourseIcon
+              slug={step.slug}
+              size={64}
+              alt=""
+              className="hidden md:block"
+            />
+            <span
+              className="absolute -bottom-1 -right-1 grid size-6 place-items-center rounded-full border-2 border-background bg-foreground font-mono text-[9px] font-bold tabular-nums text-background md:size-9 md:text-xs"
+              aria-hidden
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+          </div>
+        </RevealItem>
+      </Reveal>
 
-        <div className="relative z-10 flex w-full flex-col justify-between gap-8 p-10 md:p-14 lg:p-16">
-          {/* TOP — eyebrow + title */}
-          <div className="space-y-5">
-            <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold tabular-nums text-muted-foreground">
-                {String(index + 1).padStart(2, "0")} / 03
-              </span>
-              <span className="inline-flex items-center rounded-full border border-border px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+      {/* Card */}
+      <Reveal
+        amount={0.2}
+        staggerChildren={0.05}
+        as="article"
+        className="min-w-0 flex-1 rounded-2xl border border-border bg-card"
+      >
+        <div className="flex flex-col gap-5 p-5 md:gap-7 md:p-10">
+          <RevealItem variant="fade-up">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span className="inline-flex items-center rounded-full border border-border px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                 {step.tag}
               </span>
               <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                 Examen {step.examLetter}
               </span>
+              <span className="ml-auto inline-flex items-center gap-1.5 text-muted-foreground">
+                <Clock className="size-3.5" />
+                <span className="font-mono text-xs font-medium tabular-nums">
+                  {step.duration}
+                </span>
+              </span>
             </div>
+          </RevealItem>
 
-            <div className="flex items-end gap-5">
-              <CourseIcon slug={step.slug} size={84} alt="" />
-              <h3 className="text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-                {step.title}
-              </h3>
-            </div>
+          <RevealItem variant="fade-up">
+            <h3 className="text-balance text-2xl font-bold tracking-tight md:text-4xl lg:text-5xl">
+              {step.title}
+            </h3>
+          </RevealItem>
 
-            <p className="max-w-xl text-pretty text-base text-muted-foreground md:text-lg">
+          <RevealItem variant="fade-up">
+            <p className="text-pretty text-sm text-muted-foreground md:text-lg">
               {syllabus.intro}
             </p>
-          </div>
+          </RevealItem>
 
-          {/* BOTTOM — topic preview + duration + cta */}
-          <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
-              <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
+          <RevealItem variant="fade-up">
+            <div className="border-t border-border pt-5 md:pt-6">
+              <p className="mb-4 font-mono text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
                 Capitole · {syllabus.topics.length} total
               </p>
-              <ol className="space-y-2.5">
+              <ol className="grid gap-2.5 sm:grid-cols-2 sm:gap-x-6">
                 {previewTopics.map((topic, i) => (
                   <li
                     key={i}
-                    className="flex items-baseline gap-3 text-sm md:text-base"
+                    className="flex items-baseline gap-3 text-sm"
                   >
                     <span className="font-mono text-xs font-medium tabular-nums text-muted-foreground/60">
                       {String(i + 1).padStart(2, "0")}
@@ -147,67 +189,29 @@ function PathwayCard({ step, index }: { step: PathwayStep; index: number }) {
                     </span>
                   </li>
                 ))}
-                {syllabus.topics.length > previewTopics.length && (
-                  <li className="ml-7 text-xs text-muted-foreground/60">
-                    + {syllabus.topics.length - previewTopics.length} mai
-                  </li>
-                )}
               </ol>
+              {remaining > 0 && (
+                <p className="mt-3 text-xs text-muted-foreground/70">
+                  + {remaining} capitole în cursul complet
+                </p>
+              )}
             </div>
+          </RevealItem>
 
-            <div className="space-y-3 lg:col-span-5 lg:items-end lg:text-right">
-              <div className="inline-flex items-center gap-2 text-muted-foreground">
-                <Clock className="size-4" />
-                <span className="font-mono text-sm font-medium tabular-nums">
-                  {step.duration}
-                </span>
-              </div>
-              <div>
-                <a
-                  href="/cursuri"
-                  className={cn(
-                    "group/cta inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-semibold transition-colors",
-                    "hover:border-foreground hover:bg-foreground hover:text-background"
-                  )}
-                >
-                  Vezi programa
-                  <ArrowRight className="size-3.5 transition-transform group-hover/cta:translate-x-0.5" />
-                </a>
-              </div>
-            </div>
-          </div>
+          <RevealItem variant="fade-up">
+            <Link
+              href="/cursuri"
+              className={cn(
+                "group/cta inline-flex items-center gap-2 self-start rounded-full border border-border px-4 py-2 text-sm font-semibold transition-colors",
+                "hover:border-foreground hover:bg-foreground hover:text-background"
+              )}
+            >
+              Vezi programa
+              <ArrowRight className="size-3.5 transition-transform group-hover/cta:translate-x-0.5" />
+            </Link>
+          </RevealItem>
         </div>
-      </article>
+      </Reveal>
     </li>
-  );
-}
-
-function ProgressIndicator({ progress }: { progress: MotionValue<number> }) {
-  return (
-    <div className="absolute inset-x-0 bottom-12 mx-auto flex max-w-md items-center gap-4 px-6">
-      <ProgressSegment progress={progress} segIndex={0} />
-      <ProgressSegment progress={progress} segIndex={1} />
-      <ProgressSegment progress={progress} segIndex={2} />
-    </div>
-  );
-}
-
-function ProgressSegment({
-  progress,
-  segIndex,
-}: {
-  progress: MotionValue<number>;
-  segIndex: number;
-}) {
-  const segStart = segIndex * 0.33;
-  const segEnd = Math.min(1, segStart + 0.33);
-  const fillWidth = useTransform(progress, [segStart, segEnd], ["0%", "100%"]);
-  return (
-    <div className="relative h-0.5 flex-1 overflow-hidden rounded-full bg-muted">
-      <motion.div
-        className="absolute inset-y-0 left-0 bg-foreground"
-        style={{ width: fillWidth }}
-      />
-    </div>
   );
 }

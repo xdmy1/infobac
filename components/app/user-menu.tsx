@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { useTransition } from "react";
-import { LogOut } from "lucide-react";
+import { Home, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -61,6 +62,13 @@ export function UserMenu({ fullName, email }: UserMenuProps) {
             {email}
           </span>
         </div>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem render={<Link href="/" />}>
+          <Home className="size-4" />
+          Pagina principală
+        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
 
         <DropdownMenuItem

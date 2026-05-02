@@ -54,7 +54,7 @@ export function MobileSidebarTrigger({ myCourses, isAdmin }: SidebarProps) {
       <SheetContent side="left" className="w-72 p-0 sm:max-w-xs">
         <SheetHeader className="flex h-16 flex-row items-center border-b border-border px-5">
           <SheetTitle className="text-left">
-            <Logo height={28} href={null} />
+            <Logo height={28} />
           </SheetTitle>
           <SheetDescription className="sr-only">
             Meniu navigație aplicație
