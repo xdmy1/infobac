@@ -4,14 +4,34 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
-import type { PlanId } from "@/lib/content";
-import type { CourseSlug } from "@/lib/content/courses";
+import { sendEmail } from "@/lib/resend";
+import { pricingPlans, type PlanId } from "@/lib/content";
+import { allCoursesMeta, type CourseSlug } from "@/lib/content/courses";
+import PaymentPendingEmail from "@/emails/payment-pending";
+import PaymentSuccessEmail from "@/emails/payment-success";
 
 const PRICE_BY_PLAN: Record<PlanId, number> = {
   module: 250,
   all: 550,
   semester: 950,
 };
+
+function planDisplayName(planId: PlanId): string {
+  return pricingPlans.find((p) => p.id === planId)?.name ?? planId;
+}
+
+function courseDisplayName(
+  slug: CourseSlug | null | undefined,
+): string | undefined {
+  if (!slug) return undefined;
+  const meta = allCoursesMeta.find((c) => c.slug === slug);
+  return meta?.title.split(" — ")[0];
+}
+
+function firstName(email: string, fullName?: string | null): string {
+  if (fullName?.trim()) return fullName.trim().split(/\s+/)[0]!;
+  return email.split("@")[0] ?? "elev";
+}
 
 const VALID_COURSE_SLUGS: ReadonlySet<CourseSlug> = new Set([
   "python",
@@ -143,6 +163,35 @@ export async function submitPaymentRequestAction(
   revalidatePath("/abonament");
   revalidatePath("/admin/plati");
 
+  // Confirmation email — non-blocking. If Resend is misconfigured or fails
+  // we still return ok=true so the UX redirects to /confirmat as expected.
+  if (user.email) {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("id", user.id)
+      .maybeSingle();
+
+    sendEmail({
+      to: user.email,
+      subject: "Am primit cererea ta de plată — InfoBac",
+      react: (
+        <PaymentPendingEmail
+          name={firstName(user.email, profile?.full_name)}
+          planName={planDisplayName(input.plan)}
+          amountMDL={PRICE_BY_PLAN[input.plan]}
+          selectedCourse={courseDisplayName(input.selectedCourseSlug)}
+        />
+      ),
+      tags: [
+        { name: "type", value: "payment-pending" },
+        { name: "plan", value: input.plan },
+      ],
+    }).catch((err) => {
+      console.warn("[payment] payment-pending email failed:", err);
+    });
+  }
+
   return { ok: true, requestId: inserted.id };
 }
 
@@ -234,6 +283,53 @@ export async function approvePaymentRequestAction(
   revalidatePath("/admin/plati");
   revalidatePath("/abonament");
   revalidatePath("/dashboard");
+
+  // Notify the user that access is now active. Best-effort — admin's UI ack
+  // succeeds either way.
+  try {
+    const { data: target } = await supabase
+      .from("profiles")
+      .select("email, full_name")
+      .eq("id", req.user_id)
+      .maybeSingle();
+    const { data: sub } = await supabase
+      .from("subscriptions")
+      .select("current_period_end")
+      .eq("user_id", req.user_id)
+      .maybeSingle();
+
+    if (target?.email) {
+      const accessUntil = sub?.current_period_end
+        ? new Intl.DateTimeFormat("ro-MD", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          }).format(new Date(sub.current_period_end))
+        : undefined;
+
+      sendEmail({
+        to: target.email,
+        subject: "Accesul tău e activ — InfoBac",
+        react: (
+          <PaymentSuccessEmail
+            name={firstName(target.email, target.full_name)}
+            plan={planDisplayName(req.plan)}
+            amountMDL={PRICE_BY_PLAN[req.plan]}
+            accessUntil={accessUntil}
+          />
+        ),
+        tags: [
+          { name: "type", value: "payment-success" },
+          { name: "plan", value: req.plan },
+        ],
+      }).catch((err) => {
+        console.warn("[payment] payment-success email failed:", err);
+      });
+    }
+  } catch (err) {
+    console.warn("[payment] post-approval email lookup failed:", err);
+  }
+
   return { ok: true };
 }
 

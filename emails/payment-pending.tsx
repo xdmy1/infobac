@@ -3,34 +3,35 @@ import { EmailLayout, emailStyles } from "./components/email-layout";
 import { emailBrand } from "@/lib/email-brand";
 import { siteConfig } from "@/lib/site";
 
-interface PaymentSuccessEmailProps {
+interface PaymentPendingEmailProps {
   name: string;
-  /** Display name of the plan (e.g. "Un modul", "Toate modulele", "Pe 6 luni"). */
-  plan: string;
+  planName: string;
   amountMDL: number;
-  invoiceUrl?: string;
-  /** Display string for when access expires (e.g. "28 octombrie 2026"). */
-  accessUntil?: string;
+  selectedCourse?: string;
 }
 
 const formatMDL = new Intl.NumberFormat("ro-MD", {
   maximumFractionDigits: 0,
 }).format;
 
-export default function PaymentSuccessEmail({
+export default function PaymentPendingEmail({
   name,
-  plan,
+  planName,
   amountMDL,
-  invoiceUrl,
-  accessUntil,
-}: PaymentSuccessEmailProps) {
+  selectedCourse,
+}: PaymentPendingEmailProps) {
   return (
-    <EmailLayout preview={`Plata pentru planul ${plan} confirmată.`}>
-      <Text style={emailStyles.heading}>Mulțumim, {name}!</Text>
+    <EmailLayout
+      preview={`Am primit cererea ta pentru ${planName}. Activăm accesul în curând.`}
+    >
+      <Text style={emailStyles.heading}>Hei, {name}!</Text>
 
       <Text style={emailStyles.paragraph}>
-        Plata pentru planul <strong>{plan}</strong> a fost confirmată. Ai
-        acces complet la cele 3 cursuri și la toate simulările.
+        Am primit cererea ta de plată pentru planul{" "}
+        <strong>{planName}</strong>
+        {selectedCourse ? ` (${selectedCourse})` : ""}. O verificăm și îți
+        activăm accesul în maxim <strong>24 de ore lucrătoare</strong> — de
+        obicei mult mai repede.
       </Text>
 
       <Section
@@ -70,12 +71,40 @@ export default function PaymentSuccessEmail({
                     fontWeight: 600,
                   }}
                 >
-                  {plan}
+                  {planName}
                 </Text>
               </td>
             </tr>
+            {selectedCourse && (
+              <tr>
+                <td style={{ paddingBottom: "8px" }}>
+                  <Text
+                    style={{
+                      ...emailStyles.paragraphMuted,
+                      margin: 0,
+                      fontSize: "12px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
+                    Curs
+                  </Text>
+                </td>
+                <td style={{ paddingBottom: "8px", textAlign: "right" }}>
+                  <Text
+                    style={{
+                      ...emailStyles.paragraph,
+                      margin: 0,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {selectedCourse}
+                  </Text>
+                </td>
+              </tr>
+            )}
             <tr>
-              <td style={{ paddingBottom: "8px" }}>
+              <td>
                 <Text
                   style={{
                     ...emailStyles.paragraphMuted,
@@ -88,7 +117,7 @@ export default function PaymentSuccessEmail({
                   Sumă
                 </Text>
               </td>
-              <td style={{ paddingBottom: "8px", textAlign: "right" }}>
+              <td style={{ textAlign: "right" }}>
                 <Text
                   style={{
                     ...emailStyles.paragraph,
@@ -100,69 +129,35 @@ export default function PaymentSuccessEmail({
                 </Text>
               </td>
             </tr>
-            {accessUntil && (
-              <tr>
-                <td>
-                  <Text
-                    style={{
-                      ...emailStyles.paragraphMuted,
-                      margin: 0,
-                      fontSize: "12px",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.05em",
-                    }}
-                  >
-                    Acces până la
-                  </Text>
-                </td>
-                <td style={{ textAlign: "right" }}>
-                  <Text
-                    style={{
-                      ...emailStyles.paragraph,
-                      margin: 0,
-                      fontWeight: 500,
-                    }}
-                  >
-                    {accessUntil}
-                  </Text>
-                </td>
-              </tr>
-            )}
           </tbody>
         </table>
       </Section>
 
+      <Text style={emailStyles.paragraphMuted}>
+        Între timp, poți citi gratis primele 2 lecții din Python ca să te
+        familiarizezi cu platforma.
+      </Text>
+
       <Section style={{ margin: "24px 0", textAlign: "center" }}>
         <Button
-          href={`${siteConfig.url}/dashboard`}
+          href={`${siteConfig.url}/cursuri`}
           style={emailStyles.buttonPrimary}
         >
-          Continuă pregătirea
+          Începe cu lecțiile gratuite
         </Button>
       </Section>
 
-      {invoiceUrl && (
-        <Text style={emailStyles.paragraphMuted}>
-          Ai nevoie de factură fiscală?{" "}
-          <a href={invoiceUrl} style={emailStyles.link}>
-            Descarcă PDF
-          </a>
-          .
-        </Text>
-      )}
-
       <Text style={emailStyles.paragraphMuted}>
-        Politica de refund: 7 zile fără întrebări. Răspunde la acest email
-        dacă ai schimbat părerea.
+        Dacă ceva e greșit cu cererea (sumă, plan, curs), răspunde direct la
+        acest email — îți răspundem rapid.
       </Text>
     </EmailLayout>
   );
 }
 
-PaymentSuccessEmail.PreviewProps = {
+PaymentPendingEmail.PreviewProps = {
   name: "Andrei",
-  plan: "Toate modulele",
+  planName: "Toate modulele",
   amountMDL: 550,
-  invoiceUrl: "https://infobac.md/factura/preview",
-  accessUntil: "28 octombrie 2026",
-} satisfies PaymentSuccessEmailProps;
+  selectedCourse: undefined,
+} satisfies PaymentPendingEmailProps;
