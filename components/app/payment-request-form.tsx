@@ -15,7 +15,9 @@ import { CourseIcon } from "@/components/shared/course-icon";
 import { cn } from "@/lib/utils";
 import { submitPaymentRequestAction } from "@/lib/actions/payment";
 import { allCoursesMeta, type CourseSlug } from "@/lib/content/courses";
-import type { PlanId } from "@/lib/content";
+import { pricingPlans, type PlanId } from "@/lib/content";
+
+const TELEGRAM_PHONE = "+37368327082";
 
 interface PaymentRequestFormProps {
   plan: PlanId;
@@ -44,6 +46,18 @@ export function PaymentRequestForm({
   const [notes, setNotes] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const planName =
+    pricingPlans.find((p) => p.id === plan)?.name ?? plan;
+  const selectedCourseName = courseSlug
+    ? allCoursesMeta
+        .find((c) => c.slug === courseSlug)
+        ?.title.split(" — ")[0]
+    : null;
+  const telegramMessage = selectedCourseName
+    ? `Am achitat pentru abonamentul „${planName}" (${selectedCourseName})`
+    : `Am achitat pentru abonamentul „${planName}"`;
+  const telegramUrl = `https://t.me/${TELEGRAM_PHONE}?text=${encodeURIComponent(telegramMessage)}`;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -57,20 +71,34 @@ export function PaymentRequestForm({
       return;
     }
 
+    // Open Telegram synchronously inside the click handler — popup blockers
+    // require the call to be in the same user-gesture frame, so this can't
+    // wait for the server action to resolve.
+    if (proofMode === "telegram" && typeof window !== "undefined") {
+      window.open(telegramUrl, "_blank", "noopener,noreferrer");
+    }
+
     startTransition(async () => {
-      const result = await submitPaymentRequestAction({
-        plan,
-        selectedCourseSlug:
-          requiresCourseSelection && courseSlug ? courseSlug : undefined,
-        proofVia: proofMode,
-        proofFile: proofMode === "upload" ? proofFile : null,
-        userNotes: notes,
-      });
-      if (result.ok) {
-        toast.success("Cererea a fost trimisă! Te anunțăm pe email.");
-        router.push(`/abonament/cumpara/${plan}/confirmat`);
-      } else {
-        toast.error(result.error);
+      try {
+        const result = await submitPaymentRequestAction({
+          plan,
+          selectedCourseSlug:
+            requiresCourseSelection && courseSlug ? courseSlug : undefined,
+          proofVia: proofMode,
+          proofFile: proofMode === "upload" ? proofFile : null,
+          userNotes: notes,
+        });
+        if (result.ok) {
+          toast.success("Cererea a fost trimisă! Te anunțăm pe email.");
+          router.push(`/abonament/cumpara/${plan}/confirmat`);
+        } else {
+          toast.error(result.error);
+        }
+      } catch (err) {
+        console.warn("[payment] submit failed:", err);
+        toast.error(
+          "Trimiterea a eșuat. Verifică conexiunea sau încearcă un fișier mai mic.",
+        );
       }
     });
   };
@@ -172,7 +200,7 @@ export function PaymentRequestForm({
             onSelect={() => setProofMode("telegram")}
             title="Trimit pe Telegram"
             sub="Cel mai rapid"
-            description="Trimite screenshot-ul confirmării plății pe Telegram la +373 68 327 082."
+            description={`Când dai „Am trimis plata", deschidem Telegram cu mesajul gata-scris către +373 68 327 082. Trimite-l împreună cu screenshot-ul.`}
           />
           <ProofOption
             kind="upload"
