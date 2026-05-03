@@ -50,10 +50,9 @@ export function FaqSection() {
                   </p>
                 </RevealItem>
                 <RevealItem variant="fade-blur">
-                  <h2 className="mt-3 text-balance text-5xl font-bold leading-[1.02] tracking-tight md:text-6xl lg:text-7xl">
-                    Tot ce vrei{" "}
-                    <span className="italic text-muted-foreground">să știi</span>{" "}
-                    înainte.
+                  <h2 className="mt-3 text-balance text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+                    Tot ce vrei să știi{" "}
+                    <span className="text-muted-foreground">înainte.</span>
                   </h2>
                 </RevealItem>
                 <RevealItem variant="fade-up">

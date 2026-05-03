@@ -66,11 +66,8 @@ export default async function AppLayout({
 
   return (
     // The outer flex grows naturally with content so the body itself is the
-    // page's scroll container. Earlier the inner <main> had overflow-y-auto,
-    // which made body never grow past 100dvh and broke Lenis (smooth-scroll
-    // hijacks wheel events on body — when body doesn't scroll, nothing does
-    // until you refresh and lose the Lenis instance). Sidebar uses sticky
-    // top-0 to stay docked while the rest scrolls.
+    // page's scroll container. Sidebar uses sticky top-0 to stay docked while
+    // the rest scrolls.
     <div className="flex w-full bg-background">
       <DesktopSidebar myCourses={myCoursesData} isAdmin={isAdmin} />
 

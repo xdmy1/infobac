@@ -1,8 +1,4 @@
-"use client";
-
-import { useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll } from "motion/react";
 import { ArrowRight, Check, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -14,12 +10,6 @@ import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
 
 export function Pathway() {
-  const railRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: railRef,
-    offset: ["start 70%", "end 60%"],
-  });
-
   return (
     <section id="pathway" className="scroll-mt-20 py-24 md:py-32">
       <Reveal
@@ -47,18 +37,12 @@ export function Pathway() {
       </Reveal>
 
       <div className="px-6 lg:px-8">
-        <div ref={railRef} className="relative mx-auto max-w-5xl">
+        <div className="relative mx-auto max-w-5xl">
           {/* Vertical rail — passes through every node center */}
           <div
             aria-hidden
-            className="pointer-events-none absolute bottom-8 left-8 top-8 w-px md:bottom-14 md:left-14 md:top-14"
-          >
-            <div className="absolute inset-0 bg-border" />
-            <motion.div
-              style={{ scaleY: scrollYProgress }}
-              className="absolute inset-0 origin-top bg-foreground"
-            />
-          </div>
+            className="pointer-events-none absolute bottom-8 left-8 top-8 w-px bg-border md:bottom-14 md:left-14 md:top-14"
+          />
 
           <ol className="space-y-10 md:space-y-16">
             {pathway.map((step, i) => (

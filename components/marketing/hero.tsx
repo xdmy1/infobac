@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "motion/react";
-import { useRef } from "react";
+import { motion } from "motion/react";
 import { ArrowRight, ArrowDown, CheckCircle2 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { NoiseOverlay } from "@/components/shared/noise-overlay";
@@ -14,22 +13,8 @@ import { cn } from "@/lib/utils";
 import { heroTrustIndicators } from "@/lib/content";
 
 export function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"],
-  });
-
-  // Parallax — mockup floats up slowly as we scroll.
-  const mockupY = useTransform(scrollYProgress, [0, 1], [0, -120]);
-  const mockupScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
-  const mockupOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0.3]);
-
   return (
-    <section
-      ref={containerRef}
-      className="relative isolate overflow-hidden"
-    >
+    <section className="relative isolate overflow-hidden">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-20"
@@ -138,7 +123,6 @@ export function Hero() {
           </div>
 
           <motion.div
-            style={{ y: mockupY, scale: mockupScale, opacity: mockupOpacity }}
             initial={{ opacity: 0, x: 40, filter: "blur(20px)" }}
             animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.2, delay: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}

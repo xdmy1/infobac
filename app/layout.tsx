@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
-import { SmoothScroll } from "@/components/shared/smooth-scroll";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/lib/site";
 
@@ -12,13 +11,17 @@ const inter = Inter({
   display: "swap",
 });
 
+const HOMEPAGE_TITLE = `InfoBac.md — 10 din oficiu la BAC informatică Moldova | Certiport`;
+const HOMEPAGE_DESCRIPTION =
+  "Pregătire online pentru BAC informatică Moldova prin 3 certificări Certiport (Python, SQL, Devices). Acceptat oficial de MEC pentru echivalarea probei. De la 250 MDL/lună. Făcut în Chișinău de elevi care au luat 10.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    default: HOMEPAGE_TITLE,
     template: `%s · ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  description: HOMEPAGE_DESCRIPTION,
   keywords: [...siteConfig.keywords],
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
@@ -26,32 +29,27 @@ export const metadata: Metadata = {
   applicationName: siteConfig.name,
   category: "education",
   alternates: {
-    canonical: siteConfig.url,
+    canonical: "/",
     languages: {
       "ro-MD": siteConfig.url,
+      "x-default": siteConfig.url,
     },
   },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
+    alternateLocale: ["ro_RO"],
     url: siteConfig.url,
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-        alt: `${siteConfig.name} — ${siteConfig.tagline}`,
-      },
-    ],
+    title: HOMEPAGE_TITLE,
+    description: HOMEPAGE_DESCRIPTION,
+    siteName: siteConfig.fullName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.tagline}`,
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    title: HOMEPAGE_TITLE,
+    description: HOMEPAGE_DESCRIPTION,
+    site: process.env.NEXT_PUBLIC_TWITTER_HANDLE ?? undefined,
+    creator: process.env.NEXT_PUBLIC_TWITTER_HANDLE ?? undefined,
   },
   robots: {
     index: true,
@@ -66,6 +64,23 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false,
+    email: false,
+    address: false,
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+    yandex: process.env.NEXT_PUBLIC_YANDEX_VERIFICATION,
+    other: process.env.NEXT_PUBLIC_BING_VERIFICATION
+      ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_VERIFICATION }
+      : undefined,
+  },
+  appleWebApp: {
+    capable: true,
+    title: siteConfig.name,
+    statusBarStyle: "default",
+  },
+  other: {
+    "msapplication-TileColor": "#0f172a",
   },
 };
 
@@ -86,7 +101,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="ro"
+      lang="ro-MD"
       suppressHydrationWarning
       className={`${inter.variable} h-full antialiased`}
     >
@@ -97,7 +112,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SmoothScroll />
           {children}
           <Toaster position="top-right" richColors closeButton />
         </ThemeProvider>

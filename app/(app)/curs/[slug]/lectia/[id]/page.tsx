@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, Lock, ArrowRight } from "lucide-react";
 import { LessonContent } from "@/components/app/lesson-content";
 import { LessonActions } from "@/components/app/lesson-actions";
-import { ReadingProgress } from "@/components/app/reading-progress";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { CourseIcon } from "@/components/shared/course-icon";
 import { buttonVariants } from "@/components/ui/button";
@@ -68,7 +67,6 @@ export default async function LessonPage({ params }: PageProps) {
 
   return (
     <>
-      <ReadingProgress />
       <div className="mx-auto w-full max-w-3xl min-w-0 px-3 py-8 sm:px-4 md:px-6 md:py-14 lg:px-8">
         <Reveal variant="fade-down">
           <nav
