@@ -8,934 +8,934 @@ export const questions: readonly Question[] = [
     id: `sql-001`,
     type: "single",
     topic: `General`,
-    prompt: `You are structuring a table in a relational database with a primary key.
+    prompt: `Construiești un tabel relațional ce va avea o cheie primară.
 
-"Each value in a field in a table must be unique."`,
-    options: [`True`, `False`],
+Afirmația „Toate valorile dintr-o coloană obișnuită trebuie să fie distincte." este corectă?`,
+    options: [`Adevărat`, `Fals`],
     correctIndex: 1,
-    explanation: `FALSE — Valorile dintr-un câmp NU trebuie să fie unice. Ex: doi studenți pot avea aceeași vârstă. Doar PRIMARY KEY trebuie să fie unică.`,
+    explanation: `Răspunsul este Fals. Coloanele simple admit valori care se repetă (de exemplu doi clienți pot avea același oraș). Doar coloana declarată PRIMARY KEY este obligată să aibă valori unice.`,
   },
   {
     id: `sql-002`,
     type: "single",
     topic: `General`,
-    prompt: `You are structuring a table in a relational database with a primary key.
+    prompt: `Construiești un tabel relațional ce va avea o cheie primară.
 
-"Each row in a table must be unique."`,
-    options: [`True`, `False`],
+Afirmația „Fiecare rând al tabelei trebuie să fie distinct de celelalte." este corectă?`,
+    options: [`Adevărat`, `Fals`],
     correctIndex: 0,
-    explanation: `TRUE — Fiecare rând trebuie să fie unic. Primary key-ul asigură acest lucru.`,
+    explanation: `Afirmația este corectă. Cheia primară impune ca nicio combinație de valori a întregului rând să nu se repete, asigurând astfel unicitatea fiecărei înregistrări.`,
   },
   {
     id: `sql-003`,
     type: "single",
     topic: `General`,
-    prompt: `You are structuring a table in a relational database with a primary key.
+    prompt: `Construiești un tabel relațional ce va avea o cheie primară.
 
-"Each column name in a table must be unique."`,
-    options: [`True`, `False`],
+Afirmația „Două coloane nu pot purta același nume în interiorul unui tabel." este corectă?`,
+    options: [`Adevărat`, `Fals`],
     correctIndex: 0,
-    explanation: `TRUE — Nu poți avea două coloane cu același nume în același tabel.`,
+    explanation: `Afirmația este corectă. În definiția unei tabele, identificatorul fiecărei coloane trebuie să fie unic, altfel motorul nu poate distinge la care dintre ele se referă o interogare.`,
   },
   {
     id: `sql-004`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Employee with columns EmployeeID and EmployeeName.
+    prompt: `Ai un tabel numit Staff care conține coloanele StaffID și StaffName.
 
-Which statement returns the number of rows in the table?`,
-    options: [`SELECT COUNT(rows) FROM Employee;`, `SELECT COUNT(*) FROM Employee;`, `SELECT SUM(*) FROM Employee;`, `SELECT * FROM Employee;`],
+Care instrucțiune îți afișează câte rânduri conține tabelul?`,
+    options: [`SELECT COUNT(rows) FROM Staff;`, `SELECT COUNT(*) FROM Staff;`, `SELECT SUM(*) FROM Staff;`, `SELECT * FROM Staff;`],
     correctIndex: 1,
-    explanation: `COUNT(*) numără toate rândurile din tabel. COUNT(rows) nu e valid, SUM(*) nu e valid, SELECT * returnează datele, nu numărul.`,
+    explanation: `Forma corectă este COUNT(*), care însumează toate rândurile prezente în tabel. Varianta COUNT(rows) nu este recunoscută, SUM(*) nu este o sintaxă validă, iar SELECT * descarcă datele propriu-zise, nu un total.`,
   },
   {
     id: `sql-005`,
     type: "multi",
     topic: `General`,
-    prompt: `You need to normalize a database to first normal form (1NF).
+    prompt: `Trebuie să aduci o bază de date la prima formă normală (1NF).
 
-Which two requirements must you meet? (Choose 2)`,
-    options: [`Exclude duplicate rows`, `Exclude foreign keys`, `Exclude composite keys`, `Exclude repeating groups`],
+Care două condiții sunt obligatorii? (Alege 2)`,
+    options: [`Eliminarea rândurilor duplicate`, `Eliminarea cheilor străine`, `Eliminarea cheilor compuse`, `Eliminarea grupurilor repetitive`],
     correctIndices: [0, 3],
     min: 2,
-    explanation: `1NF cere: 1) Fără rânduri duplicate (primary key) și 2) Fără grupuri repetitive (fiecare celulă o singură valoare).`,
+    explanation: `Pentru 1NF se cer două lucruri: nicio înregistrare nu se repetă (asigurat de cheia primară) și nicio celulă nu conține valori multiple, adică nu există grupuri care se repetă în interiorul unui rând.`,
   },
   {
     id: `sql-006`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table Product (ProductID PK, ProductName, CategoryID FK→Category).
-Existing data: ProductID 3296 = Spoon, ProductID 1114 = Chair.
+    prompt: `Ai un tabel Item cu structura (ItemID PK, ItemName, GroupID FK→Group).
+Datele existente: ItemID 3296 = Lingură, ItemID 1114 = Scaun.
 
-You execute: INSERT INTO Product VALUES (3296, 'Table', 4444);
+Execuți: INSERT INTO Item VALUES (3296, 'Masă', 4444);
 
-What is the result?`,
-    options: [`A foreign key constraint violation`, `A new row in the Product table`, `A syntax error`, `A new row in the Category table`, `A primary key constraint violation`],
+Ce se întâmplă?`,
+    options: [`Încălcare a unei chei străine`, `O linie nouă apare în tabelul Item`, `Eroare de sintaxă`, `O linie nouă apare în tabelul Group`, `Încălcare a constrângerii de cheie primară`],
     correctIndex: 4,
-    explanation: `ProductID 3296 deja există → Primary Key Constraint Violation. PK nu permite duplicate.`,
+    explanation: `Valoarea 3296 deja există ca ItemID, deci motorul refuză inserarea cu o eroare de tip Primary Key Constraint Violation. O cheie primară nu permite duplicate.`,
   },
   {
     id: `sql-007`,
     type: "single",
     topic: `General`,
-    prompt: `You have two tables. Each table has three rows. You create a SQL query that uses a CROSS JOIN. The query does not include a WHERE clause.
+    prompt: `Ai două tabele, fiecare cu câte trei rânduri. Construiești o interogare care folosește CROSS JOIN, fără clauza WHERE.
 
-How many rows will be included in the Cartesian product?`,
+Câte rânduri are produsul cartezian rezultat?`,
     options: [`0`, `3`, `6`, `9`],
     correctIndex: 3,
-    explanation: `CROSS JOIN = produs cartezian. 3 × 3 = 9 rânduri.`,
+    explanation: `CROSS JOIN combină fiecare rând al unei tabele cu fiecare rând al celeilalte. Pentru două seturi de câte trei intrări obținem 3 înmulțit cu 3, prin urmare 9 rânduri.`,
   },
   {
     id: `sql-008`,
     type: "single",
     topic: `General`,
-    prompt: `You have two tables named SalesPerson and Sales. You need to ensure that each record in the Sales table has a valid associated salesperson record.
+    prompt: `Ai două tabele numite Agent și Deal. Vrei ca fiecare înregistrare din Deal să facă referire la un agent existent.
 
-Which database object should you add to the Sales table?`,
-    options: [`nonclustered index`, `primary key`, `foreign key`, `clustered index`],
+Ce element ar trebui adăugat tabelului Deal?`,
+    options: [`un index nonclustered`, `o cheie primară`, `o cheie străină`, `un index clustered`],
     correctIndex: 2,
-    explanation: `Foreign key asigură integritatea referențială — fiecare SalesPersonID din Sales trebuie să existe în SalesPerson.`,
+    explanation: `Soluția este o cheie străină, care impune integritatea referențială: orice AgentID din Deal trebuie să corespundă unui rând existent în tabelul Agent.`,
   },
   {
     id: `sql-009`,
     type: "single",
     topic: `General`,
-    prompt: `Table PlayerStat has fields: PlayerID (INT), TeamID (INT), GameDate (DATETIME), Points (INT).
+    prompt: `Tabelul AthleteScore are câmpurile: AthleteID (INT), SquadID (INT), MatchDate (DATETIME), Score (INT).
 
-You need to display the total number of points per player on TeamID = 1.
+Trebuie să afișezi totalul de scor pentru fiecare atlet din SquadID = 1.
 
-What goes after SELECT PlayerID, ___?`,
-    options: [`COUNT`, `TeamID`, `SUM(Points)`, `PlayerID`],
+Ce trebuie scris după SELECT AthleteID, ___?`,
+    options: [`COUNT`, `SquadID`, `SUM(Score)`, `AthleteID`],
     correctIndex: 2,
-    explanation: `Pentru totalul de puncte se folosește SUM(Points). COUNT numără rânduri, nu adună valori.`,
+    explanation: `Pentru un total numeric folosim funcția SUM aplicată coloanei Score. COUNT doar numără rândurile, deci nu produce suma valorilor.`,
   },
   {
     id: `sql-010`,
     type: "single",
     topic: `General`,
-    prompt: `For the PlayerStat query (total points per player, TeamID=1), what keyword filters by TeamID = 1?`,
+    prompt: `Pentru aceeași interogare pe AthleteScore (totalul scorului pe atlet, doar SquadID = 1), ce clauză aplici filtrul SquadID = 1?`,
     options: [`HAVING`, `GROUP BY`, `WHERE`, `ORDER BY`],
     correctIndex: 2,
-    explanation: `WHERE filtrează rânduri individuale ÎNAINTE de grupare. TeamID = 1 e o condiție pe rând, nu pe grup.`,
+    explanation: `Condiția SquadID = 1 vizează rânduri individuale și se aplică înainte de orice grupare, deci aparține clauzei WHERE.`,
   },
   {
     id: `sql-011`,
     type: "single",
     topic: `General`,
-    prompt: `For the PlayerStat query (total points per player, TeamID=1), what keyword groups results by player?`,
+    prompt: `Pentru aceeași interogare pe AthleteScore (totalul scorului pe atlet, doar SquadID = 1), ce clauză gruppează rezultatele după atlet?`,
     options: [`HAVING`, `WHERE`, `ORDER BY`, `GROUP BY`],
     correctIndex: 3,
-    explanation: `GROUP BY PlayerID grupează rândurile pe fiecare jucător pentru a calcula SUM(Points) per jucător.`,
+    explanation: `Pentru a calcula SUM(Score) separat pentru fiecare atlet, rândurile trebuie strânse pe AthleteID, lucru realizat prin GROUP BY AthleteID.`,
   },
   {
     id: `sql-012`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Customer. You need to create a new column named District of type INTEGER.
+    prompt: `Ai un tabel numit Client. Trebuie să adaugi o coloană nouă numită Region, de tip INTEGER.
 
-Which statement should you use?`,
-    options: [`ALTER TABLE Customer MODIFY (District INTEGER);`, `ALTER TABLE Customer ADD (District INTEGER);`, `ALTER TABLE Customer ADD (INTEGER District);`, `MODIFY TABLE Customer ADD (INTEGER District);`],
+Ce instrucțiune folosești?`,
+    options: [`ALTER TABLE Client MODIFY (Region INTEGER);`, `ALTER TABLE Client ADD (Region INTEGER);`, `ALTER TABLE Client ADD (INTEGER Region);`, `MODIFY TABLE Client ADD (INTEGER Region);`],
     correctIndex: 1,
-    explanation: `ALTER TABLE ... ADD adaugă o coloană nouă. MODIFY schimbă o coloană existentă. Sintaxa: NumeColoană TipDate.`,
+    explanation: `Pentru a introduce o coloană nouă se foloseste ALTER TABLE împreună cu ADD. MODIFY se utilizează doar pentru a schimba o coloană deja existentă, iar ordinea este nume coloană urmat de tipul de date.`,
   },
   {
     id: `sql-013`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table with ProductID and ProductCategory:
-32→books, 25→books, 67→movies, 89→movies.
+    prompt: `Ai un tabel cu coloanele ItemID și ItemGroup:
+32→cărți, 25→cărți, 67→filme, 89→filme.
 
-Which term describes the relationship between ProductID and ProductCategory?`,
-    options: [`compositional`, `relationally dependent`, `deterministic`, `functionally dependent`],
+Ce termen descrie cel mai bine relația dintre ItemID și ItemGroup?`,
+    options: [`compozițional`, `dependent relațional`, `determinist`, `dependent funcțional`],
     correctIndex: 3,
-    explanation: `Functionally dependent: ProductID determină unic ProductCategory. Fiecare ID are exact o categorie.`,
+    explanation: `Vorbim despre dependență funcțională: cunoașterea valorii ItemID stabilește în mod unic valoarea lui ItemGroup, fiecare identificator având o singură categorie asociată.`,
   },
   {
     id: `sql-014`,
     type: "single",
     topic: `General`,
-    prompt: `A stored procedure contains:
-SELECT 'Greetings ' + Prefix + ' ' + FirstName FROM Person;
+    prompt: `O procedură stocată conține:
+SELECT 'Bună ziua, ' + Title + ' ' + GivenName FROM Contact;
 
-It returns all NULL values. There IS data in the Person table.
+Toate rezultatele apar ca NULL, deși tabelul Contact conține date.
 
-What is the likely cause?`,
-    options: [`The Prefix or FirstName columns have null values`, `The plus (+) operator cannot be used to append character data`, `You must specify the JOIN keyword in the SELECT statement`, `You must specify the NULLIF keyword in the query`],
+Care este cauza probabilă?`,
+    options: [`Coloanele Title sau GivenName conțin valori NULL`, `Operatorul plus (+) nu poate concatena șiruri de caractere`, `Lipsește cuvântul cheie JOIN din SELECT`, `Trebuie folosit cuvântul NULLIF în interogare`],
     correctIndex: 0,
-    explanation: `În SQL Server, NULL + orice = NULL. Dacă Prefix sau FirstName e NULL, întregul rezultat al concatenării devine NULL.`,
+    explanation: `În SQL Server orice concatenare cu un NULL produce tot NULL. Dacă fie Title, fie GivenName este NULL, întreg șirul rezultat devine NULL.`,
   },
   {
     id: `sql-015`,
     type: "single",
     topic: `General`,
-    prompt: `Which syntax correctly creates a table named Student with columns ID (INT), Name (VARCHAR), Age (INT)?`,
-    options: [`CREATE ( TABLE Student  ID INT, Name VARCHAR(100), Age INT);`, `CREATE Student( ID INT, Name VARCHAR(100), Age INT);`, `CREATE TABLE Student( ID INT, Name VARCHAR(100), Age INT);`, `CREATE TABLE ( ID INT, Name VARCHAR(100), Age INT);`],
+    prompt: `Care sintaxă creează corect un tabel numit Pupil cu coloanele ID (INT), Name (VARCHAR) și Age (INT)?`,
+    options: [`CREATE ( TABLE Pupil  ID INT, Name VARCHAR(100), Age INT);`, `CREATE Pupil( ID INT, Name VARCHAR(100), Age INT);`, `CREATE TABLE Pupil( ID INT, Name VARCHAR(100), Age INT);`, `CREATE TABLE ( ID INT, Name VARCHAR(100), Age INT);`],
     correctIndex: 2,
-    explanation: `Sintaxa corectă: CREATE TABLE NumeTabel( coloane ). Trebuie și TABLE și numele tabelului înainte de paranteză.`,
+    explanation: `Forma corectă cere CREATE TABLE, urmat de numele tabelei și apoi paranteza cu definițiile coloanelor. Lipsa cuvântului TABLE sau a numelui tabelei face instrucțiunea invalidă.`,
   },
   {
     id: `sql-016`,
     type: "single",
     topic: `General`,
-    prompt: `You need to combine the results of two queries into a single result that contains all rows from both queries.
+    prompt: `Trebuie să unești rezultatele a două interogări într-un singur set ce conține toate rândurile lor.
 
-Which SQL statement should you use?`,
+Care instrucțiune SQL realizează acest lucru?`,
     options: [`EXCEPT`, `TRUNCATE`, `UNION`, `JOIN`],
     correctIndex: 2,
-    explanation: `UNION combină rezultatele a două SELECT-uri. EXCEPT exclude rânduri. TRUNCATE șterge date. JOIN combină coloane.`,
+    explanation: `Operatorul UNION reunește două seturi de rezultate. EXCEPT scoate rândurile comune, TRUNCATE golește un tabel, iar JOIN combină coloane, nu seturi.`,
   },
   {
     id: `sql-017`,
     type: "single",
     topic: `General`,
-    prompt: `Which feature does a relational database use to ensure that data entered into a column is valid?`,
-    options: [`an attribute`, `a primary key`, `a constraint`, `an index`],
+    prompt: `Ce mecanism folosește o bază de date relațională pentru a verifica dacă datele introduse într-o coloană sunt valide?`,
+    options: [`un atribut`, `o cheie primară`, `o constrângere`, `un index`],
     correctIndex: 2,
-    explanation: `Constraints (constrângeri) validează datele: NOT NULL, CHECK, UNIQUE, FK, PK. Un index optimizează performanța, nu validează.`,
+    explanation: `Constrângerile (CHECK, NOT NULL, UNIQUE, FK, PK) se ocupă de validarea valorilor introduse. Un index influențează viteza, nu corectitudinea datelor.`,
   },
   {
     id: `sql-018`,
     type: "single",
     topic: `General`,
-    prompt: `Which statement removes all rows from a table without logging the individual row deletions?`,
+    prompt: `Care instrucțiune golește un tabel de toate rândurile fără a înregistra fiecare ștergere în jurnalul de tranzacții?`,
     options: [`ALTER TABLE`, `DROP TABLE`, `TRUNCATE TABLE`, `CREATE TABLE`],
     correctIndex: 2,
-    explanation: `TRUNCATE TABLE șterge toate rândurile rapid fără a loga fiecare ștergere individual. DROP TABLE șterge tot tabelul.`,
+    explanation: `TRUNCATE TABLE elimină toate rândurile printr-o singură operațiune, fără logarea individuală a fiecăruia. DROP TABLE ar elimina și definiția tabelei.`,
   },
   {
     id: `sql-019`,
     type: "single",
     topic: `General`,
-    prompt: `You work at a coffee shop. You need a data type in a database table to store charges on purchases and run financial functions.
+    prompt: `Lucrezi pentru o cofetărie. Ai nevoie de un tip de date care să stocheze sumele plătite și pe care să rulezi calcule financiare.
 
-Which data type should you recommend?`,
+Ce tip de date recomanzi?`,
     options: [`binary`, `bit`, `decimal`, `varchar`],
     correctIndex: 2,
-    explanation: `DECIMAL e pentru valori numerice cu zecimale exacte — ideal pentru bani. BIT=0/1, BINARY=date binare, VARCHAR=text.`,
+    explanation: `Pentru valori monetare cu precizie exactă tipul potrivit este DECIMAL. BIT este pentru 0/1, BINARY pentru date binare, iar VARCHAR pentru text.`,
   },
   {
     id: `sql-020`,
     type: "single",
     topic: `General`,
-    prompt: `Table Volunteer has columns Id and GivenName. You need to change Tia's name to Kimberly.
+    prompt: `Tabelul Helper are coloanele Id și GivenName. Vrei să schimbi prenumele Mihai în Andrei.
 
-Which statement should you choose?`,
-    options: [`UPDATE GivenName = 'Kimberly'
-FROM Volunteer
-WHERE GivenName = 'Tia';`, `SET Volunteer = 'Kimberly'
-WHERE GivenName = 'Tia';`, `UPDATE Volunteer
-SET GivenName = 'Kimberly'
-WHERE GivenName = 'Tia';`, `SET GivenName = 'Kimberly'
-FROM Volunteer
-WHERE GivenName = 'Tia';`],
+Ce instrucțiune alegi?`,
+    options: [`UPDATE GivenName = 'Andrei'
+FROM Helper
+WHERE GivenName = 'Mihai';`, `SET Helper = 'Andrei'
+WHERE GivenName = 'Mihai';`, `UPDATE Helper
+SET GivenName = 'Andrei'
+WHERE GivenName = 'Mihai';`, `SET GivenName = 'Andrei'
+FROM Helper
+WHERE GivenName = 'Mihai';`],
     correctIndex: 2,
-    explanation: `Sintaxa UPDATE: UPDATE tabel SET coloană = valoare WHERE condiție.`,
+    explanation: `Sintaxa unei modificări este UPDATE numele_tabelei SET coloana = noua_valoare WHERE condiție. Variantele care încep cu SET singur sau plasează WHERE înainte de SET sunt invalide.`,
   },
   {
     id: `sql-021`,
     type: "single",
     topic: `General`,
-    prompt: `You execute:
-SELECT EmployeeID, FirstName, DepartmentName
-FROM Employee, Department;
+    prompt: `Execuți următoarea interogare:
+SELECT WorkerID, FirstName, UnitName
+FROM Worker, Unit;
 
-Which type of operation was performed?`,
-    options: [`outer join`, `Cartesian product`, `equi-join`, `intersection`],
+Ce tip de operație s-a efectuat?`,
+    options: [`outer join`, `produs cartezian`, `equi-join`, `intersecție`],
     correctIndex: 1,
-    explanation: `SELECT din două tabele fără JOIN sau WHERE = produs cartezian (Cartesian product). Fiecare rând se combină cu fiecare.`,
+    explanation: `Plasarea a două tabele după FROM, separate prin virgulă, fără JOIN sau WHERE, generează un produs cartezian: fiecare rând dintr-o parte se asociază cu fiecare rând din cealaltă.`,
   },
   {
     id: `sql-022`,
     type: "single",
     topic: `General`,
-    prompt: `How is a function different from a stored procedure?`,
-    options: [`A function must be called from a trigger`, `A function cannot contain a transaction`, `A function cannot accept parameters`, `A function must return a value`],
+    prompt: `Prin ce diferă o funcție de o procedură stocată?`,
+    options: [`O funcție trebuie apelată dintr-un trigger`, `O funcție nu poate conține o tranzacție`, `O funcție nu acceptă parametri`, `O funcție trebuie să returneze o valoare`],
     correctIndex: 3,
-    explanation: `Diferența principală: o funcție TREBUIE să returneze o valoare. O procedură stocată poate, dar nu e obligatoriu.`,
+    explanation: `Diferența esențială este obligația de a returna o valoare: funcțiile au mereu un rezultat returnat, în timp ce procedurile pot doar să execute acțiuni, fără a întoarce ceva.`,
   },
   {
     id: `sql-023`,
     type: "single",
     topic: `General`,
-    prompt: `Which query returns orders placed after January 2023 in all states EXCEPT California (CA)?`,
-    options: [`SELECT * FROM orders WHERE order_date > '2023-01-31' OR ship_state <> 'CA';`, `SELECT * FROM orders WHERE order_date > '2023-01-31' AND ship_state LIKE 'CA';`, `SELECT * FROM orders WHERE order_date > '2023-01-31' OR ship_state LIKE 'CA';`, `SELECT * FROM orders WHERE order_date > '2023-01-31' AND ship_state <> 'CA';`],
+    prompt: `Care interogare returnează comenzile plasate după ianuarie 2023, în toate statele cu excepția statului Texas (TX)?`,
+    options: [`SELECT * FROM purchases WHERE purchase_date > '2023-01-31' OR delivery_state <> 'TX';`, `SELECT * FROM purchases WHERE purchase_date > '2023-01-31' AND delivery_state LIKE 'TX';`, `SELECT * FROM purchases WHERE purchase_date > '2023-01-31' OR delivery_state LIKE 'TX';`, `SELECT * FROM purchases WHERE purchase_date > '2023-01-31' AND delivery_state <> 'TX';`],
     correctIndex: 3,
-    explanation: `Ambele condiții trebuie îndeplinite simultan → AND. Diferit de CA → <>. LIKE se folosește cu wildcards (%).`,
+    explanation: `Cele două condiții trebuie să fie satisfăcute simultan, deci se folosește AND. Pentru excludere se utilizează operatorul <>, nu LIKE, care e destinat căutărilor după șablon.`,
   },
   {
     id: `sql-024`,
     type: "single",
     topic: `General`,
-    prompt: `Your database has a table named Customer. You need to delete the record with CustomerID of 12345.
+    prompt: `Baza ta de date conține tabelul Buyer. Vrei să elimini înregistrarea cu BuyerID = 12345.
 
-Which statement should you use?`,
-    options: [`DELETE FROM Customer WHERE CustomerID = 12345;`, `UPDATE CustomerID FROM Customer DELETE * WHERE CustomerID = 12345;`, `DELETE CustomerID FROM Customer WHERE CustomerID = 12345;`, `UPDATE Customer DELETE * WHERE CustomerID = 12345;`],
+Ce instrucțiune folosești?`,
+    options: [`DELETE FROM Buyer WHERE BuyerID = 12345;`, `UPDATE BuyerID FROM Buyer DELETE * WHERE BuyerID = 12345;`, `DELETE BuyerID FROM Buyer WHERE BuyerID = 12345;`, `UPDATE Buyer DELETE * WHERE BuyerID = 12345;`],
     correctIndex: 0,
-    explanation: `Sintaxa DELETE: DELETE FROM tabel WHERE condiție. Nu se specifică coloane la DELETE.`,
+    explanation: `Forma standard este DELETE FROM nume_tabel WHERE condiție. La DELETE nu se enumeră coloane, iar combinațiile cu UPDATE nu sunt sintaxe valide.`,
   },
   {
     id: `sql-025`,
     type: "single",
     topic: `General`,
-    prompt: `You need to delete a database table.
+    prompt: `Vrei să elimini complet un tabel din baza de date.
 
-Which data definition language (DDL) keyword should you use?`,
+Ce cuvânt cheie DDL folosești?`,
     options: [`DELETE`, `ALTER`, `TRUNCATE`, `DROP`],
     correctIndex: 3,
-    explanation: `DROP este DDL și șterge întregul tabel (structură + date). DELETE este DML (șterge doar rânduri).`,
+    explanation: `DROP face parte din DDL și înlătură atât structura, cât și datele tabelului. DELETE face parte din DML și șterge doar rânduri, păstrând tabelul.`,
   },
   {
     id: `sql-026`,
     type: "single",
     topic: `General`,
-    prompt: `What is a benefit of creating a stored procedure?`,
-    options: [`bypasses case sensitivity requirements`, `gives the user control of the query logic`, `minimizes storage space`, `improves performance`],
+    prompt: `Care este un avantaj al folosirii procedurilor stocate?`,
+    options: [`elimină nevoia de a respecta majusculele`, `oferă utilizatorului control asupra logicii interogării`, `reduce spațiul de stocare`, `îmbunătățește performanța`],
     correctIndex: 3,
-    explanation: `Stored procedures sunt pre-compilate pe server → execuție mai rapidă → îmbunătățesc performanța.`,
+    explanation: `Deoarece sunt precompilate pe server și planul lor de execuție este reutilizat, procedurile stocate rulează mai rapid, prin urmare contribuie la o performanță mai bună.`,
   },
   {
     id: `sql-027`,
     type: "single",
     topic: `General`,
-    prompt: `The Products table has ItemNumber, ItemName, ItemDescription, Price.
+    prompt: `Tabelul Goods conține ItemNumber, ItemName, ItemDescription și Price.
 
-Which query increases the price of item 1 by 6 percent?`,
-    options: [`UPDATE Products SET Price = Price * 1.06 WHERE ItemNumber = 1;`, `ALTER Products SET Price = Price * 1.06 WHERE ItemNumber = 1;`, `SET Price = Price * 1.06 FROM Products WHERE ItemNumber = 1;`, `USE Products SET Price = Price * 1.06 WHERE ItemNumber = 1;`],
+Care interogare crește prețul articolului 1 cu 6 procente?`,
+    options: [`UPDATE Goods SET Price = Price * 1.06 WHERE ItemNumber = 1;`, `ALTER Goods SET Price = Price * 1.06 WHERE ItemNumber = 1;`, `SET Price = Price * 1.06 FROM Goods WHERE ItemNumber = 1;`, `USE Goods SET Price = Price * 1.06 WHERE ItemNumber = 1;`],
     correctIndex: 0,
-    explanation: `UPDATE tabel SET coloana = expresie WHERE condiție. Price * 1.06 = creștere cu 6%.`,
+    explanation: `Modificarea valorilor existente se face prin UPDATE tabel SET coloana = expresie WHERE condiție. Înmulțirea cu 1.06 reprezintă o creștere de 6 la sută.`,
   },
   {
     id: `sql-028`,
     type: "single",
     topic: `General`,
-    prompt: `Table Volunteer has columns ID, GivenName, DateOfBirth.
-You need to delete all records with GivenName 'Tia'.
+    prompt: `Tabelul Helper are coloanele ID, GivenName și DateOfBirth.
+Vrei să elimini toate înregistrările unde GivenName este 'Mihai'.
 
-Which SQL statement should you use?`,
-    options: [`DELETE FROM Volunteer WHERE GivenName = 'Tia';`, `DELETE FROM Volunteer WHERE GivenName == 'Tia';`, `DELETE FROM Volunteer WHERE GivenName EQUALS 'Tia';`, `DELETE FROM Volunteer WHERE GivenName IS 'Tia';`],
+Ce instrucțiune SQL folosești?`,
+    options: [`DELETE FROM Helper WHERE GivenName = 'Mihai';`, `DELETE FROM Helper WHERE GivenName == 'Mihai';`, `DELETE FROM Helper WHERE GivenName EQUALS 'Mihai';`, `DELETE FROM Helper WHERE GivenName IS 'Mihai';`],
     correctIndex: 0,
-    explanation: `Operatorul de comparație în SQL este = (un singur egal). == nu există, EQUALS nu există, IS se folosește doar cu NULL.`,
+    explanation: `Pentru egalitate în SQL se folosește un singur semn =. Operatorii == sau EQUALS nu există, iar IS este permis exclusiv pentru testul cu NULL.`,
   },
   {
     id: `sql-029`,
     type: "single",
     topic: `General`,
-    prompt: `You need to change ProductCategory to 43 for all spoons in the Product table.
-ProductDescription of 'spoon' indicates a spoon.
+    prompt: `Trebuie să setezi ItemGroup = 43 pentru toate lingurile din tabelul Item.
+Un ItemDescription egal cu 'lingură' identifică o lingură.
 
-Which statement should you use?`,
-    options: [`SET Product WHERE ProductDescription = 'spoon' TO ProductCategory = 43;`, `SET Product TO ProductCategory = 43 WHERE ProductDescription = 'spoon';`, `UPDATE Product WHERE ProductDescription = 'spoon' SET ProductCategory = 43;`, `UPDATE Product SET ProductCategory = 43 WHERE ProductDescription = 'spoon';`],
+Ce instrucțiune folosești?`,
+    options: [`SET Item WHERE ItemDescription = 'lingură' TO ItemGroup = 43;`, `SET Item TO ItemGroup = 43 WHERE ItemDescription = 'lingură';`, `UPDATE Item WHERE ItemDescription = 'lingură' SET ItemGroup = 43;`, `UPDATE Item SET ItemGroup = 43 WHERE ItemDescription = 'lingură';`],
     correctIndex: 3,
-    explanation: `Ordinea corectă: UPDATE tabel SET coloana=valoare WHERE condiție. SET vine DUPĂ UPDATE, nu singur.`,
+    explanation: `Ordinea corectă este UPDATE tabel, apoi SET coloană = valoare și abia la final WHERE condiție. SET nu poate apărea singur, iar WHERE nu poate precede SET.`,
   },
   {
     id: `sql-030`,
     type: "single",
     topic: `General`,
-    prompt: `The Customers table has CustomerID, Address, Region, Country.
+    prompt: `Tabelul Buyer conține BuyerID, Address, Region și Country.
 
-Which query returns the number of customers in each country that has fewer than 50 customers?`,
-    options: [`SELECT Country, CustomerID FROM Customers GROUP BY Country WHERE COUNT(CustomerID) < 50;`, `SELECT Country, CustomerID FROM Customers WHERE COUNT(CustomerID) < 50 GROUP BY Country;`, `SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country HAVING COUNT(CustomerID) < 50;`, `SELECT COUNT(CustomerID), Country FROM Customers HAVING COUNT(CustomerID) < 50 GROUP BY Country;`],
+Ce interogare returnează numărul de cumpărători din fiecare țară care are mai puțin de 50 de cumpărători?`,
+    options: [`SELECT Country, BuyerID FROM Buyer GROUP BY Country WHERE COUNT(BuyerID) < 50;`, `SELECT Country, BuyerID FROM Buyer WHERE COUNT(BuyerID) < 50 GROUP BY Country;`, `SELECT COUNT(BuyerID), Country FROM Buyer GROUP BY Country HAVING COUNT(BuyerID) < 50;`, `SELECT COUNT(BuyerID), Country FROM Buyer HAVING COUNT(BuyerID) < 50 GROUP BY Country;`],
     correctIndex: 2,
-    explanation: `HAVING filtrează grupuri (nu WHERE). Ordinea: GROUP BY vine înainte de HAVING.`,
+    explanation: `Filtrarea pe rezultatele unei agregări se face cu HAVING, niciodată cu WHERE. Ordinea cerută este GROUP BY înaintea lui HAVING.`,
   },
   {
     id: `sql-031`,
     type: "single",
     topic: `General`,
-    prompt: `You need to remove a view named EmployeeView from your database.
+    prompt: `Vrei să elimini un view numit StaffView din baza de date.
 
-Which statement should you use?`,
-    options: [`DROP EmployeeView;`, `DELETE VIEW EmployeeView;`, `DELETE EmployeeView;`, `DROP VIEW EmployeeView;`],
+Ce instrucțiune folosești?`,
+    options: [`DROP StaffView;`, `DELETE VIEW StaffView;`, `DELETE StaffView;`, `DROP VIEW StaffView;`],
     correctIndex: 3,
-    explanation: `Sintaxa corectă: DROP VIEW NumeView. Nu DELETE VIEW. Și trebuie specificat cuvântul VIEW.`,
+    explanation: `Eliminarea unui view se realizează prin DROP VIEW nume_view. Forma DELETE VIEW nu există, iar omiterea cuvântului VIEW lasă comanda incompletă.`,
   },
   {
     id: `sql-032`,
     type: "single",
     topic: `General`,
-    prompt: `Your company stores SSN in a column in the Customers table. You need to remove the SSN column.
-The query ALTER TABLE Customers REMOVE SSN; causes an error.
+    prompt: `Compania ta stochează IDNP-ul într-o coloană din tabelul Buyer. Trebuie să elimini coloana IDNP.
+Comanda ALTER TABLE Buyer REMOVE IDNP; produce o eroare.
 
-What is the correct statement?`,
-    options: [`ALTER TABLE Customers DELETE SSN;`, `ALTER TABLE Customers DROP SSN;`, `ALTER TABLE Customers DELETE COLUMN SSN;`, `ALTER TABLE Customers DROP COLUMN SSN;`],
+Care este forma corectă?`,
+    options: [`ALTER TABLE Buyer DELETE IDNP;`, `ALTER TABLE Buyer DROP IDNP;`, `ALTER TABLE Buyer DELETE COLUMN IDNP;`, `ALTER TABLE Buyer DROP COLUMN IDNP;`],
     correctIndex: 3,
-    explanation: `Pentru a șterge o coloană: ALTER TABLE tabel DROP COLUMN numeColoana. DELETE nu e valid, REMOVE nu e valid.`,
+    explanation: `Pentru a scoate o coloană se folosește ALTER TABLE tabel DROP COLUMN nume_coloană. Variantele cu DELETE sau cu REMOVE nu sunt acceptate de SQL.`,
   },
   {
     id: `sql-033`,
     type: "single",
     topic: `General`,
-    prompt: `CREATE TABLE Road (RoadID INTEGER NOT NULL, Distance INTEGER NOT NULL);
-Existing data: 1234→22, 1384→34.
+    prompt: `CREATE TABLE Path (PathID INTEGER NOT NULL, Length INTEGER NOT NULL);
+Date existente: 1234→22, 1384→34.
 
-You execute: INSERT INTO Road VALUES (1234, 36);
+Execuți: INSERT INTO Path VALUES (1234, 36);
 
-What is the result?`,
-    options: [`An error stating that duplicate IDs are not allowed`, `An error stating that NULL values are not allowed`, `A syntax error`, `A new row in the table`],
+Care este rezultatul?`,
+    options: [`O eroare ce semnalează faptul că ID-urile duplicate nu sunt permise`, `O eroare ce semnalează că valorile NULL nu sunt permise`, `O eroare de sintaxă`, `Un nou rând în tabel`],
     correctIndex: 3,
-    explanation: `Nu există PRIMARY KEY definit! NOT NULL nu înseamnă UNIQUE. Fără PK, duplicatele sunt permise → rând nou inserat.`,
+    explanation: `Tabelul Path nu are nicio cheie primară definită, iar NOT NULL nu impune unicitatea. Fără PRIMARY KEY, valorile duplicate sunt acceptate, deci rândul nou se inserează fără probleme.`,
   },
   {
     id: `sql-034`,
     type: "single",
     topic: `General`,
-    prompt: `Which statement deletes rows where the employee's phone number is not entered?`,
-    options: [`DELETE FROM Employee WHERE Phone = NULL;`, `DELETE FROM Employee WHERE Phone = NULLABLE;`, `DELETE FROM Employee WHERE Phone IS NOT NULL;`, `DELETE FROM Employee WHERE Phone IS NULL;`],
+    prompt: `Care instrucțiune șterge rândurile în care numărul de telefon al angajatului nu a fost completat?`,
+    options: [`DELETE FROM Worker WHERE Phone = NULL;`, `DELETE FROM Worker WHERE Phone = NULLABLE;`, `DELETE FROM Worker WHERE Phone IS NOT NULL;`, `DELETE FROM Worker WHERE Phone IS NULL;`],
     correctIndex: 3,
-    explanation: `Phone not entered = NULL. Se testează cu IS NULL (nu = NULL). IS NOT NULL ar șterge pe cei CU telefon.`,
+    explanation: `Lipsa unei valori se detectează prin operatorul IS NULL. Comparația = NULL nu produce niciodată adevărat, iar IS NOT NULL ar viza tocmai rândurile completate.`,
   },
   {
     id: `sql-035`,
     type: "single",
     topic: `General`,
-    prompt: `You have an ERD: Machine → Assignment ← Operator (with referential integrity).
+    prompt: `Ai o diagramă ERD: Device → Allocation ← Handler (cu integritate referențială impusă).
 
-INSERT INTO Assignment(MachineID, OperatorID) values (3, 4);
+INSERT INTO Allocation(DeviceID, HandlerID) values (3, 4);
 
-Error: FK conflict on 'FK_Assignment_Machine', table 'dbo.Machine', column 'ID'.
+Eroare: conflict FK pe 'FK_Allocation_Device', tabelul 'dbo.Device', coloana 'ID'.
 
-What is the cause?`,
-    options: [`The Assignment table has an existing row with MachineID value of 3`, `The Machine table has no rows that have an ID value of 3`, `The Operator table has no rows that have an ID value of 4`, `The Assignment table has an existing row with OperatorID value of 4`],
+Care este cauza?`,
+    options: [`Tabelul Allocation conține deja un rând cu DeviceID = 3`, `Tabelul Device nu are niciun rând cu valoarea ID = 3`, `Tabelul Handler nu are niciun rând cu valoarea ID = 4`, `Tabelul Allocation conține deja un rând cu HandlerID = 4`],
     correctIndex: 1,
-    explanation: `Eroarea menționează FK_Assignment_Machine și coloana ID din Machine → MachineID=3 nu există în tabela Machine.`,
+    explanation: `Mesajul de eroare indică explicit constrângerea FK_Allocation_Device și coloana ID din Device. Concluzia: valoarea 3 trimisă pentru DeviceID nu se regăsește în tabelul părinte Device.`,
   },
   {
     id: `sql-036`,
     type: "single",
     topic: `General`,
-    prompt: `Which statement creates an index?`,
-    options: [`CREATE TABLE Employee (EmployeeID INTEGER INDEX);`, `CREATE TABLE Employee (EmployeeID INTEGER DISTINCT);`, `CREATE TABLE Employee (EmployeeID INTEGER PRIMARY KEY);`, `CREATE TABLE Employee (EmployeeID INTEGER NULL);`],
+    prompt: `Care instrucțiune duce la crearea unui index?`,
+    options: [`CREATE TABLE Worker (WorkerID INTEGER INDEX);`, `CREATE TABLE Worker (WorkerID INTEGER DISTINCT);`, `CREATE TABLE Worker (WorkerID INTEGER PRIMARY KEY);`, `CREATE TABLE Worker (WorkerID INTEGER NULL);`],
     correctIndex: 2,
-    explanation: `PRIMARY KEY creează automat un clustered index. INDEX, DISTINCT și NULL nu creează indexuri.`,
+    explanation: `Atunci când declari o coloană drept PRIMARY KEY, motorul construiește automat un index clustered pe ea. Cuvintele INDEX, DISTINCT sau NULL nu generează indexuri în interiorul CREATE TABLE.`,
   },
   {
     id: `sql-037`,
     type: "single",
     topic: `General`,
-    prompt: `Table Product has 1 million rows. Query:
-SELECT ProductName, Price FROM Product WHERE Category = 'Science Books';
+    prompt: `Tabelul Item are 1 milion de rânduri. Interogarea:
+SELECT ItemName, Price FROM Item WHERE Section = 'Manuale Științifice';
 
-What will make this search more efficient?`,
-    options: [`a non-clustered index on the Category column`, `a clustered index on the ProductName column`, `a clustered index on the Price column`, `a non-clustered index on the Price column`],
+Ce optimizare grăbește această căutare?`,
+    options: [`un index nonclustered pe coloana Section`, `un index clustered pe coloana ItemName`, `un index clustered pe coloana Price`, `un index nonclustered pe coloana Price`],
     correctIndex: 0,
-    explanation: `Filtrul este pe Category (WHERE Category = ...). Un index pe Category accelerează căutarea. Non-clustered pentru că probabil PK are deja clustered.`,
+    explanation: `Filtrul lucrează pe coloana Section, deci un index ridicat pe Section reduce cantitatea de pagini citite. Varianta nonclustered este cea potrivită, fiindcă indexul clustered este de obicei rezervat cheii primare.`,
   },
   {
     id: `sql-038`,
     type: "single",
     topic: `General`,
-    prompt: `Query:
-SELECT Title FROM Movie WHERE Title = 'Sample Movie'
+    prompt: `Interogarea:
+SELECT Title FROM Film WHERE Title = 'Demo Film'
 ORDER BY Title
 GROUP BY Title
 HAVING COUNT(*) = 1;
 
-This returns a syntax error. What should you do?`,
-    options: [`Remove the GROUP BY clause`, `Change HAVING to HAVING COUNT(Title) = 1`, `Remove the ORDER BY clause`, `Change HAVING to HAVING COUNT(1) = 1`],
+Returnează o eroare de sintaxă. Ce trebuie să faci?`,
+    options: [`Să elimini clauza GROUP BY`, `Să schimbi HAVING în HAVING COUNT(Title) = 1`, `Să elimini clauza ORDER BY`, `Să schimbi HAVING în HAVING COUNT(1) = 1`],
     correctIndex: 2,
-    explanation: `ORDER BY trebuie să fie ULTIMA clauză (după GROUP BY și HAVING). Aici e înainte de GROUP BY → syntax error. Soluția: elimini ORDER BY sau îl muți la final.`,
+    explanation: `Clauza ORDER BY trebuie să fie ultima, plasată după GROUP BY și HAVING. Aici apare prematur, înainte de GROUP BY, deci trebuie scoasă sau mutată la sfârșit pentru ca interogarea să fie validă.`,
   },
   {
     id: `sql-039`,
     type: "single",
     topic: `General`,
-    prompt: `A database table stores school attendance.
-StudentName must be a string. GradeLevel must be a whole number. DaysAbsent can have one decimal.
+    prompt: `Un tabel reține prezența la cursuri.
+PupilName este șir de caractere. ClassLevel este număr întreg. AbsenceDays poate avea o singură zecimală.
 
-Match data types:
-StudentName = ?, GradeLevel = ?, DaysAbsent = ?`,
+Asociază tipurile de date:
+PupilName = ?, ClassLevel = ?, AbsenceDays = ?`,
     options: [`VARCHAR, INT, DECIMAL`, `CHAR, DECIMAL, INT`, `INT, VARCHAR, DATETIME`, `VARCHAR, DECIMAL, INT`],
     correctIndex: 0,
-    explanation: `String → VARCHAR, whole number → INT, one decimal → DECIMAL.`,
+    explanation: `Pentru un șir de caractere folosim VARCHAR, pentru un număr întreg INT, iar pentru o valoare cu o singură zecimală tipul potrivit este DECIMAL.`,
   },
   {
     id: `sql-040`,
     type: "single",
     topic: `General`,
-    prompt: `Building table: BuildingID, Address, InspectorID, InspectionDate.
-NULL in InspectionDate = not yet inspected.
+    prompt: `Tabelul Edifice: EdificeID, Address, ReviewerID, ReviewDate.
+NULL în ReviewDate înseamnă că nu a fost încă inspectat.
 
-You need addresses of the earliest 10 buildings that HAVE been inspected.
+Vrei adresele celor mai vechi 10 edificii care AU fost inspectate.
 
-What goes in: SELECT ___ Address FROM Building WHERE InspectionDate ___ ORDER BY InspectionDate;`,
+Ce completezi în: SELECT ___ Address FROM Edifice WHERE ReviewDate ___ ORDER BY ReviewDate;`,
     options: [`TOP 10, IS NOT NULL`, `TOP 10, IS NULL`, `COUNT, IS NOT NULL`, `GROUP BY 10, IS NULL`],
     correctIndex: 0,
-    explanation: `TOP 10 = primele 10 rezultate. IS NOT NULL = doar cele inspectate. ORDER BY InspectionDate = cele mai vechi primele.`,
+    explanation: `TOP 10 limitează rezultatul la primele 10 rânduri. IS NOT NULL exclude clădirile neinspectate. ORDER BY ReviewDate aduce mai întâi inspecțiile cele mai vechi.`,
   },
   {
     id: `sql-041`,
     type: "multi",
     topic: `General`,
-    prompt: `You are developing a SQL statement to create a table.
+    prompt: `Construiești o instrucțiune CREATE TABLE.
 
-Which two SQL keywords are valid to use in a CREATE TABLE statement? (Choose 2)`,
+Care două cuvinte cheie SQL pot apărea în interiorul unui CREATE TABLE? (Alege 2)`,
     options: [`CONSTRAINT`, `ORDER BY`, `INSERT INTO`, `PRIMARY KEY`],
     correctIndices: [0, 3],
     min: 2,
-    explanation: `CONSTRAINT și PRIMARY KEY sunt valide în CREATE TABLE. ORDER BY e pentru SELECT, INSERT INTO e pentru inserare.`,
+    explanation: `Atât CONSTRAINT, cât și PRIMARY KEY sunt elemente specifice definirii tabelelor. ORDER BY apare în SELECT, iar INSERT INTO este o instrucțiune separată, nu o componentă a CREATE TABLE.`,
   },
   {
     id: `sql-042`,
     type: "single",
     topic: `General`,
-    prompt: `Which statement should you use to remove a foreign key?`,
+    prompt: `Cu ce instrucțiune se elimină o cheie străină dintr-un tabel?`,
     options: [`ALTER FOREIGN KEY;`, `DELETE TABLE;`, `DELETE FOREIGN KEY;`, `ALTER TABLE;`],
     correctIndex: 3,
-    explanation: `Foreign key se elimină cu ALTER TABLE ... DROP CONSTRAINT. Deci comanda începe cu ALTER TABLE.`,
+    explanation: `Cheile străine se șterg printr-un ALTER TABLE urmat de DROP CONSTRAINT, deci comanda pornește obligatoriu cu ALTER TABLE.`,
   },
   {
     id: `sql-043`,
     type: "multi",
     topic: `General`,
-    prompt: `Tables: Chapter (ChapterId PK) and Language (LanguageId PK).
-You create ChapterLanguage to relate them with a composite primary key.
+    prompt: `Tabelele: Branch (BranchId PK) și Tongue (TongueId PK).
+Construiești BranchTongue ca să le legi printr-o cheie primară compusă.
 
-Which two columns should you select?`,
-    options: [`Region`, `ChapterId`, `LanguageId`, `City`, `Country`, `LanguageName`],
+Care două coloane trebuie alese?`,
+    options: [`Region`, `BranchId`, `TongueId`, `City`, `Country`, `TongueName`],
     correctIndices: [1, 2],
     min: 2,
-    explanation: `Composite PK = primary key-urile celor două tabele: ChapterId + LanguageId.`,
+    explanation: `O cheie primară compusă într-un tabel de legătură moștenește cheile primare ale tabelelor părinte, în acest caz BranchId și TongueId.`,
   },
   {
     id: `sql-044`,
     type: "single",
     topic: `General`,
-    prompt: `Two queries on Machine/Assignment/Operator tables:
+    prompt: `Două interogări pe tabelele Device/Allocation/Handler:
 
-Query 1: SELECT Machine.Name FROM Machine JOIN Assignment ON MachineID = Machine.ID;
-Query 2: SELECT Operator.Name FROM Operator LEFT JOIN Assignment ON OperatorID = Operator.ID;
+Interogarea 1: SELECT Device.Name FROM Device JOIN Allocation ON DeviceID = Device.ID;
+Interogarea 2: SELECT Handler.Name FROM Handler LEFT JOIN Allocation ON HandlerID = Handler.ID;
 
-Assignment has 2 rows (MachineID: 1,2 / OperatorID: 1,2). All tables have 3 rows.
+Allocation are 2 rânduri (DeviceID: 1,2 / HandlerID: 1,2). Toate tabelele au 3 rânduri.
 
-How many rows does Query 1 return?`,
+Câte rânduri returnează prima interogare?`,
     options: [`1`, `2`, `3`, `6`],
     correctIndex: 1,
-    explanation: `INNER JOIN returnează doar rândurile cu potrivire. Assignment are 2 rânduri cu MachineID 1 și 2 → 2 mașini găsite.`,
+    explanation: `Un INNER JOIN păstrează doar perechile cu corespondență. Allocation are doar două rânduri, cu DeviceID 1 și 2, deci doar două dispozitive sunt regăsite și se obțin 2 rânduri.`,
   },
   {
     id: `sql-045`,
     type: "single",
     topic: `General`,
-    prompt: `Same scenario as above.
+    prompt: `Aceeași configurație ca mai sus.
 
-How many rows does Query 2 (LEFT JOIN) return?`,
+Câte rânduri returnează interogarea a doua (LEFT JOIN)?`,
     options: [`1`, `2`, `3`, `6`],
     correctIndex: 2,
-    explanation: `LEFT JOIN returnează TOȚI operatorii (3), chiar și cei fără assignment. Operator 3 (Nina) nu are assignment dar apare cu NULL.`,
+    explanation: `LEFT JOIN păstrează absolut toți operatorii (3 la număr). Cel fără asociere apare cu valori NULL în coloanele din dreapta, deci totalul rămâne 3 rânduri.`,
   },
   {
     id: `sql-046`,
     type: "single",
     topic: `General`,
-    prompt: `The Customers table includes Extension column with some NULL values.
+    prompt: `Tabelul Buyer conține o coloană Extension cu unele valori NULL.
 
-You need customers that HAVE extensions, sorted by LastName.
+Vrei cumpărătorii care AU extension, sortați după LastName.
 
-What goes in WHERE ___ and the last line?`,
+Ce completezi pe linia WHERE ___ și pe ultima linie?`,
     options: [`Extension IS NOT NULL ... ORDER BY LastName`, `Extension = NOT NULL ... ORDER BY LastName`, `Extension IS NULL ... ORDER BY LastName`, `Extension IS NOT NULL ... GROUP BY LastName`],
     correctIndex: 0,
-    explanation: `Have extensions = nu sunt NULL → IS NOT NULL. Sortat = ORDER BY (nu GROUP BY).`,
+    explanation: `Au extension înseamnă că valoarea nu este NULL, deci IS NOT NULL. Sortarea finală se face cu ORDER BY, nu cu GROUP BY, care servește pentru grupări.`,
   },
   {
     id: `sql-047`,
     type: "single",
     topic: `General`,
-    prompt: `ItemsOnOrder table: ID, ItemNumber, Quantity, UnitPrice, LineItemTotal.
+    prompt: `Tabelul GoodsOnOrder: ID, ItemNumber, Quantity, UnitPrice, LineItemTotal.
 
-You need: total number of orders, average line item total, highest line item total, grand total.
+Vrei: numărul total de comenzi, media pe linie, valoarea maximă pe linie și totalul general.
 
-Which query should you use?`,
+Ce interogare folosești?`,
     options: [`SELECT COUNT(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
-FROM ItemsOnOrder
+FROM GoodsOnOrder
 HAVING ItemNumber, Quantity, UnitPrice;`, `SELECT SUM(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
-FROM ItemsOnOrder;`, `SELECT COUNT(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
-FROM ItemsOnOrder;`, `SELECT COUNT(ID), AVG(UnitPrice*Quantity), MAX(UnitPrice*Quantity), SUM(UnitPrice*Quantity)
-FROM ItemsOnOrder
+FROM GoodsOnOrder;`, `SELECT COUNT(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
+FROM GoodsOnOrder;`, `SELECT COUNT(ID), AVG(UnitPrice*Quantity), MAX(UnitPrice*Quantity), SUM(UnitPrice*Quantity)
+FROM GoodsOnOrder
 GROUP BY ItemNumber, LineItemTotal;`],
     correctIndex: 2,
-    explanation: `COUNT(ID) = nr comenzi, AVG/MAX/SUM pe LineItemTotal. Fără GROUP BY (vrem totaluri generale). SUM(ID) e greșit.`,
+    explanation: `Numărul de comenzi se obține cu COUNT(ID), iar AVG, MAX și SUM se aplică pe LineItemTotal. Fiindcă vrem indicatori globali, nu se folosește GROUP BY, iar SUM(ID) ar fi lipsit de sens.`,
   },
   {
     id: `sql-048`,
     type: "single",
     topic: `General`,
-    prompt: `Student enrollment report requirements:
-- Students enrolled on or after June 1, 2024
-- Students who graduated in 2024
-- Ordered by most recent enrollment date first
+    prompt: `Cerințele raportului de înmatriculare:
+- Studenții înmatriculați la 1 iunie 2024 sau ulterior
+- Studenții care au absolvit în 2024
+- Sortați după dată de înmatriculare, cea mai recentă prima
 
-Which query is correct?`,
+Care interogare este corectă?`,
     options: [`... WHERE (enrollment_date >= '2024-06-01') OR (academic_status='Graduated' AND graduation_date >= '2024-01-01')
 ORDER BY enrollment_date DESC;`, `... WHERE (enrollment_date >= '2024-06-01') AND (academic_status='Graduated' AND graduation_date >= '2024-01-01')
 ORDER BY enrollment_date ASC;`, `... WHERE (enrollment_date >= '2024-06-01') AND (academic_status='Graduated' OR graduation_date >= '2024-01-01')
 ORDER BY enrollment_date;`, `... WHERE (enrollment_date >= '2024-06-01') OR (academic_status='Graduated' OR graduation_date >= '2024-01-01')
 ORDER BY enrollment_date DESC;`],
     correctIndex: 0,
-    explanation: `OR între cele două categorii (înscriși SAU absolvenți). AND între academic_status și graduation_date. DESC = cel mai recent primul.`,
+    explanation: `Cele două categorii (înmatriculați sau absolvenți) se reunesc cu OR, în timp ce între statut și dată se aplică AND. Pentru cele mai recente date primele se folosește DESC.`,
   },
   {
     id: `sql-049`,
     type: "single",
     topic: `General`,
-    prompt: `You want to create a view that shows only ID, Name, and Type from the Company table for companies in the state of 'UT'.
+    prompt: `Vrei să creezi un view care arată doar ID, Name și Type din tabelul Firm pentru firmele din statul 'AZ'.
 
-Which approach is correct?`,
-    options: [`CREATE VIEW CompanyView AS SELECT * FROM Company WHERE State = 'UT';`, `CREATE VIEW CompanyView AS SELECT ID, Name, Type FROM Company WHERE State = 'UT';`, `INSERT VIEW CompanyView AS SELECT ID, Name, Type FROM Company WHERE State = 'UT';`, `CREATE TABLE CompanyView AS SELECT ID, Name, Type FROM Company WHERE State = 'UT';`],
+Care abordare este corectă?`,
+    options: [`CREATE VIEW FirmView AS SELECT * FROM Firm WHERE State = 'AZ';`, `CREATE VIEW FirmView AS SELECT ID, Name, Type FROM Firm WHERE State = 'AZ';`, `INSERT VIEW FirmView AS SELECT ID, Name, Type FROM Firm WHERE State = 'AZ';`, `CREATE TABLE FirmView AS SELECT ID, Name, Type FROM Firm WHERE State = 'AZ';`],
     correctIndex: 1,
-    explanation: `CREATE VIEW ... AS SELECT doar coloanele dorite. Nu SELECT * (ar include toate coloanele). Nu INSERT VIEW sau CREATE TABLE.`,
+    explanation: `Definiția corectă este CREATE VIEW urmat de AS SELECT cu doar coloanele dorite (ID, Name, Type). SELECT * ar aduce toate coloanele, INSERT VIEW nu există, iar CREATE TABLE produce un tabel, nu un view.`,
   },
   {
     id: `sql-050`,
     type: "single",
     topic: `General`,
-    prompt: `You have three tables: student, enrollment, course.
-You need student names and course names. Students not enrolled should NOT be returned.
+    prompt: `Ai trei tabele: pupil, registration, lesson.
+Vrei numele elevilor și denumirile lecțiilor. Elevii fără înscriere NU trebuie returnați.
 
-The original query uses OUTER JOIN and WHERE instead of proper JOINs.
+Interogarea inițială folosește OUTER JOIN și WHERE în loc de JOIN-uri propriu-zise.
 
-How should you correct it?`,
-    options: [`Use INNER JOIN enrollment ON enrollment.courseID = course.courseID
-INNER JOIN student ON enrollment.studentID = student.studentID`, `Use LEFT JOIN on all tables`, `Use CROSS JOIN between all tables`, `Add a WHERE clause with all conditions`],
+Cum o corectezi?`,
+    options: [`Folosești INNER JOIN registration ON registration.lessonID = lesson.lessonID
+INNER JOIN pupil ON registration.pupilID = pupil.pupilID`, `Folosești LEFT JOIN pe toate tabelele`, `Folosești CROSS JOIN între toate tabelele`, `Adaugi un WHERE cu toate condițiile`],
     correctIndex: 0,
-    explanation: `INNER JOIN returnează doar studenții înscriși (exclude neînscriși). Trebuie JOIN prin tabelul enrollment care leagă student de course.`,
+    explanation: `Pentru a păstra doar elevii cu înscrieri se aplică INNER JOIN, iar legarea celor trei tabele se face prin tabelul intermediar registration, care unește pupil cu lesson.`,
   },
   {
     id: `sql-051`,
     type: "single",
     topic: `General`,
-    prompt: `You are designing an ERD for Machine and Operator tables (many-to-many relationship).
+    prompt: `Proiectezi un ERD între tabelele Device și Handler (relație many-to-many).
 
-The Assignment junction table needs foreign keys.
+Tabelul de joncțiune Allocation are nevoie de chei străine.
 
-What keys should the MACHINE table's ID and OPERATOR table's ID have?`,
-    options: [`Both should be foreign keys`, `Both should be primary keys in their own tables`, `Machine.ID should be a primary key, Operator.ID should be a foreign key`, `Both should be composite keys`],
+Ce tip de chei sunt ID-urile din Device și Handler?`,
+    options: [`Ambele sunt chei străine`, `Ambele sunt chei primare în propriile tabele`, `Device.ID este cheie primară, Handler.ID este cheie străină`, `Ambele sunt chei compuse`],
     correctIndex: 1,
-    explanation: `Machine.ID e PK în Machine, Operator.ID e PK în Operator. Assignment va avea FK-uri care referă aceste PK-uri.`,
+    explanation: `Device.ID rămâne cheie primară în Device, iar Handler.ID este cheie primară în Handler. Tabelul Allocation va avea două chei străine care fac referire la aceste chei primare.`,
   },
   {
     id: `sql-052`,
     type: "single",
     topic: `General`,
-    prompt: `A clustered index improves the performance of queries that:`,
-    options: [`return a single specific row by ID`, `return a range of values`, `use aggregate functions only`, `use subqueries`],
+    prompt: `Un index clustered îmbunătățește performanța interogărilor care:`,
+    options: [`returnează un singur rând specific după ID`, `returnează un interval de valori`, `folosesc doar funcții de agregare`, `folosesc subinterogări`],
     correctIndex: 1,
-    explanation: `Clustered index sortează datele fizic → excelent pentru range queries (BETWEEN, >, <) unde rândurile consecutive sunt stocate împreună.`,
+    explanation: `Indexul clustered ordonează datele fizic pe disc, prin urmare este foarte eficient pentru interogări care cer un interval (BETWEEN, >, <), deoarece rândurile vecine sunt stocate împreună.`,
   },
   {
     id: `sql-053`,
     type: "single",
     topic: `General`,
-    prompt: `A clustered index improves the performance of queries on columns that:`,
-    options: [`contain only NULL values`, `are rarely used in queries`, `are frequently used for sorting or range searches`, `store binary data`],
+    prompt: `Un index clustered îmbunătățește performanța interogărilor pe coloane care:`,
+    options: [`conțin doar valori NULL`, `sunt rar utilizate în interogări`, `sunt folosite frecvent pentru sortare sau căutări de interval`, `stochează date binare`],
     correctIndex: 2,
-    explanation: `Clustered index e ideal pe coloane folosite frecvent în ORDER BY sau WHERE cu range-uri, deoarece datele sunt deja sortate fizic.`,
+    explanation: `Coloanele potrivite pentru un index clustered sunt cele apelate des în ORDER BY sau în condiții cu interval, deoarece datele fiind deja sortate fizic, accesul devine direct.`,
   },
   {
     id: `sql-054`,
     type: "single",
     topic: `General`,
-    prompt: `You need to set up a view of North American mammals (NorthAmericanMammals_View).
+    prompt: `Trebuie să configurezi un view pentru mamiferele din America de Nord (NorthAmericanMammals_View).
 
-Which keyword starts the definition?`,
+Ce cuvânt cheie începe definiția?`,
     options: [`INSERT VIEW [dbo].[NorthAmericanMammals_View]`, `CREATE VIEW [dbo].[NorthAmericanMammals_View]`, `ALTER VIEW [dbo].[NorthAmericanMammals_View]`, `SELECT VIEW [dbo].[NorthAmericanMammals_View]`],
     correctIndex: 1,
-    explanation: `Un view nou se creează cu CREATE VIEW. INSERT VIEW și SELECT VIEW nu există. ALTER VIEW modifică un view existent.`,
+    explanation: `Un view nou se creează cu CREATE VIEW. INSERT VIEW și SELECT VIEW nu sunt sintaxe valide, iar ALTER VIEW se aplică doar pe un view care există deja.`,
   },
   {
     id: `sql-055`,
     type: "single",
     topic: `General`,
-    prompt: `For the NorthAmericanMammals view, what comes after the view name?`,
-    options: [`AS JOIN a.Id, a.Name`, `AS SELECT a.Id, a.Name`, `FROM Animal a`, `JOIN Animal a`],
+    prompt: `Pentru view-ul NorthAmericanMammals, ce urmează imediat după numele view-ului?`,
+    options: [`AS JOIN a.Id, a.Name`, `AS SELECT a.Id, a.Name`, `FROM Beast a`, `JOIN Beast a`],
     correctIndex: 1,
-    explanation: `După CREATE VIEW NumeView vine AS SELECT ... Aceasta definește query-ul pe care view-ul îl execută.`,
+    explanation: `După CREATE VIEW nume_view se scrie AS SELECT urmat de coloanele dorite. Această parte definește interogarea pe care view-ul o execută la fiecare apel.`,
   },
   {
     id: `sql-056`,
     type: "single",
     topic: `General`,
-    prompt: `Which SQL command is classified as DML (Data Manipulation Language)?`,
+    prompt: `Care comandă SQL este DML (Data Manipulation Language)?`,
     options: [`CREATE TABLE`, `DROP TABLE`, `ALTER TABLE`, `INSERT INTO`],
     correctIndex: 3,
-    explanation: `DML = manipulare date: SELECT, INSERT, UPDATE, DELETE. DDL = definire structură: CREATE, ALTER, DROP, TRUNCATE.`,
+    explanation: `DML cuprinde comenzile care lucrează cu datele propriu-zise: SELECT, INSERT, UPDATE, DELETE. Restul (CREATE, ALTER, DROP, TRUNCATE) modifică structura, deci aparțin DDL.`,
   },
   {
     id: `sql-057`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table with 1000 rows. You run:
+    prompt: `Ai un tabel cu 1000 de rânduri. Rulezi:
 DELETE FROM MyTable;
 
-What happens?`,
-    options: [`The table structure and all data are removed`, `All 1000 rows are deleted, each deletion is logged, table structure remains`, `All rows are removed without logging, table structure remains`, `A syntax error occurs`],
+Ce se întâmplă?`,
+    options: [`Structura tabelului și toate datele sunt eliminate`, `Toate cele 1000 de rânduri sunt șterse, fiecare ștergere e logată, structura rămâne`, `Toate rândurile sunt șterse fără logare, structura rămâne`, `Apare o eroare de sintaxă`],
     correctIndex: 1,
-    explanation: `DELETE FROM fără WHERE șterge toate rândurile cu logare individuală. Structura tabelului rămâne. DROP ar șterge tot, TRUNCATE nu logază.`,
+    explanation: `Fără clauza WHERE, DELETE elimină fiecare rând și înregistrează individual operațiunile în jurnal. Structura tabelului nu este afectată; pentru ștergere fără logare s-ar folosi TRUNCATE.`,
   },
   {
     id: `sql-058`,
     type: "single",
     topic: `General`,
-    prompt: `What does the keyword DISTINCT do in a SELECT statement?`,
-    options: [`Sorts results in ascending order`, `Removes duplicate rows from the result set`, `Limits the number of rows returned`, `Groups rows by a column`],
+    prompt: `Ce face cuvântul cheie DISTINCT într-un SELECT?`,
+    options: [`Sortează rezultatele crescător`, `Elimină rândurile duplicate din rezultat`, `Limitează numărul de rânduri returnate`, `Grupează rândurile după o coloană`],
     correctIndex: 1,
-    explanation: `DISTINCT elimină rândurile duplicate din rezultat. ORDER BY sortează, TOP limitează, GROUP BY grupează.`,
+    explanation: `DISTINCT scoate rândurile identice din setul de rezultate. Sortarea o face ORDER BY, limitarea o face TOP, iar gruparea aparține lui GROUP BY.`,
   },
   {
     id: `sql-059`,
     type: "single",
     topic: `General`,
-    prompt: `Which of the following is NOT a valid aggregate function in SQL?`,
+    prompt: `Care dintre următoarele NU este o funcție de agregare validă în SQL?`,
     options: [`COUNT()`, `AVG()`, `TOTAL()`, `MAX()`],
     correctIndex: 2,
-    explanation: `Funcțiile agregate standard: COUNT, SUM, AVG, MIN, MAX. TOTAL() nu există în SQL standard.`,
+    explanation: `Funcțiile de agregare standard sunt COUNT, SUM, AVG, MIN și MAX. TOTAL nu face parte din SQL standard, deci este varianta invalidă din listă.`,
   },
   {
     id: `sql-060`,
     type: "single",
     topic: `General`,
-    prompt: `You have a Customers table. You need to find all customers whose name starts with 'A'.
+    prompt: `Ai un tabel Buyer. Vrei toți cumpărătorii al căror nume începe cu 'B'.
 
-Which WHERE clause should you use?`,
-    options: [`WHERE Name = 'A%'`, `WHERE Name LIKE 'A%'`, `WHERE Name STARTS 'A'`, `WHERE Name BEGINS WITH 'A'`],
+Ce clauză WHERE folosești?`,
+    options: [`WHERE Name = 'B%'`, `WHERE Name LIKE 'B%'`, `WHERE Name STARTS 'B'`, `WHERE Name BEGINS WITH 'B'`],
     correctIndex: 1,
-    explanation: `LIKE cu wildcard % = potrivire parțială. 'A%' = începe cu A. = caută valoarea exactă 'A%'. STARTS și BEGINS WITH nu există.`,
+    explanation: `Pentru o potrivire parțială folosim LIKE împreună cu wildcard-ul %. Forma 'B%' acceptă orice text care începe cu B. Operatorul = cere egalitate strictă, iar STARTS sau BEGINS WITH nu există.`,
   },
   {
     id: `sql-061`,
     type: "single",
     topic: `General`,
-    prompt: `You are structuring a table in a relational database. The table will have a primary key.
+    prompt: `Construiești un tabel într-o bază relațională. Tabelul va avea o cheie primară.
 
-For each statement, select True or False:
+Pentru fiecare afirmație, alege Adevărat sau Fals:
 
-"Each value in a field in a table must be unique."`,
-    options: [`True`, `False`],
+„Toate valorile dintr-o coloană obișnuită trebuie să fie distincte."`,
+    options: [`Adevărat`, `Fals`],
     correctIndex: 1,
-    explanation: `FALSE — Valorile dintr-un câmp NU trebuie să fie unice (ex: doi studenți cu aceeași vârstă). Doar PK e unică.`,
+    explanation: `Răspunsul este Fals. Valori repetate într-o coloană sunt perfect permise (de exemplu doi clienți cu aceeași țară). Doar coloana definită ca PRIMARY KEY trebuie să fie unică.`,
   },
   {
     id: `sql-062`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Employee that includes the following columns:
-  EmployeeID
-  EmployeeName
+    prompt: `Ai un tabel numit Staff cu coloanele:
+  StaffID
+  StaffName
 
-Which statement should you use to return the number of rows in the table?`,
+Care instrucțiune returnează numărul de rânduri din tabel?`,
     options: [`SELECT COUNT(rows)
-  FROM Employee;`, `SELECT COUNT(*)
-  FROM Employee;`, `SELECT SUM(*)
-  FROM Employee;`, `SELECT *
-  FROM Employee;`],
+  FROM Staff;`, `SELECT COUNT(*)
+  FROM Staff;`, `SELECT SUM(*)
+  FROM Staff;`, `SELECT *
+  FROM Staff;`],
     correctIndex: 1,
-    explanation: `COUNT(*) numără toate rândurile. COUNT(rows) nu e valid, SUM(*) nu e valid, SELECT * returnează datele.`,
+    explanation: `COUNT(*) parcurge toate rândurile și le numără. COUNT(rows) și SUM(*) nu sunt forme valide, iar SELECT * doar afișează datele propriu-zise.`,
   },
   {
     id: `sql-063`,
     type: "single",
     topic: `General`,
-    prompt: `You have the following tables:
+    prompt: `Ai următoarele tabele:
 
 ┌──────────┐    ┌────────────┐    ┌──────────┐
-│ student  │    │ enrollment │    │ course   │
+│  pupil   │    │registration│    │  lesson  │
 ├──────────┤    ├────────────┤    ├──────────┤
-│studentID │◄──►│ studentId  │    │ courseId  │
-│firstName │    │ courseId   │◄──►│ name     │
+│ pupilID  │◄──►│  pupilId   │    │ lessonId │
+│firstName │    │  lessonId  │◄──►│   name   │
 │lastName  │    └────────────┘    └──────────┘
 └──────────┘
 
-You need to return the student name and each course they are taking. Students who are not enrolled should not be returned.
+Trebuie să returnezi numele elevilor și denumirile lecțiilor pe care le urmează. Elevii fără înscriere nu trebuie incluși.
 
-The original query uses OUTER JOIN and WHERE, which returns an error.
+Interogarea inițială folosește OUTER JOIN și WHERE și produce eroare.
 
-How should you correct the query?`,
-    options: [`SELECT student.firstname, student.lastname, course.name FROM course
-INNER JOIN enrollment ON enrollment.courseID = course.courseID
-INNER JOIN student ON enrollment.studentID = student.studentID;`, `SELECT firstname, lastname, name FROM student
-INNER JOIN ON course, enrollment
-WHERE enrollment.courseID = course.courseID AND enrollment.studentID = student.studentID;`, `SELECT student.firstname, student.lastname, course.name FROM student
-INNER JOIN ON course, enrollment
-WHERE enrollment.courseID = course.courseID AND enrollment.studentID = student.studentID;`, `SELECT firstname, lastname, name FROM course
-INNER JOIN enrollment WHERE enrollment.courseID = course.courseID
-INNER JOIN student WHERE enrollment.studentID = student.studentID;`],
+Cum o corectezi?`,
+    options: [`SELECT pupil.firstname, pupil.lastname, lesson.name FROM lesson
+INNER JOIN registration ON registration.lessonID = lesson.lessonID
+INNER JOIN pupil ON registration.pupilID = pupil.pupilID;`, `SELECT firstname, lastname, name FROM pupil
+INNER JOIN ON lesson, registration
+WHERE registration.lessonID = lesson.lessonID AND registration.pupilID = pupil.pupilID;`, `SELECT pupil.firstname, pupil.lastname, lesson.name FROM pupil
+INNER JOIN ON lesson, registration
+WHERE registration.lessonID = lesson.lessonID AND registration.pupilID = pupil.pupilID;`, `SELECT firstname, lastname, name FROM lesson
+INNER JOIN registration WHERE registration.lessonID = lesson.lessonID
+INNER JOIN pupil WHERE registration.pupilID = pupil.pupilID;`],
     correctIndex: 0,
-    explanation: `INNER JOIN prin enrollment (tabelul de joncțiune). Folosim ON nu WHERE. Excludem studenții neînscriși cu INNER JOIN.`,
+    explanation: `Soluția corectă folosește INNER JOIN prin tabelul intermediar registration, cu condițiile exprimate prin ON, nu prin WHERE. Astfel sunt eliminați elevii fără înscriere.`,
   },
   {
     id: `sql-064`,
     type: "multi",
     topic: `General`,
-    prompt: `You need to normalize a database to first normal form.
+    prompt: `Trebuie să normalizezi o bază de date la prima formă normală.
 
-Which two requirements must you meet? (Choose 2.)`,
-    options: [`Exclude duplicate rows.`, `Exclude foreign keys.`, `Exclude composite keys.`, `Exclude repeating groups.`],
+Care două cerințe trebuie îndeplinite? (Alege 2.)`,
+    options: [`Eliminarea rândurilor duplicate.`, `Eliminarea cheilor străine.`, `Eliminarea cheilor compuse.`, `Eliminarea grupurilor repetitive.`],
     correctIndices: [0, 3],
     min: 2,
-    explanation: `1NF = (1) Fără rânduri duplicate și (2) Fără grupuri repetitive (fiecare celulă conține o singură valoare).`,
+    explanation: `Prima formă normală cere două lucruri: niciun rând să nu se repete și nicio celulă să nu conțină valori multiple, deci fără grupuri repetitive în interiorul unei singure coloane.`,
   },
   {
     id: `sql-065`,
     type: "single",
     topic: `General`,
-    prompt: `The following is a portion of the Company table:
+    prompt: `Mai jos este o porțiune din tabelul Firm:
 
 ┌──────┬─────────────────┬───────┬──────┬──────────────────────┬────────────┐
 │  ID  │     Name        │ State │ Type │    Description       │    Date    │
 ├──────┼─────────────────┼───────┼──────┼──────────────────────┼────────────┤
-│ 1000 │ Healthy Eats    │  NY   │ ABA  │ Delivers meal kits   │ 02/01/1988 │
-│ 1001 │ Rock Music Zone │  UT   │ AZZ  │ Sells musical instr. │ 04/10/2022 │
-│ 1002 │ Sunset Web      │  UT   │ CYY  │ Builds custom soft.  │ 08/01/1943 │
-│ 1003 │ CompanyPro      │  CA   │ MCC  │ Creates learning sol.│ 12/31/2016 │
+│ 1000 │ Healthy Eats    │  NY   │ ABA  │ Livrează kit-uri     │ 02/01/1988 │
+│ 1001 │ Rock Music Zone │  AZ   │ AZZ  │ Vinde instrumente    │ 04/10/2022 │
+│ 1002 │ Sunset Web      │  AZ   │ CYY  │ Software personalizat│ 08/01/1943 │
+│ 1003 │ FirmPro         │  CA   │ MCC  │ Soluții educaționale │ 12/31/2016 │
 └──────┴─────────────────┴───────┴──────┴──────────────────────┴────────────┘
 
-You want to create a view that retrieves only the ID, Name and Type from the table for all companies in the state of UT.
+Vrei un view care preia doar ID, Name și Type pentru toate firmele din statul AZ.
 
-How should you construct the query?`,
-    options: [`CREATE VIEW CompanyView AS
-SELECT * FROM Company WHERE State = 'UT';`, `CREATE VIEW CompanyView AS
-SELECT ID, Name, Type FROM Company WHERE State = 'UT';`, `INSERT VIEW CompanyView AS
-SELECT ID, Name, Type FROM Company WHERE State = 'UT';`, `CREATE TABLE CompanyView AS
-SELECT ID, Name, Type FROM Company WHERE State = 'UT';`],
+Cum construiești interogarea?`,
+    options: [`CREATE VIEW FirmView AS
+SELECT * FROM Firm WHERE State = 'AZ';`, `CREATE VIEW FirmView AS
+SELECT ID, Name, Type FROM Firm WHERE State = 'AZ';`, `INSERT VIEW FirmView AS
+SELECT ID, Name, Type FROM Firm WHERE State = 'AZ';`, `CREATE TABLE FirmView AS
+SELECT ID, Name, Type FROM Firm WHERE State = 'AZ';`],
     correctIndex: 1,
-    explanation: `CREATE VIEW ... AS SELECT doar coloanele dorite (ID, Name, Type), nu SELECT *. INSERT VIEW nu există.`,
+    explanation: `Definiția corectă a unui view conține CREATE VIEW urmat de AS SELECT cu doar coloanele cerute (ID, Name, Type). SELECT * ar aduce toate coloanele, iar INSERT VIEW nu este o sintaxă recunoscută.`,
   },
   {
     id: `sql-066`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Product that contains the following data:
+    prompt: `Ai un tabel numit Item cu următoarele date:
 
 ┌───────────┬─────────────┬────────────┐
-│ ProductID │ ProductName │ CategoryID │
+│  ItemID   │  ItemName   │  GroupID   │
 ├───────────┼─────────────┼────────────┤
-│   3296    │   Spoon     │    2222    │
-│   1114    │   Chair     │    4444    │
+│   3296    │   Lingură   │    2222    │
+│   1114    │   Scaun     │    4444    │
 └───────────┴─────────────┴────────────┘
 
-The ProductID column is the primary key. The CategoryID column is a foreign key to a separate table named Category.
+Coloana ItemID este cheia primară. Coloana GroupID este cheie străină către un tabel separat numit Group.
 
-You execute the following statement:
+Execuți următoarea instrucțiune:
 
-INSERT INTO Product
-    VALUES (3296, 'Table', 4444);
+INSERT INTO Item
+    VALUES (3296, 'Masă', 4444);
 
-What is the result?`,
-    options: [`A foreign key constraint violation`, `A new row in the Product table`, `A syntax error`, `A new row in the Category table`, `A primary key constraint violation`],
+Care este rezultatul?`,
+    options: [`O încălcare a constrângerii de cheie străină`, `Un nou rând în tabelul Item`, `O eroare de sintaxă`, `Un nou rând în tabelul Group`, `O încălcare a constrângerii de cheie primară`],
     correctIndex: 4,
-    explanation: `ProductID 3296 deja există în tabel → Primary Key Constraint Violation. PK nu permite duplicate.`,
+    explanation: `Valoarea 3296 există deja ca ItemID în tabel, deci motorul respinge inserarea cu o eroare Primary Key Constraint Violation. Cheile primare nu permit valori repetate.`,
   },
   {
     id: `sql-067`,
     type: "single",
     topic: `General`,
-    prompt: `A table named PlayerStat contains the following fields:
+    prompt: `Un tabel numit AthleteScore are următoarele câmpuri:
 
 ┌──────────┬───────────┬─────────────┐
-│  Field   │ Data Type │ Allow Nulls │
+│  Câmp    │ Tip date  │ Permite NULL│
 ├──────────┼───────────┼─────────────┤
-│ PlayerID │   INT     │    FALSE    │
-│ TeamID   │   INT     │    FALSE    │
-│ GameDate │ DATETIME  │    TRUE     │
-│ Points   │   INT     │    TRUE     │
+│ AthleteID│   INT     │    FALSE    │
+│ SquadID  │   INT     │    FALSE    │
+│ MatchDate│ DATETIME  │    TRUE     │
+│ Score    │   INT     │    TRUE     │
 └──────────┴───────────┴─────────────┘
 
-You need to display the total number of points per player on the team whose TeamID is 1.
+Vrei să afișezi totalul scorului pe atlet pentru echipa cu SquadID = 1.
 
-Complete the query:
-SELECT PlayerID, [___]
-FROM PlayerStat
-[___] TeamID = 1
-[___] PlayerID`,
-    options: [`SUM(Points), WHERE, GROUP BY`, `COUNT, WHERE, GROUP BY`, `SUM(Points), HAVING, ORDER BY`, `COUNT, HAVING, GROUP BY`],
+Completează interogarea:
+SELECT AthleteID, [___]
+FROM AthleteScore
+[___] SquadID = 1
+[___] AthleteID`,
+    options: [`SUM(Score), WHERE, GROUP BY`, `COUNT, WHERE, GROUP BY`, `SUM(Score), HAVING, ORDER BY`, `COUNT, HAVING, GROUP BY`],
     correctIndex: 0,
-    explanation: `SUM(Points) = total puncte. WHERE TeamID=1 filtrează înainte de grupare. GROUP BY PlayerID grupează per jucător.`,
+    explanation: `SUM(Score) generează totalul punctelor, WHERE SquadID = 1 filtrează rândurile dorite înainte de grupare, iar GROUP BY AthleteID adună rezultatele separat pentru fiecare atlet.`,
   },
   {
     id: `sql-068`,
     type: "single",
     topic: `General`,
-    prompt: `A table has a clustered index.
+    prompt: `Un tabel are un index clustered.
 
-"A clustered index improves the performance of queries that ___"
-"A clustered index improves the performance of queries on columns that ___"`,
-    options: [`...return a range of values / ...are used in ORDER BY or range searches`, `...return a single row / ...contain NULL values`, `...use subqueries / ...store binary data`, `...use aggregate functions / ...are rarely queried`],
+„Un index clustered îmbunătățește performanța interogărilor care ___"
+„Un index clustered îmbunătățește performanța interogărilor pe coloane care ___"`,
+    options: [`...returnează un interval de valori / ...sunt folosite în ORDER BY sau căutări de interval`, `...returnează un singur rând / ...conțin valori NULL`, `...folosesc subinterogări / ...stochează date binare`, `...folosesc funcții de agregare / ...sunt rar interogate`],
     correctIndex: 0,
-    explanation: `Clustered index sortează datele fizic → ideal pt range queries și coloane folosite frecvent în ORDER BY / WHERE cu range.`,
+    explanation: `Pentru că datele sunt sortate fizic pe disc, indexul clustered este optim atunci când interogarea cere intervale sau coloana este folosită frecvent pentru sortare ori pentru filtre cu interval.`,
   },
   {
     id: `sql-069`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Customer. You need to create a new column named District.
+    prompt: `Ai un tabel Client. Vrei să adaugi o coloană nouă numită Region.
 
-Which statement should you use?`,
-    options: [`ALTER TABLE Customer
-MODIFY (District INTEGER);`, `ALTER TABLE Customer
-ADD (District INTEGER);`, `ALTER TABLE Customer
-ADD (INTEGER District);`, `MODIFY TABLE Customer
-ADD (INTEGER District);`],
+Ce instrucțiune folosești?`,
+    options: [`ALTER TABLE Client
+MODIFY (Region INTEGER);`, `ALTER TABLE Client
+ADD (Region INTEGER);`, `ALTER TABLE Client
+ADD (INTEGER Region);`, `MODIFY TABLE Client
+ADD (INTEGER Region);`],
     correctIndex: 1,
-    explanation: `ALTER TABLE ... ADD (NumeColoană TipDate). MODIFY schimbă o coloană existentă, nu adaugă.`,
+    explanation: `Adăugarea unei coloane se face prin ALTER TABLE ... ADD (NumeColoană TipDate). MODIFY ar fi pentru o coloană deja prezentă, iar inversarea ordinii nume/tip e respinsă de parser.`,
   },
   {
     id: `sql-070`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table that contains the following data:
+    prompt: `Ai un tabel cu următoarele date:
 
 ┌───────────┬─────────────────┐
-│ ProductID │ ProductCategory │
+│  ItemID   │   ItemGroup     │
 ├───────────┼─────────────────┤
-│    32     │     books       │
-│    25     │     books       │
-│    67     │     movies      │
-│    89     │     movies      │
+│    32     │     cărți       │
+│    25     │     cărți       │
+│    67     │     filme       │
+│    89     │     filme       │
 └───────────┴─────────────────┘
 
-Which database term is used to describe the relationship between ProductID and ProductCategory?`,
-    options: [`compositional`, `relationally dependent`, `deterministic`, `functionally dependent`],
+Ce termen din baze de date descrie relația dintre ItemID și ItemGroup?`,
+    options: [`compozițional`, `dependent relațional`, `determinist`, `dependent funcțional`],
     correctIndex: 3,
-    explanation: `Functionally dependent: ProductID determină unic ProductCategory (fiecare ID → exact o categorie).`,
+    explanation: `Este vorba de dependență funcțională: pentru fiecare ItemID există o singură valoare ItemGroup posibilă, deci ItemID determină în mod unic categoria.`,
   },
   {
     id: `sql-071`,
     type: "single",
     topic: `General`,
-    prompt: `A stored procedure contains the following query:
+    prompt: `O procedură stocată conține următoarea interogare:
 
-SELECT 'Greetings ' + Prefix + ' ' + FirstName FROM Person;
+SELECT 'Bună ziua, ' + Title + ' ' + GivenName FROM Contact;
 
-The stored procedure returns all null values. You verify that there is data in the Person table.
+Procedura returnează doar valori NULL. Ai verificat și există date în tabelul Contact.
 
-What is likely the cause of this problem?`,
-    options: [`The Prefix or FirstName columns have null values.`, `The plus (+) operator cannot be used to append character data.`, `You must specify the JOIN keyword in the SELECT statement.`, `You must specify the NULLIF keyword in the query.`],
+Care este cauza probabilă?`,
+    options: [`Coloanele Title sau GivenName conțin valori NULL.`, `Operatorul plus (+) nu poate concatena șiruri de caractere.`, `Trebuie specificat cuvântul JOIN în SELECT.`, `Trebuie specificat cuvântul NULLIF în interogare.`],
     correctIndex: 0,
-    explanation: `În SQL Server, NULL + orice string = NULL. Dacă Prefix sau FirstName e NULL, tot rezultatul concatenării e NULL.`,
+    explanation: `În SQL Server orice șir concatenat cu NULL produce NULL. Dacă Title sau GivenName este NULL pentru un rând, întreaga concatenare devine NULL pentru acel rând.`,
   },
   {
     id: `sql-072`,
     type: "single",
     topic: `General`,
-    prompt: `You are creating a database object named Student to store the following data:
+    prompt: `Creezi un obiect numit Pupil pentru a stoca datele:
 
 ┌────┬────────┬─────┐
 │ ID │  Name  │ Age │
 ├────┼────────┼─────┤
-│  1 │  Rene  │  18 │
-│  2 │  Tia   │  22 │
-│  3 │  Oliver│  25 │
+│  1 │  Diana │  18 │
+│  2 │  Andrei│  22 │
+│  3 │  Vlad  │  25 │
 └────┴────────┴─────┘
 
-Which syntax should you use to create the object?`,
+Ce sintaxă folosești pentru a crea obiectul?`,
     options: [`CREATE (
-TABLE Student
+TABLE Pupil
   ID INT,
   Name VARCHAR (100),
-  Age INT);`, `CREATE Student(
+  Age INT);`, `CREATE Pupil(
   ID INT,
   Name VARCHAR (100),
-  Age INT);`, `CREATE TABLE Student(
+  Age INT);`, `CREATE TABLE Pupil(
   ID INT,
   Name VARCHAR (100),
   Age INT);`, `CREATE TABLE (
@@ -943,414 +943,414 @@ TABLE Student
   Name VARCHAR (100),
   Age INT);`],
     correctIndex: 2,
-    explanation: `CREATE TABLE NumeTabel( coloane ). Trebuie CREATE TABLE + numele tabelului + paranteza cu coloane.`,
+    explanation: `Sintaxa validă este CREATE TABLE nume_tabel(coloane). Trebuie obligatoriu cuvântul TABLE și numele obiectului plasate înaintea parantezei cu definițiile coloanelor.`,
   },
   {
     id: `sql-073`,
     type: "single",
     topic: `General`,
-    prompt: `You need to set up a database to provide a view of North American mammals (NorthAmericanMammals_View).
+    prompt: `Trebuie să configurezi o bază de date pentru a oferi un view al mamiferelor din America de Nord (NorthAmericanMammals_View).
 
-Code Segments available:
+Fragmente de cod disponibile:
 • CREATE VIEW [dbo].[NorthAmericanMammals_View]
 • INSERT VIEW [dbo].[NorthAmericanMammals_View]
 • AS JOIN a.Id, a.Name
 • AS SELECT a.Id, a.Name
-• FROM Animal a
-• JOIN Animal a
+• FROM Beast a
+• JOIN Beast a
 
-Complete the statement:
+Completează instrucțiunea:
 [___]
 [___]
 [___]
 WHERE a.Class = 'Mammals'
 AND a.InNorthAmerica = 1;`,
-    options: [`CREATE VIEW..., AS SELECT a.Id a.Name, FROM Animal a`, `INSERT VIEW..., AS JOIN a.Id a.Name, FROM Animal a`, `CREATE VIEW..., AS SELECT a.Id a.Name, JOIN Animal a`, `INSERT VIEW..., AS JOIN a.Id a.Name, JOIN Animal a`],
+    options: [`CREATE VIEW..., AS SELECT a.Id a.Name, FROM Beast a`, `INSERT VIEW..., AS JOIN a.Id a.Name, FROM Beast a`, `CREATE VIEW..., AS SELECT a.Id a.Name, JOIN Beast a`, `INSERT VIEW..., AS JOIN a.Id a.Name, JOIN Beast a`],
     correctIndex: 0,
-    explanation: `CREATE VIEW (nu INSERT VIEW) + AS SELECT (nu AS JOIN) + FROM Animal a.`,
+    explanation: `Definiția corectă a unui view începe cu CREATE VIEW (nu INSERT VIEW), continuă cu AS SELECT (nu AS JOIN) și folosește FROM pentru sursa datelor, niciodată JOIN ca prima clauză.`,
   },
   {
     id: `sql-074`,
     type: "single",
     topic: `General`,
-    prompt: `You work at a coffee shop. They ask you to set up a website that stores charges on purchases.
-You need to recommend a data type in a database table to run financial functions against the charged amounts.
+    prompt: `Lucrezi pentru o cofetărie. Ți se cere un site care stochează sumele plătite la vânzări.
+Vrei să recomanzi un tip de date pe care să rulezi calcule financiare.
 
-Which data type should you recommend?`,
+Ce tip de date recomanzi?`,
     options: [`binary`, `bit`, `decimal`, `varchar`],
     correctIndex: 2,
-    explanation: `DECIMAL = precizie exactă pt bani. BIT=0/1, BINARY=date binare, VARCHAR=text.`,
+    explanation: `Pentru sume monetare cu precizie exactă alegerea naturală este DECIMAL. BIT reține doar 0/1, BINARY este pentru date brute, iar VARCHAR pentru text liber.`,
   },
   {
     id: `sql-075`,
     type: "single",
     topic: `General`,
-    prompt: `You accept an IT internship at a local charity. The charity asks you to keep a record of its volunteers using a database table named Volunteer. The table has the following columns and rows:
+    prompt: `Faci stagiu IT la o organizație caritabilă. Aceasta vrea să țină evidența voluntarilor într-un tabel numit Helper. Tabelul are următoarele coloane și rânduri:
 
 ┌────┬───────────┐
 │ Id │ GivenName │
 ├────┼───────────┤
-│  1 │    Tia    │
-│  2 │   Susana  │
-│  3 │    Joey   │
+│  1 │   Mihai   │
+│  2 │  Carolina │
+│  3 │   Ion     │
 └────┴───────────┘
 
-You need to change Tia's name to Kimberly.
+Vrei să schimbi prenumele lui Mihai în Andrei.
 
-Which statement should you choose?`,
-    options: [`UPDATE GivenName = 'Kimberly'
-FROM Volunteer
-WHERE GivenName = 'Tia';`, `SET Volunteer = 'Kimberly'
-WHERE GivenName = 'Tia';`, `UPDATE Volunteer
-SET GivenName = 'Kimberly'
-WHERE GivenName = 'Tia';`, `SET GivenName = 'Kimberly'
-FROM Volunteer
-WHERE GivenName = 'Tia';`],
+Ce instrucțiune alegi?`,
+    options: [`UPDATE GivenName = 'Andrei'
+FROM Helper
+WHERE GivenName = 'Mihai';`, `SET Helper = 'Andrei'
+WHERE GivenName = 'Mihai';`, `UPDATE Helper
+SET GivenName = 'Andrei'
+WHERE GivenName = 'Mihai';`, `SET GivenName = 'Andrei'
+FROM Helper
+WHERE GivenName = 'Mihai';`],
     correctIndex: 2,
-    explanation: `UPDATE tabel SET coloană = valoare WHERE condiție. Ordinea: UPDATE → SET → WHERE.`,
+    explanation: `Sintaxa corectă este UPDATE tabel SET coloana = valoare WHERE condiție. Ordinea cuvintelor cheie este UPDATE, apoi SET și abia la sfârșit WHERE.`,
   },
   {
     id: `sql-076`,
     type: "single",
     topic: `General`,
-    prompt: `You execute the following query:
+    prompt: `Execuți următoarea interogare:
 
-SELECT EmployeeID, FirstName, DepartmentName
-FROM Employee, Department;
+SELECT WorkerID, FirstName, UnitName
+FROM Worker, Unit;
 
-Which type of operation was performed?`,
-    options: [`outer join.`, `Cartesian product.`, `equi-join.`, `intersection.`],
+Ce tip de operație s-a efectuat?`,
+    options: [`outer join.`, `produs cartezian.`, `equi-join.`, `intersecție.`],
     correctIndex: 1,
-    explanation: `SELECT din două tabele separate prin virgulă, fără JOIN/WHERE = Cartesian product (produs cartezian).`,
+    explanation: `Două tabele scrise după FROM, separate doar prin virgulă și fără JOIN sau WHERE, generează un produs cartezian: fiecare combinație posibilă între rânduri apare în rezultat.`,
   },
   {
     id: `sql-077`,
     type: "single",
     topic: `General`,
-    prompt: `How is a function different from a stored procedure?`,
-    options: [`A function must be called from a trigger.`, `A function cannot contain a transaction.`, `A function cannot accept parameters.`, `A function must return a value.`],
+    prompt: `Prin ce diferă o funcție de o procedură stocată?`,
+    options: [`O funcție trebuie apelată dintr-un trigger.`, `O funcție nu poate conține o tranzacție.`, `O funcție nu acceptă parametri.`, `O funcție trebuie să returneze o valoare.`],
     correctIndex: 3,
-    explanation: `Diferența cheie: o funcție TREBUIE să returneze o valoare. Stored procedures pot sau nu returna valori.`,
+    explanation: `Diferența principală: o funcție întoarce întotdeauna o valoare, în timp ce o procedură stocată poate executa acțiuni fără a returna nimic.`,
   },
   {
     id: `sql-078`,
     type: "single",
     topic: `General`,
-    prompt: `Which query returns a result set of orders placed after January 2023 in all states except California (CA)?`,
-    options: [`SELECT * FROM orders WHERE order_date > '2023-01-31' OR ship_state <> 'CA';`, `SELECT * FROM orders WHERE order_date > '2023-01-31' AND ship_state LIKE 'CA';`, `SELECT * FROM orders WHERE order_date > '2023-01-31' OR ship_state LIKE 'CA';`, `SELECT * FROM orders WHERE order_date > '2023-01-31' AND ship_state <> 'CA';`],
+    prompt: `Care interogare returnează comenzile plasate după ianuarie 2023, în toate statele cu excepția statului Texas (TX)?`,
+    options: [`SELECT * FROM purchases WHERE purchase_date > '2023-01-31' OR delivery_state <> 'TX';`, `SELECT * FROM purchases WHERE purchase_date > '2023-01-31' AND delivery_state LIKE 'TX';`, `SELECT * FROM purchases WHERE purchase_date > '2023-01-31' OR delivery_state LIKE 'TX';`, `SELECT * FROM purchases WHERE purchase_date > '2023-01-31' AND delivery_state <> 'TX';`],
     correctIndex: 3,
-    explanation: `Ambele condiții simultane → AND. Excepție CA → <> (not equal). LIKE e pt pattern matching, OR ar include prea mult.`,
+    explanation: `Ambele condiții (data și statul) trebuie respectate simultan, deci AND. Excluderea statului TX se exprimă cu operatorul <>; LIKE este pentru pattern, nu pentru egalitate.`,
   },
   {
     id: `sql-079`,
     type: "single",
     topic: `General`,
-    prompt: `Your database contains a table named Customer. You need to delete the record from the Customer table that has a CustomerID of 12345.
+    prompt: `Baza ta de date conține un tabel numit Buyer. Trebuie să elimini înregistrarea cu BuyerID = 12345.
 
-Which statement should you use?`,
-    options: [`DELETE FROM Customer
-  WHERE CustomerID = 12345;`, `UPDATE CustomerID
-  FROM Customer
+Ce instrucțiune folosești?`,
+    options: [`DELETE FROM Buyer
+  WHERE BuyerID = 12345;`, `UPDATE BuyerID
+  FROM Buyer
   DELETE *
-  WHERE CustomerID = 12345;`, `DELETE CustomerID
-  FROM Customer
-  WHERE CustomerID = 12345;`, `UPDATE Customer
+  WHERE BuyerID = 12345;`, `DELETE BuyerID
+  FROM Buyer
+  WHERE BuyerID = 12345;`, `UPDATE Buyer
   DELETE *
-  WHERE CustomerID = 12345;`],
+  WHERE BuyerID = 12345;`],
     correctIndex: 0,
-    explanation: `DELETE FROM tabel WHERE condiție. Nu se specifică coloane la DELETE și nu se combină cu UPDATE.`,
+    explanation: `Forma validă este DELETE FROM tabel WHERE condiție. La DELETE nu se enumeră coloane, iar amestecarea cu UPDATE produce erori de sintaxă.`,
   },
   {
     id: `sql-080`,
     type: "single",
     topic: `General`,
-    prompt: `The Products table contains the following data:
+    prompt: `Tabelul Goods conține următoarele date:
 
 ┌────────────┬───────────────┬────────────────────────────────────────────┬───────┐
 │ ItemNumber │   ItemName    │            ItemDescription                │ Price │
 ├────────────┼───────────────┼────────────────────────────────────────────┼───────┤
-│     1      │ Bonbon Box    │ Chocolate Truffles, Black Forest...      │ 24.95 │
-│     2      │ Brownie Bites │ Caramel Nut, German Chocolate...         │ 14.95 │
-│     3      │ Cappuccino Co.│ Tasty treats to accompany your java...   │ 21.50 │
-│     4      │ Citrus Cooler │ Refreshing citrus cookies...             │ 19.99 │
-│     5      │ Fruit Jewels  │ Fruity Favorites...                      │ 29.99 │
+│     1      │ Cutie Pralină │ Trufe ciocolată, Pădurea Neagră...       │ 24.95 │
+│     2      │ Mini Brownies │ Caramel cu nucă, ciocolată germană...    │ 14.95 │
+│     3      │ Set Cappuccino│ Dulciuri pentru cafea...                 │ 21.50 │
+│     4      │ Citrice Bites │ Biscuiți răcoritori cu citrice...        │ 19.99 │
+│     5      │ Bijuterii Fr. │ Selecții fructate...                     │ 29.99 │
 └────────────┴───────────────┴────────────────────────────────────────────┴───────┘
 
-Which query will increase the price of item 1 by 6 percent?`,
-    options: [`UPDATE Products
+Ce interogare crește prețul articolului 1 cu 6 procente?`,
+    options: [`UPDATE Goods
 SET Price = Price * 1.06
-WHERE ItemNumber = 1;`, `ALTER Products
+WHERE ItemNumber = 1;`, `ALTER Goods
 SET Price = Price * 1.06
 WHERE ItemNumber = 1;`, `SET Price = Price * 1.06
-FROM Products
-WHERE ItemNumber = 1;`, `USE Products
+FROM Goods
+WHERE ItemNumber = 1;`, `USE Goods
 SET Price = Price * 1.06
 WHERE ItemNumber = 1;`],
     correctIndex: 0,
-    explanation: `UPDATE tabel SET coloana = expresie WHERE condiție. Price * 1.06 = +6%. ALTER/USE/SET singur nu sunt valide.`,
+    explanation: `Forma corectă este UPDATE tabel SET coloana = expresie WHERE condiție. Înmulțirea cu 1.06 echivalează cu o creștere de 6%, iar variantele cu ALTER, USE sau SET singur sunt invalide.`,
   },
   {
     id: `sql-081`,
     type: "single",
     topic: `General`,
-    prompt: `You accept an IT internship at a local charity. Table Volunteer:
+    prompt: `Faci un stagiu IT la o organizație caritabilă. Tabelul Helper:
 
 ┌────┬───────────┬─────────────┐
 │ ID │ GivenName │ DateOfBirth │
 ├────┼───────────┼─────────────┤
-│  1 │    Tia    │ 1976-05-30  │
-│  2 │   Susana  │ 1952-11-04  │
-│  3 │    Joey   │ 1963-02-17  │
+│  1 │   Mihai   │ 1976-05-30  │
+│  2 │  Carolina │ 1952-11-04  │
+│  3 │    Ion    │ 1963-02-17  │
 └────┴───────────┴─────────────┘
 
-You need to delete all records with the GivenName Tia.
+Vrei să elimini toate înregistrările cu GivenName = Mihai.
 
-Which SQL statement should you use?`,
-    options: [`DELETE FROM Volunteer WHERE GivenName = 'Tia';`, `DELETE FROM Volunteer WHERE GivenName == 'Tia';`, `DELETE FROM Volunteer WHERE GivenName EQUALS 'Tia';`, `DELETE FROM Volunteer WHERE GivenName IS 'Tia';`],
+Ce instrucțiune SQL folosești?`,
+    options: [`DELETE FROM Helper WHERE GivenName = 'Mihai';`, `DELETE FROM Helper WHERE GivenName == 'Mihai';`, `DELETE FROM Helper WHERE GivenName EQUALS 'Mihai';`, `DELETE FROM Helper WHERE GivenName IS 'Mihai';`],
     correctIndex: 0,
-    explanation: `Operatorul de comparație în SQL este = (un singur egal). == nu există, EQUALS nu există, IS e doar pt NULL.`,
+    explanation: `Operatorul de egalitate în SQL este un singur =. Forma == nu există, EQUALS nu este cuvânt cheie, iar IS este permis exclusiv pentru testul cu NULL.`,
   },
   {
     id: `sql-082`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Product. The Product table has columns for ProductDescription and ProductCategory.
+    prompt: `Ai un tabel numit Item, cu coloanele ItemDescription și ItemGroup.
 
-You need to change the ProductCategory value for all the spoons in the Product table to 43.
+Vrei să schimbi valoarea ItemGroup la 43 pentru toate lingurile din Item.
 
-A ProductDescription of spoon indicates that the item is a spoon.
+ItemDescription = 'lingură' identifică o lingură.
 
-Which statement should you use?`,
-    options: [`SET Product
-  WHERE ProductDescription = 'spoon'
-  TO ProductCategory = 43;`, `SET Product
-  TO ProductCategory = 43
-  WHERE ProductDescription = 'spoon';`, `UPDATE Product
-  WHERE ProductDescription = 'spoon'
-  SET ProductCategory = 43;`, `UPDATE Product
-  SET ProductCategory = 43
-  WHERE ProductDescription = 'spoon';`],
+Ce instrucțiune folosești?`,
+    options: [`SET Item
+  WHERE ItemDescription = 'lingură'
+  TO ItemGroup = 43;`, `SET Item
+  TO ItemGroup = 43
+  WHERE ItemDescription = 'lingură';`, `UPDATE Item
+  WHERE ItemDescription = 'lingură'
+  SET ItemGroup = 43;`, `UPDATE Item
+  SET ItemGroup = 43
+  WHERE ItemDescription = 'lingură';`],
     correctIndex: 3,
-    explanation: `UPDATE tabel SET coloana=valoare WHERE condiție. SET nu poate fi singur, și WHERE vine DUPĂ SET.`,
+    explanation: `Ordinea cerută este UPDATE tabel SET coloana = valoare WHERE condiție. SET nu poate apărea singur, iar WHERE trebuie să vină după SET, nu înaintea lui.`,
   },
   {
     id: `sql-083`,
     type: "single",
     topic: `General`,
-    prompt: `The Customers table is defined as follows:
+    prompt: `Tabelul Buyer este definit astfel:
 
 ┌────────────┬─────────────────┬────────┬───────────────┐
-│ CustomerID │    Address      │ Region │   Country     │
+│  BuyerID   │    Address      │ Region │   Country     │
 ├────────────┼─────────────────┼────────┼───────────────┤
-│    123     │ 123 Main Street │ Nevada │ United States │
-│    456     │ 456 Rue de Paris│ Paris  │    France     │
-│    789     │ 789 Elm Street  │ Maine  │ United States │
+│    123     │ str. Teilor 12  │ Chișin │   Moldova     │
+│    456     │ Rue de Lyon 5   │ Lyon   │    Franța     │
+│    789     │ str. Mihai E. 8 │ Bălți  │   Moldova     │
 └────────────┴─────────────────┴────────┴───────────────┘
 
-You need to write a SQL query that will return the number of customers in each country that has fewer than 50 customers.
+Trebuie să scrii o interogare care returnează numărul de cumpărători din fiecare țară care are mai puțin de 50 de cumpărători.
 
-Which query should you use?`,
-    options: [`SELECT Country, CustomerID
-FROM Customers
+Ce interogare folosești?`,
+    options: [`SELECT Country, BuyerID
+FROM Buyer
 GROUP BY Country
-WHERE COUNT(CustomerID) < 50;`, `SELECT Country, CustomerID
-FROM Customers
-WHERE COUNT(CustomerID) < 50
-GROUP BY Country;`, `SELECT COUNT(CustomerID), Country
-FROM Customers
+WHERE COUNT(BuyerID) < 50;`, `SELECT Country, BuyerID
+FROM Buyer
+WHERE COUNT(BuyerID) < 50
+GROUP BY Country;`, `SELECT COUNT(BuyerID), Country
+FROM Buyer
 GROUP BY Country
-HAVING COUNT(CustomerID) < 50;`, `SELECT COUNT(CustomerID), Country
-FROM Customers
-HAVING COUNT(CustomerID) < 50
+HAVING COUNT(BuyerID) < 50;`, `SELECT COUNT(BuyerID), Country
+FROM Buyer
+HAVING COUNT(BuyerID) < 50
 GROUP BY Country;`],
     correctIndex: 2,
-    explanation: `HAVING filtrează grupuri (nu WHERE). Ordinea corectă: GROUP BY apoi HAVING. WHERE nu merge cu funcții agregate.`,
+    explanation: `Filtrarea pe rezultatele unei agregări se face cu HAVING, niciodată cu WHERE. Ordinea corectă în query este GROUP BY, apoi HAVING. WHERE nu acceptă funcții de agregare.`,
   },
   {
     id: `sql-084`,
     type: "single",
     topic: `General`,
-    prompt: `Your company stores customer social security numbers in a column named SSN in a table named Customers. New compliance laws prohibit your company from storing this information.
+    prompt: `Compania ta stochează codurile fiscale ale clienților într-o coloană numită IDNP din tabelul Buyer. Noile reglementări de conformitate interzic păstrarea acestor date.
 
-Running the query below causes an error:
-ALTER TABLE Customers
-REMOVE SSN;
+Rularea interogării de mai jos produce eroare:
+ALTER TABLE Buyer
+REMOVE IDNP;
 
-What changes are needed to the query above so that it removes the SSN column from the Customers table?`,
-    options: [`ALTER TABLE Customers
-DELETE SSN;`, `ALTER TABLE Customers
-DROP SSN;`, `ALTER TABLE Customers
-DELETE COLUMN SSN;`, `ALTER TABLE Customers
-DROP COLUMN SSN;`],
+Ce modificări sunt necesare ca instrucțiunea să elimine coloana IDNP din Buyer?`,
+    options: [`ALTER TABLE Buyer
+DELETE IDNP;`, `ALTER TABLE Buyer
+DROP IDNP;`, `ALTER TABLE Buyer
+DELETE COLUMN IDNP;`, `ALTER TABLE Buyer
+DROP COLUMN IDNP;`],
     correctIndex: 3,
-    explanation: `DROP COLUMN este sintaxa corectă pt a șterge o coloană. REMOVE, DELETE nu sunt valide pt coloane.`,
+    explanation: `Sintaxa corectă pentru a scoate o coloană este DROP COLUMN. Cuvintele REMOVE și DELETE nu sunt acceptate de SQL pentru această operațiune.`,
   },
   {
     id: `sql-085`,
     type: "single",
     topic: `General`,
-    prompt: `You have the following table definition:
+    prompt: `Ai următoarea definiție de tabel:
 
-CREATE TABLE Road
-  (RoadID INTEGER NOT NULL,
-   Distance INTEGER NOT NULL);
+CREATE TABLE Path
+  (PathID INTEGER NOT NULL,
+   Length INTEGER NOT NULL);
 
-The Road table contains the following data:
+Tabelul Path conține următoarele date:
 
 ┌────────┬──────────┐
-│ RoadID │ Distance │
+│ PathID │  Length  │
 ├────────┼──────────┤
 │  1234  │    22    │
 │  1384  │    34    │
 └────────┴──────────┘
 
-You execute the following statement:
+Execuți următoarea instrucțiune:
 
-INSERT INTO Road VALUES (1234, 36);
+INSERT INTO Path VALUES (1234, 36);
 
-What is the result?`,
-    options: [`An error stating that duplicate IDs are not allowed`, `An error stating that NULL values are not allowed`, `A syntax error`, `A new row in the table`],
+Care este rezultatul?`,
+    options: [`O eroare ce semnalează că ID-urile duplicate nu sunt permise`, `O eroare ce semnalează că valorile NULL nu sunt permise`, `O eroare de sintaxă`, `Un nou rând în tabel`],
     correctIndex: 3,
-    explanation: `Nu există PRIMARY KEY! NOT NULL ≠ UNIQUE. Fără PK, duplicatele sunt permise → se inserează rândul nou.`,
+    explanation: `Tabelul Path nu are PRIMARY KEY definit, iar NOT NULL nu este același lucru cu UNIQUE. În lipsa unei chei primare, valorile duplicate sunt permise, prin urmare rândul nou se inserează fără restricții.`,
   },
   {
     id: `sql-086`,
     type: "single",
     topic: `General`,
-    prompt: `Which statement deletes the rows where the employee's phone number is not entered?`,
-    options: [`DELETE FROM Employee
-  WHERE Phone = NULL;`, `DELETE FROM Employee
-  WHERE Phone = NULLABLE;`, `DELETE FROM Employee
-  WHERE Phone IS NOT NULL;`, `DELETE FROM Employee
+    prompt: `Care instrucțiune șterge rândurile în care numărul de telefon al angajatului nu a fost introdus?`,
+    options: [`DELETE FROM Worker
+  WHERE Phone = NULL;`, `DELETE FROM Worker
+  WHERE Phone = NULLABLE;`, `DELETE FROM Worker
+  WHERE Phone IS NOT NULL;`, `DELETE FROM Worker
   WHERE Phone IS NULL;`],
     correctIndex: 3,
-    explanation: `Phone not entered = NULL. Se testează cu IS NULL (nu = NULL, care nu funcționează). IS NOT NULL ar fi opusul.`,
+    explanation: `Lipsa unui telefon înseamnă valoare NULL, iar testul corespunzător este IS NULL. Comparația = NULL nu funcționează, iar IS NOT NULL ar viza tocmai angajații cu telefon completat.`,
   },
   {
     id: `sql-087`,
     type: "single",
     topic: `General`,
-    prompt: `You have the following entity relationship diagram (ERD) with referential integrity enforced:
+    prompt: `Ai următoarea diagramă entitate-relație (ERD), cu integritate referențială impusă:
 
 ┌──────────┐    ┌────────────┐    ┌──────────┐
-│ Machine  │    │ Assignment │    │ Operator │
+│  Device  │    │ Allocation │    │ Handler  │
 ├──────────┤    ├────────────┤    ├──────────┤
-│ ID       │◄──│ MachineID  │    │ ID       │
-│ Name     │    │ OperatorID │──►│ Name     │
-│ Model    │    │ Role       │    │Experience│
+│ ID       │◄──│ DeviceID   │    │ ID       │
+│ Name     │    │ HandlerID  │──►│ Name     │
+│ Model    │    │ Role       │    │ Seniority│
 └──────────┘    └────────────┘    └──────────┘
 
-You run the following query:
-INSERT INTO Assignment(MachineID, OperatorID) values (3, 4);
+Rulezi următoarea interogare:
+INSERT INTO Allocation(DeviceID, HandlerID) values (3, 4);
 
-You receive the following error:
-Msg 547 - The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Assignment_Machine". The conflict occurred in table "dbo.Machine", column 'ID'.
+Primești următoarea eroare:
+Msg 547 - The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Allocation_Device". The conflict occurred in table "dbo.Device", column 'ID'.
 
-What is the cause of this problem?`,
-    options: [`The Assignment table has an existing row that has a MachineID value of 3.`, `The Machine table has no rows that have an ID value of 3.`, `The Operator table has no rows that have an ID value of 4.`, `The Assignment table has an existing row that has an OperatorID value of 4.`],
+Care este cauza problemei?`,
+    options: [`Tabelul Allocation are deja un rând cu DeviceID = 3.`, `Tabelul Device nu are niciun rând cu valoarea ID = 3.`, `Tabelul Handler nu are niciun rând cu valoarea ID = 4.`, `Tabelul Allocation are deja un rând cu HandlerID = 4.`],
     correctIndex: 1,
-    explanation: `Eroarea menționează FK_Assignment_Machine și coloana ID din Machine → MachineID=3 nu există în tabela Machine.`,
+    explanation: `Mesajul indică explicit constrângerea FK_Allocation_Device și coloana ID din tabelul Device, deci valoarea 3 trimisă pentru DeviceID nu există în tabelul părinte Device.`,
   },
   {
     id: `sql-088`,
     type: "single",
     topic: `General`,
-    prompt: `Which statement creates an index?`,
-    options: [`CREATE TABLE Employee
-  (EmployeeID INTEGER INDEX);`, `CREATE TABLE Employee
-  (EmployeeID INTEGER DISTINCT);`, `CREATE TABLE Employee
-  (EmployeeID INTEGER PRIMARY
-  KEY);`, `CREATE TABLE Employee
-  (EmployeeID INTEGER NULL);`],
+    prompt: `Care instrucțiune duce la crearea unui index?`,
+    options: [`CREATE TABLE Worker
+  (WorkerID INTEGER INDEX);`, `CREATE TABLE Worker
+  (WorkerID INTEGER DISTINCT);`, `CREATE TABLE Worker
+  (WorkerID INTEGER PRIMARY
+  KEY);`, `CREATE TABLE Worker
+  (WorkerID INTEGER NULL);`],
     correctIndex: 2,
-    explanation: `PRIMARY KEY creează automat un clustered index. INDEX nu e keyword valid în CREATE TABLE. DISTINCT/NULL nu creează indexuri.`,
+    explanation: `Atunci când o coloană este declarată PRIMARY KEY, motorul construiește automat un index clustered pe ea. INDEX nu este un cuvânt cheie valid în CREATE TABLE, iar DISTINCT și NULL nu produc indexuri.`,
   },
   {
     id: `sql-089`,
     type: "single",
     topic: `General`,
-    prompt: `You have a table named Product that contains one million rows. You need to search for product information using the following query:
+    prompt: `Ai un tabel numit Item cu un milion de rânduri. Vrei să cauți informații despre produse cu interogarea:
 
-SELECT ProductName, Price FROM Product WHERE Category = 'Science Books';
+SELECT ItemName, Price FROM Item WHERE Section = 'Manuale Științifice';
 
-What will make this type of search more efficient?`,
-    options: [`a non-clustered index on the Category column`, `a clustered index on the ProductName column`, `a clustered index on the Price column`, `a non-clustered index on the Price column`],
+Ce face acest tip de căutare mai rapid?`,
+    options: [`un index nonclustered pe coloana Section`, `un index clustered pe coloana ItemName`, `un index clustered pe coloana Price`, `un index nonclustered pe coloana Price`],
     correctIndex: 0,
-    explanation: `Filtrul e pe Category → index pe Category. Non-clustered deoarece PK are deja clustered index.`,
+    explanation: `Filtrul lucrează pe Section, deci cea mai eficientă opțiune este un index pe coloana respectivă. Varianta nonclustered este potrivită aici, fiindcă indexul clustered se asociază de obicei cu cheia primară.`,
   },
   {
     id: `sql-090`,
     type: "single",
     topic: `General`,
-    prompt: `You create the following query to determine whether Sample Movie appears only once in the Movie table.
+    prompt: `Construiești următoarea interogare pentru a determina dacă Demo Film apare o singură dată în tabelul Film.
 
 SELECT Title
-FROM Movie
-WHERE Title = 'Sample Movie'
+FROM Film
+WHERE Title = 'Demo Film'
 ORDER BY Title
 GROUP BY Title
 HAVING COUNT(*) = 1;
 
-When you run this query, it returns a syntax error. What should you do?`,
-    options: [`Remove the GROUP BY clause.`, `Change the HAVING clause to HAVING COUNT(Title) = 1`, `Remove the ORDER BY clause.`, `Change the HAVING clause to HAVING COUNT(1) = 1`],
+Când o rulezi, primești o eroare de sintaxă. Ce trebuie să faci?`,
+    options: [`Să elimini clauza GROUP BY.`, `Să schimbi HAVING în HAVING COUNT(Title) = 1`, `Să elimini clauza ORDER BY.`, `Să schimbi HAVING în HAVING COUNT(1) = 1`],
     correctIndex: 2,
-    explanation: `ORDER BY trebuie să fie ULTIMA clauză (după GROUP BY și HAVING). Aici e înainte → eroare de sintaxă.`,
+    explanation: `ORDER BY trebuie să fie ultima clauză, scrisă după GROUP BY și HAVING. În interogarea de față apare prematur, înaintea lui GROUP BY, fapt care provoacă eroarea de sintaxă.`,
   },
   {
     id: `sql-091`,
     type: "single",
     topic: `General`,
-    prompt: `A database table stores information about school attendance:
+    prompt: `Un tabel stochează informații despre prezența la cursuri:
 
 ┌─────────────┬────────────┬─────────────┐
-│ StudentName │ GradeLevel │ DaysAbsent  │
+│  PupilName  │ ClassLevel │ AbsenceDays │
 ├─────────────┼────────────┼─────────────┤
-│    John     │     12     │     2.5     │
-│    Holly    │     12     │     0.0     │
-│    David    │     12     │     3.0     │
+│    Petru    │     12     │     2.5     │
+│    Ana      │     12     │     0.0     │
+│    Vlad     │     12     │     3.0     │
 └─────────────┴────────────┴─────────────┘
 
-Requirements:
-• StudentName must consist of a string of characters.
-• GradeLevel must be a whole number.
-• DaysAbsent can have one number after the decimal.
+Cerințe:
+• PupilName trebuie să fie un șir de caractere.
+• ClassLevel trebuie să fie un număr întreg.
+• AbsenceDays poate avea o singură zecimală.
 
-Match data types to columns:`,
-    options: [`StudentName=VARCHAR, GradeLevel=INT, DaysAbsent=DECIMAL`, `StudentName=CHAR, GradeLevel=DECIMAL, DaysAbsent=INT`, `StudentName=INT, GradeLevel=VARCHAR, DaysAbsent=DATETIME`, `StudentName=VARCHAR, GradeLevel=DECIMAL, DaysAbsent=BIT`],
+Asociază tipurile de date coloanelor:`,
+    options: [`PupilName=VARCHAR, ClassLevel=INT, AbsenceDays=DECIMAL`, `PupilName=CHAR, ClassLevel=DECIMAL, AbsenceDays=INT`, `PupilName=INT, ClassLevel=VARCHAR, AbsenceDays=DATETIME`, `PupilName=VARCHAR, ClassLevel=DECIMAL, AbsenceDays=BIT`],
     correctIndex: 0,
-    explanation: `String → VARCHAR, whole number → INT, one decimal → DECIMAL.`,
+    explanation: `VARCHAR este alegerea standard pentru un șir de caractere, INT corespunde unui număr întreg, iar DECIMAL este potrivit pentru o valoare cu o singură zecimală.`,
   },
   {
     id: `sql-092`,
     type: "single",
     topic: `General`,
-    prompt: `The following table named Building stores data about buildings and their most recent inspection dates:
+    prompt: `Tabelul Edifice de mai jos stochează date despre clădiri și ultimele lor inspecții:
 
 ┌────────────┬──────────────┬─────────────┐
-│   Field    │  Data Type   │ Allow Nulls │
+│   Câmp     │  Tip date    │ Permite NULL│
 ├────────────┼──────────────┼─────────────┤
-│ BuildingID │    INT       │    FALSE    │
+│ EdificeID  │    INT       │    FALSE    │
 │ Address    │ VARCHAR(100) │    FALSE    │
-│InspectorID│   CHAR(3)    │    TRUE     │
-│InspectionDate│ DATETIME  │    TRUE     │
+│ ReviewerID │   CHAR(3)    │    TRUE     │
+│ ReviewDate │   DATETIME   │    TRUE     │
 └────────────┴──────────────┴─────────────┘
 
-NULL in InspectionDate means the building has not yet been inspected.
+NULL în ReviewDate înseamnă că edificiul nu a fost încă inspectat.
 
-You need to display the addresses of the earliest 10 buildings that have been inspected.
+Vrei să afișezi adresele celor mai vechi 10 edificii care au fost inspectate.
 
-SELECT [___] Address FROM Building
-WHERE InspectionDate [___]
-[___] InspectionDate;`,
+SELECT [___] Address FROM Edifice
+WHERE ReviewDate [___]
+[___] ReviewDate;`,
     options: [`TOP 10 / IS NOT NULL / ORDER BY`, `TOP 10 / IS NULL / ORDER BY`, `COUNT / IS NOT NULL / GROUP BY`, `GROUP BY 10 / IS NOT NULL / HAVING`],
     correctIndex: 0,
-    explanation: `TOP 10 = primele 10. IS NOT NULL = doar cele inspectate. ORDER BY InspectionDate = cele mai vechi (earliest) primele.`,
+    explanation: `TOP 10 limitează la primele 10 rânduri. IS NOT NULL exclude clădirile neinspectate. ORDER BY ReviewDate aduce mai întâi inspecțiile cele mai vechi, conform cerinței.`,
   },
   {
     id: `sql-093`,
     type: "single",
     topic: `General`,
-    prompt: `The Customers table includes the following data:
+    prompt: `Tabelul Buyer conține următoarele date:
 
 ┌────┬───────────┬───────────┬───────────────┬───────────┐
 │ ID │ FirstName │ LastName  │ PhoneNumber   │ Extension │
@@ -1362,83 +1362,83 @@ WHERE InspectionDate [___]
 │  5 │ Sherlock  │ Steam     │ (123)555-0115 │   NULL    │
 └────┴───────────┴───────────┴───────────────┴───────────┘
 
-You need a result set with LastName, PhoneNumber and Extension for customers that have extensions, sorted by the customer's last name.
+Vrei un set de rezultate cu LastName, PhoneNumber și Extension pentru cumpărătorii care au extension, sortat după LastName.
 
-Complete: SELECT LastName, PhoneNumber, Extension FROM Customers
+Completează: SELECT LastName, PhoneNumber, Extension FROM Buyer
 WHERE [___] [___]
 [___] LastName;`,
-    options: [`Extension IS NOT NULL / (nothing) / ORDER BY`, `Extension = NOT NULL / (nothing) / ORDER BY`, `Extension IS NULL / (nothing) / ORDER BY`, `Extension IS NOT NULL / (nothing) / GROUP BY`],
+    options: [`Extension IS NOT NULL / (nimic) / ORDER BY`, `Extension = NOT NULL / (nimic) / ORDER BY`, `Extension IS NULL / (nimic) / ORDER BY`, `Extension IS NOT NULL / (nimic) / GROUP BY`],
     correctIndex: 0,
-    explanation: `Have extensions = NOT NULL → IS NOT NULL. Sorted by → ORDER BY (nu GROUP BY).`,
+    explanation: `Au extension înseamnă că valoarea nu este NULL, deci se folosește IS NOT NULL. Pentru sortare se aplică ORDER BY, în timp ce GROUP BY ar fi destinat grupărilor, nu sortării.`,
   },
   {
     id: `sql-094`,
     type: "multi",
     topic: `General`,
-    prompt: `You accept an IT internship. The charity has two tables: Chapter and Language.
+    prompt: `Faci un stagiu IT. Organizația are două tabele: Branch și Tongue.
 
-Chapter table:
+Tabelul Branch:
 ┌───────────┬───────────────┬────────────┬─────────┐
-│ ChapterId │     City      │   Region   │ Country │
+│ BranchId  │     City      │   Region   │ Country │
 ├───────────┼───────────────┼────────────┼─────────┤
-│     1     │   Chicago     │  Illinois  │   USA   │
-│     2     │ Los Angeles   │ California │   USA   │
-│     3     │ New York City │  New York  │   USA   │
-│     4     │   Toronto     │  Ontario   │ Canada  │
+│     1     │   Phoenix     │  Arizona   │   USA   │
+│     2     │   Houston     │   Texas    │   USA   │
+│     3     │   Boston      │ Massachus. │   USA   │
+│     4     │   Calgary     │  Alberta   │ Canada  │
 └───────────┴───────────────┴────────────┴─────────┘
 
-Language table:
+Tabelul Tongue:
 ┌────────────┬──────────────┬─────────┐
-│ LanguageId │ LanguageName │ Locale  │
+│ TongueId   │  TongueName  │ Locale  │
 ├────────────┼──────────────┼─────────┤
 │     1      │   English    │   USA   │
 │     2      │   English    │ Canada  │
-│     3      │   Spanish    │  Spain  │
+│     3      │   Spanish    │ Mexico  │
 └────────────┴──────────────┴─────────┘
 
-You create ChapterLanguage to relate them with a composite primary key.
+Construiești BranchTongue pentru a le lega printr-o cheie primară compusă.
 
-Which two columns should you select? (Choose 2.)`,
-    options: [`Region`, `ChapterId`, `LanguageId`, `City`, `Country`, `LanguageName`],
+Care două coloane trebuie alese? (Alege 2.)`,
+    options: [`Region`, `BranchId`, `TongueId`, `City`, `Country`, `TongueName`],
     correctIndices: [1, 2],
     min: 2,
-    explanation: `Composite PK = primary key-urile din ambele tabele: ChapterId + LanguageId.`,
+    explanation: `O cheie primară compusă combină cheile primare ale tabelelor părinte, deci în acest caz BranchId și TongueId sunt coloanele necesare.`,
   },
   {
     id: `sql-095`,
     type: "single",
     topic: `General`,
-    prompt: `You run the following two queries:
+    prompt: `Rulezi următoarele două interogări:
 
-Query 1:
-SELECT [Machine].[Name] AS Machine FROM [Machine]
-JOIN [Assignment] ON MachineID = Machine.ID;
+Interogarea 1:
+SELECT [Device].[Name] AS Device FROM [Device]
+JOIN [Allocation] ON DeviceID = Device.ID;
 
-Query 2:
-SELECT [Operator].[Name] AS Operator FROM [Operator]
-LEFT JOIN [Assignment] ON OperatorID = Operator.ID;
+Interogarea 2:
+SELECT [Handler].[Name] AS Handler FROM [Handler]
+LEFT JOIN [Allocation] ON HandlerID = Handler.ID;
 
-Machine (3 rows), Operator (3 rows), Assignment (2 rows: MachineID 1,2 / OperatorID 1,2)
+Device (3 rânduri), Handler (3 rânduri), Allocation (2 rânduri: DeviceID 1,2 / HandlerID 1,2)
 
-How many rows are returned by the first query?`,
+Câte rânduri returnează prima interogare?`,
     options: [`1`, `2`, `3`, `6`],
     correctIndex: 1,
-    explanation: `INNER JOIN: doar mașinile cu assignment. Assignment are MachineID 1 și 2 → 2 mașini potrivite → 2 rânduri.`,
+    explanation: `INNER JOIN păstrează doar rândurile care au corespondent în Allocation. Sunt doar două asocieri (DeviceID 1 și 2), prin urmare rezultatul are 2 rânduri.`,
   },
   {
     id: `sql-096`,
     type: "single",
     topic: `General`,
-    prompt: `Same scenario. How many rows are returned by the second query (LEFT JOIN)?`,
+    prompt: `Aceeași configurație. Câte rânduri returnează interogarea a doua (LEFT JOIN)?`,
     options: [`1`, `2`, `3`, `6`],
     correctIndex: 2,
-    explanation: `LEFT JOIN: TOȚI operatorii (3), chiar dacă nu au assignment. Operator 3 (Nina V) apare cu NULL → 3 rânduri.`,
+    explanation: `LEFT JOIN aduce toți operatorii (3 la număr), chiar dacă unul nu are nicio asociere. Rândul fără pereche apare cu valori NULL în coloanele din Allocation, deci totalul rămâne 3 rânduri.`,
   },
   {
     id: `sql-097`,
     type: "single",
     topic: `General`,
-    prompt: `The ItemsOnOrder table contains the following data:
+    prompt: `Tabelul GoodsOnOrder conține datele:
 
 ┌─────┬────────────┬──────────┬───────────┬───────────────┐
 │ ID  │ ItemNumber │ Quantity │ UnitPrice │ LineItemTotal │
@@ -1450,31 +1450,31 @@ How many rows are returned by the first query?`,
 │ 102 │     5      │    10    │   29.99   │    299.00     │
 └─────┴────────────┴──────────┴───────────┴───────────────┘
 
-You need a query that displays: total number of orders, average line item total, highest line item total, and grand total of all items.
+Vrei o interogare care afișează: numărul total de comenzi, valoarea medie pe linie, valoarea maximă pe linie și totalul general.
 
-Which query should you use?`,
+Ce interogare folosești?`,
     options: [`SELECT COUNT(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
-FROM ItemsOnOrder
+FROM GoodsOnOrder
 HAVING ItemNumber, Quantity, UnitPrice;`, `SELECT SUM(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
-FROM ItemsOnOrder;`, `SELECT COUNT(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
-FROM ItemsOnOrder;`, `SELECT COUNT(ID), AVG(UnitPrice+Quantity), MAX(UnitPrice+Quantity), SUM(UnitPrice+Quantity)
-FROM ItemsOnOrder
+FROM GoodsOnOrder;`, `SELECT COUNT(ID), AVG(LineItemTotal), MAX(LineItemTotal), SUM(LineItemTotal)
+FROM GoodsOnOrder;`, `SELECT COUNT(ID), AVG(UnitPrice+Quantity), MAX(UnitPrice+Quantity), SUM(UnitPrice+Quantity)
+FROM GoodsOnOrder
 GROUP BY ItemNumber, LineItemTotal;`],
     correctIndex: 2,
-    explanation: `COUNT(ID)=nr, AVG/MAX/SUM pe LineItemTotal. Fără GROUP BY (vrem totaluri generale). SUM(ID) nu are sens.`,
+    explanation: `COUNT(ID) dă numărul de comenzi, iar AVG, MAX și SUM aplicate pe LineItemTotal generează cei trei indicatori cantitativi. Pentru valori globale nu folosim GROUP BY, iar SUM(ID) ar fi un calcul fără semnificație.`,
   },
   {
     id: `sql-098`,
     type: "single",
     topic: `General`,
-    prompt: `You need to create a report for the 2024-2025 school year:
-• Display all students who enrolled on or after June 1, 2024.
-• Display all students who graduated in 2024.
-• Return the result set in order of enrollment, with the most recent enrollment date first.
+    prompt: `Trebuie să creezi un raport pentru anul școlar 2024-2025:
+• Afișezi toți studenții înmatriculați la 1 iunie 2024 sau ulterior.
+• Afișezi toți studenții care au absolvit în 2024.
+• Returnezi rezultatele ordonate după dată de înmatriculare, cea mai recentă prima.
 
-enrollment_date specifies enrollment. graduation_date specifies graduation. academic_status of Graduated indicates graduated.
+enrollment_date specifică înmatricularea, graduation_date specifică absolvirea, iar academic_status = 'Graduated' indică un absolvent.
 
-Which query should you use?`,
+Care interogare folosești?`,
     options: [`SELECT * FROM students
 WHERE (enrollment_date >= '2024-06-01') OR (academic_status='Graduated' AND graduation_date >= '2024-01-01')
 ORDER BY enrollment_date DESC;`, `SELECT * FROM students
@@ -1485,83 +1485,83 @@ ORDER BY enrollment_date;`, `SELECT * FROM students
 WHERE (enrollment_date >= '2024-06-01') OR (academic_status='Graduated' OR graduation_date >= '2024-01-01')
 ORDER BY enrollment_date DESC;`],
     correctIndex: 0,
-    explanation: `OR între categorii (enrolled SAU graduated). AND între status+date pt graduated. DESC = most recent first.`,
+    explanation: `Cele două categorii (înmatriculați sau absolvenți) se reunesc cu OR, iar între academic_status și graduation_date se aplică AND. ORDER BY ... DESC asigură afișarea celei mai recente date primele.`,
   },
   {
     id: `sql-099`,
     type: "single",
     topic: `General`,
-    prompt: `You are designing a database with these requirements:
-• MACHINE table represents all machines (ID uniquely identifies each)
-• OPERATOR table represents all operators (ID uniquely identifies each)
-• Each operator can be assigned to zero or more machines
-• Each machine can be assigned to zero or more operators
+    prompt: `Proiectezi o bază de date cu următoarele cerințe:
+• Tabelul DEVICE reprezintă toate dispozitivele (ID identifică unic fiecare element)
+• Tabelul HANDLER reprezintă toți operatorii (ID identifică unic fiecare operator)
+• Fiecare operator poate fi alocat la zero sau mai multe dispozitive
+• Fiecare dispozitiv poate fi alocat la zero sau mai mulți operatori
 
-What type of relationship is this?`,
-    options: [`One-to-One`, `One-to-Many`, `Many-to-Many`, `Self-referencing`],
+Ce tip de relație este?`,
+    options: [`Unu-la-unu`, `Unu-la-mai-mulți`, `Mai-mulți-la-mai-mulți`, `Auto-referențială`],
     correctIndex: 2,
-    explanation: `Fiecare operator → 0+ mașini, fiecare mașină → 0+ operatori = Many-to-Many. Se rezolvă cu junction table (Assignment).`,
+    explanation: `Fiindcă fiecare operator poate avea zero sau mai multe dispozitive și invers, relația este de tip mai-mulți-la-mai-mulți, iar implementarea cere un tabel de joncțiune (Allocation).`,
   },
   {
     id: `sql-100`,
     type: "single",
     topic: `General`,
-    prompt: `Which SQL command is classified as DDL (Data Definition Language)?`,
+    prompt: `Care comandă SQL este DDL (Data Definition Language)?`,
     options: [`SELECT`, `INSERT INTO`, `UPDATE`, `CREATE TABLE`],
     correctIndex: 3,
-    explanation: `DDL = definire structură: CREATE, ALTER, DROP, TRUNCATE. DML = manipulare date: SELECT, INSERT, UPDATE, DELETE.`,
+    explanation: `DDL grupează comenzile care lucrează cu structura: CREATE, ALTER, DROP, TRUNCATE. Restul (SELECT, INSERT, UPDATE, DELETE) operează asupra datelor și aparțin DML.`,
   },
   {
     id: `sql-101`,
     type: "single",
     topic: `General`,
-    prompt: `Which of the following correctly describes a PRIMARY KEY?`,
-    options: [`Allows NULL values and duplicates`, `Allows NULL values but not duplicates`, `Does not allow NULL values or duplicates`, `Does not allow NULL values but allows duplicates`],
+    prompt: `Care dintre următoarele afirmații descrie corect un PRIMARY KEY?`,
+    options: [`Permite valori NULL și duplicate`, `Permite valori NULL, dar nu duplicate`, `Nu permite nici NULL, nici duplicate`, `Nu permite NULL, dar permite duplicate`],
     correctIndex: 2,
-    explanation: `PRIMARY KEY = NOT NULL + UNIQUE. Nu permite nici NULL, nici duplicate.`,
+    explanation: `O cheie primară combină proprietățile NOT NULL și UNIQUE, deci nu acceptă nici valori absente, nici valori care se repetă.`,
   },
   {
     id: `sql-102`,
     type: "single",
     topic: `General`,
-    prompt: `You need to find all customers whose name starts with 'A'.
+    prompt: `Trebuie să găsești toți cumpărătorii al căror nume începe cu 'B'.
 
-Which WHERE clause should you use?`,
-    options: [`WHERE Name = 'A%'`, `WHERE Name LIKE 'A%'`, `WHERE Name STARTS 'A'`, `WHERE Name BEGINS WITH 'A'`],
+Ce clauză WHERE folosești?`,
+    options: [`WHERE Name = 'B%'`, `WHERE Name LIKE 'B%'`, `WHERE Name STARTS 'B'`, `WHERE Name BEGINS WITH 'B'`],
     correctIndex: 1,
-    explanation: `LIKE cu % = pattern matching. 'A%' = începe cu A. = caută valoarea exactă 'A%'. STARTS/BEGINS nu există.`,
+    explanation: `Pentru o căutare după șablon se folosește LIKE împreună cu wildcard-ul %. Forma 'B%' acceptă orice text care începe cu B. Operatorul = caută egalitate exactă, iar STARTS și BEGINS WITH nu sunt sintaxe SQL valide.`,
   },
   {
     id: `sql-103`,
     type: "single",
     topic: `General`,
-    prompt: `What is the difference between WHERE and HAVING?`,
-    options: [`WHERE filters groups, HAVING filters rows`, `WHERE filters rows before grouping, HAVING filters groups after grouping`, `They are identical and interchangeable`, `WHERE is used with JOIN, HAVING is used with UNION`],
+    prompt: `Care este diferența între WHERE și HAVING?`,
+    options: [`WHERE filtrează grupuri, HAVING filtrează rânduri`, `WHERE filtrează rânduri înainte de grupare, HAVING filtrează grupuri după grupare`, `Sunt identice și interschimbabile`, `WHERE se folosește cu JOIN, HAVING se folosește cu UNION`],
     correctIndex: 1,
-    explanation: `WHERE = filtrare rânduri ÎNAINTE de GROUP BY. HAVING = filtrare grupuri DUPĂ GROUP BY.`,
+    explanation: `WHERE acționează asupra rândurilor înainte de a se forma grupurile, iar HAVING se aplică pe grupurile deja construite, după ce GROUP BY și-a făcut treaba.`,
   },
   {
     id: `sql-104`,
     type: "single",
     topic: `General`,
-    prompt: `Which type of JOIN returns ALL rows from the left table, even if there is no match in the right table?`,
+    prompt: `Ce tip de JOIN returnează TOATE rândurile din tabelul din stânga, chiar și atunci când nu există potrivire în tabelul din dreapta?`,
     options: [`INNER JOIN`, `CROSS JOIN`, `LEFT JOIN`, `SELF JOIN`],
     correctIndex: 2,
-    explanation: `LEFT JOIN returnează toate rândurile din stânga. Dacă nu e match → NULL în coloanele din dreapta.`,
+    explanation: `LEFT JOIN păstrează toate rândurile tabelului plasat la stânga. Atunci când nu există corespondent la dreapta, coloanele acelui tabel sunt completate cu NULL.`,
   },
   {
     id: `sql-105`,
     type: "single",
     topic: `General`,
-    prompt: `You execute:
+    prompt: `Execuți:
 
-SELECT COUNT(*) FROM Orders WHERE Status = 'Shipped'
+SELECT COUNT(*) FROM Purchase WHERE Status = 'Shipped'
 UNION
-SELECT COUNT(*) FROM Orders WHERE Status = 'Pending';
+SELECT COUNT(*) FROM Purchase WHERE Status = 'Pending';
 
-What does this query return?`,
-    options: [`A single number: the total count of shipped and pending orders combined`, `Two rows: one with the count of shipped orders, one with pending orders`, `An error because you cannot use UNION with aggregate functions`, `All rows from the Orders table`],
+Ce returnează această interogare?`,
+    options: [`Un singur număr: totalul comenzilor expediate și în așteptare`, `Două rânduri: unul cu numărul comenzilor expediate, celălalt cu cele în așteptare`, `O eroare, deoarece UNION nu se poate folosi cu funcții de agregare`, `Toate rândurile din tabelul Purchase`],
     correctIndex: 1,
-    explanation: `UNION combină rezultatele a două SELECT-uri. Fiecare returnează un număr → rezultat: 2 rânduri cu câte un număr.`,
+    explanation: `UNION așază unul peste celălalt rezultatele celor două SELECT-uri. Fiecare returnează câte un singur număr, deci setul final conține două rânduri, fiecare cu valoarea sa.`,
   },
 ];
