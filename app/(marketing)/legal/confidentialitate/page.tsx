@@ -40,7 +40,7 @@ export default function ConfidentialitatePage() {
     <LegalDoc
       title="Politica de confidențialitate"
       lastUpdated="30 aprilie 2026"
-      status="draft"
+      status="final"
     >
       <section>
         <h2>1. Cine suntem</h2>
@@ -66,8 +66,10 @@ export default function ConfidentialitatePage() {
         <h3>Plată și facturare</h3>
         <ul>
           <li>
-            informații de card bancar — procesate exclusiv de procesatorul
-            de plăți (Stripe sau echivalent), nu sunt stocate de InfoBac;
+            informațiile de card bancar nu sunt văzute, primite sau stocate
+            de InfoBac. Plata se face direct prin aplicația MIA către contul
+            nostru bancar. Banca emitentă este cea care procesează cardul;
+            noi primim doar confirmarea plății;
           </li>
           <li>istoric tranzacții (date, sume, plan);</li>
           <li>opțional: nume + adresă de facturare pentru factură fiscală.</li>
@@ -124,19 +126,27 @@ export default function ConfidentialitatePage() {
         </p>
         <ul>
           <li>
-            <strong>Supabase</strong> (Irlanda, EU) — bază de date și
-            autentificare.
+            <strong>Supabase</strong> (EU) — autentificare + bază de date.
           </li>
           <li>
-            <strong>Resend</strong> (SUA, cu Standard Contractual Clauses) —
-            trimitere emailuri tranzacționale.
+            <strong>Resend</strong> (US, cu Standard Contractual Clauses) —
+            emailuri tranzacționale.
           </li>
           <li>
-            <strong>Vercel</strong> (SUA, cu SCC) — hosting site web.
+            <strong>Vercel</strong> (US, cu Standard Contractual Clauses) —
+            hosting.
           </li>
           <li>
-            <strong>Procesator plăți</strong> (Stripe sau echivalent) — date
-            de card.
+            <strong>Google LLC</strong> (US, cu Standard Contractual Clauses)
+            — Google Analytics 4 (cu consimțământ).
+          </li>
+          <li>
+            <strong>Telegram FZ-LLC</strong> — atunci când utilizatorul
+            ALEGE să trimită dovada plății prin Telegram.
+          </li>
+          <li>
+            <strong>Banca noastră</strong> — pentru încasarea plăților prin
+            MIA.
           </li>
         </ul>
         <p>
@@ -201,8 +211,10 @@ export default function ConfidentialitatePage() {
             întunecat / luminos. Dezactivabile.
           </li>
           <li>
-            <strong>Analitice</strong> — pentru a înțelege ce pagini sunt
-            populare. Anonimizate, dezactivabile la prima vizită.
+            <strong>Analitice (Google Analytics 4)</strong> — se activează
+            doar dacă acordi consimțământul prin banner-ul afișat la prima
+            vizită. IP-ul tău e anonimizat. Refuzul nu afectează funcționarea
+            platformei.
           </li>
         </ul>
         <p>
@@ -214,9 +226,9 @@ export default function ConfidentialitatePage() {
         <h2>7. Securitate</h2>
         <p>
           Datele tale sunt criptate la transport (HTTPS pe toate paginile) și
-          la stocare (la nivelul Supabase / procesator de plăți). Parolele
-          sunt hash-uite cu algoritm bcrypt sau echivalent — nici echipa
-          InfoBac nu le poate vedea în clar.
+          la stocare (la nivelul Supabase). Parolele sunt hash-uite cu
+          algoritm bcrypt sau echivalent — nici echipa InfoBac nu le poate
+          vedea în clar.
         </p>
       </section>
 

@@ -3,7 +3,7 @@ export const siteConfig = {
   fullName: "InfoBac.md",
   tagline: "10 din oficiu la BAC informatică",
   description:
-    "Platformă online de pregătire pentru certificările Certiport IT Specialist — o cale internațională pentru pregătirea și recunoașterea cunoștințelor de informatică. Făcut de elevi pentru elevi în Chișinău.",
+    "Platformă online de pregătire pentru certificările Certiport IT Specialist. Făcut de elevi pentru elevi în Chișinău.",
   url:
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
     "https://infobac.md",

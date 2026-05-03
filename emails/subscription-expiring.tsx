@@ -1,12 +1,11 @@
 import { Button, Section, Text } from "@react-email/components";
 import { EmailLayout, emailStyles } from "./components/email-layout";
-import { emailBrand } from "@/lib/email-brand";
 import { siteConfig } from "@/lib/site";
 
 interface SubscriptionExpiringEmailProps {
   name: string;
   daysLeft: 1 | 2 | 3;
-  plan: "Basic" | "Standard";
+  plan: string;
   expiresOn: string;
 }
 
@@ -38,28 +37,13 @@ export default function SubscriptionExpiringEmail({
         unde ai rămas.
       </Text>
 
-      <Section
-        style={{
-          ...emailStyles.card,
-          backgroundColor: emailBrand.colors.background,
-          borderColor: emailBrand.colors.warning,
-          borderWidth: "1px",
-          borderStyle: "solid",
-        }}
-      >
-        <Text
-          style={{
-            ...emailStyles.paragraph,
-            margin: "0 0 8px 0",
-            fontWeight: 600,
-          }}
-        >
-          💡 Sugestie: trec la Lifetime
+      <Section style={emailStyles.card}>
+        <Text style={{...emailStyles.paragraph, fontWeight: 600, margin: "0 0 8px 0"}}>
+          💡 Sugestie: planul „Pe 6 luni"
         </Text>
-        <Text style={{ ...emailStyles.paragraphMuted, margin: "0" }}>
-          Pentru 1.999 MDL one-time (≈100 EUR), ai acces pe viață + un cont
-          extra pentru frate/soră. Dacă te pregătești 2+ luni, e mai ieftin
-          decât abonamentul lunar.
+        <Text style={{...emailStyles.paragraphMuted, margin: 0}}>
+          Pentru 950 MDL plată unică ai acces 6 luni la toate cursurile —
+          efectiv ~158 MDL/lună, cea mai bună valoare per lună.
         </Text>
       </Section>
 
@@ -86,6 +70,6 @@ export default function SubscriptionExpiringEmail({
 SubscriptionExpiringEmail.PreviewProps = {
   name: "Andrei",
   daysLeft: 3,
-  plan: "Standard",
+  plan: "Toate modulele",
   expiresOn: "3 mai 2026",
 } satisfies SubscriptionExpiringEmailProps;

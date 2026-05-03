@@ -6,7 +6,7 @@ export const meta: CourseMeta = {
   blurb:
     "Tabele, chei, JOIN-uri, normalizare, view-uri și constraints. SQL la nivel de examen, fără cod.",
   description:
-    "SQL la nivel de examen, fără cod inutil. Înveți să citești o schemă, să scrii un SELECT și să eviți capcanele de la Certiport.",
+    "SQL la nivel de examen, fără cod inutil. Înveți să citești o schemă, să scrii un SELECT și să fii pregătit pentru certificarea IT Specialist Databases.",
   duration: "6–10 ore",
   difficulty: "intermediar",
   icon: "/courses/sql.png",

@@ -37,7 +37,7 @@ export default function TermeniPage() {
     <LegalDoc
       title="Termeni și condiții"
       lastUpdated="30 aprilie 2026"
-      status="draft"
+      status="final"
     >
       <section>
         <h2>1. Definiții</h2>
@@ -137,16 +137,12 @@ export default function TermeniPage() {
       <section>
         <h2>6. Plata și anularea</h2>
         <p>
-          Toate plățile efectuate către InfoBac sunt <strong>finale</strong>{" "}
-          și <strong>nerambursabile</strong>. Înainte de a plăti, poți încerca
-          gratuit primele 2 lecții ale fiecărui curs ca să te asiguri că
-          platforma e potrivită pentru tine.
-        </p>
-        <p>
-          Pentru planurile lunare, poți anula abonamentul oricând din contul
-          tău. Anularea oprește taxarea pentru perioada următoare, iar
-          accesul rămâne activ până la sfârșitul perioadei deja plătite.
-          Pachetul pe 6 luni e plată unică, fără posibilitate de rambursare.
+          Plățile efectuate pentru perioada deja consumată nu se rambursează
+          — primele 2 lecții ale fiecărui curs sunt gratuite tocmai ca să poți
+          testa platforma înainte. Pentru planurile lunare, poți opri
+          reînnoirea oricând și păstrezi accesul până la sfârșitul lunii deja
+          plătite. Pachetul pe 6 luni e plată unică, nerambursabilă în
+          întregime.
         </p>
       </section>
 

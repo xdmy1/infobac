@@ -14,8 +14,8 @@ export default function WelcomeEmail({ name }: WelcomeEmailProps) {
       <Text style={emailStyles.heading}>Bun venit, {name}!</Text>
 
       <Text style={emailStyles.paragraph}>
-        Te-ai înscris pentru cel mai onest mod de a lua 10 din oficiu la BAC
-        informatică. Suntem alături de tine.
+        Te-ai înscris pentru modul nostru de pregătire pentru BAC informatică
+        prin certificările Certiport. Suntem alături de tine.
       </Text>
 
       <Text style={emailStyles.paragraphMuted}>
@@ -65,8 +65,8 @@ export default function WelcomeEmail({ name }: WelcomeEmailProps) {
           3. Întreabă orice, oricând
         </Text>
         <Text style={{ ...emailStyles.paragraphMuted, margin: "0" }}>
-          Răspundem la fiecare email. Adesea în câteva ore, niciodată mai
-          târziu de 12h lucrătoare.
+          Răspundem la fiecare email. Adesea în câteva ore, de obicei în 24h
+          lucrătoare.
         </Text>
       </Section>
 

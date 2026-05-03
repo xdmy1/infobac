@@ -6,7 +6,7 @@ export const meta: CourseMeta = {
   blurb:
     "De la tipuri de date și operatori la funcții, fișiere și gestiunea erorilor — exact ce intră la examen.",
   description:
-    "Limbajul de bază pentru BAC. De la tipuri și operatori până la funcții, fișiere și gestiunea erorilor — exact ce intră la examen, fără teorie de prisos.",
+    "Limbajul de bază pentru certificarea IT Specialist Python — tipuri, operatori, control flow, fișiere, gestiunea erorilor.",
   duration: "8–12 ore",
   difficulty: "începător",
   icon: "/courses/python.png",
