@@ -13,14 +13,27 @@ const DESCRIPTION =
   "Ghiduri, comparații și pași concreți pentru BAC-ul de informatică din Moldova: cum funcționează echivalarea Certiport, ce examene dai și cum iei 10 din oficiu.";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: TITLE,
   description: DESCRIPTION,
-  alternates: { canonical: "/blog" },
+  alternates: {
+    canonical: "/blog",
+    languages: { "ro-MD": "/blog" },
+    types: {
+      "application/rss+xml": [
+        { url: "/rss.xml", title: `${siteConfig.fullName} — Blog RSS` },
+      ],
+    },
+  },
   openGraph: {
     title: TITLE,
     description: DESCRIPTION,
     url: `${siteConfig.url}/blog`,
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
   },
 };
 

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Clock, ChevronRight } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import {
   getAllSlugs,
   getPostBySlug,
@@ -62,7 +64,11 @@ export async function generateMetadata({
     title: post.meta.title,
     description: post.meta.description,
     keywords: post.meta.tags,
-    alternates: { canonical: `/blog/${post.meta.slug}` },
+    authors: [{ name: post.meta.author }],
+    alternates: {
+      canonical: `/blog/${post.meta.slug}`,
+      languages: { "ro-MD": `/blog/${post.meta.slug}` },
+    },
     openGraph: {
       title: post.meta.title,
       description: post.meta.description,
@@ -73,6 +79,8 @@ export async function generateMetadata({
       authors: [post.meta.author],
       tags: post.meta.tags,
       locale: "ro_MD",
+      alternateLocale: ["ro_RO"],
+      section: post.meta.category,
     },
     twitter: {
       card: "summary_large_image",
@@ -201,7 +209,24 @@ export default async function BlogPostPage({ params }: PageProps) {
         <MDXRemote
           source={post.body}
           components={mdxComponents}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+              rehypePlugins: [
+                rehypeSlug,
+                [
+                  rehypeAutolinkHeadings,
+                  {
+                    behavior: "append",
+                    properties: {
+                      className: "header-anchor",
+                      ariaLabel: "Link către această secțiune",
+                    },
+                  },
+                ],
+              ],
+            },
+          }}
         />
       </div>
 

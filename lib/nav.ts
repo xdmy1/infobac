@@ -6,6 +6,8 @@ export const marketingNav = [
   { label: "FAQ", href: "/faq" },
 ] as const;
 
+// Footer links must point to LIVE pages — sitewide 404s hurt indexing. Only
+// add an entry once the page exists.
 export const footerNav = {
   product: {
     title: "Produs",
@@ -21,8 +23,8 @@ export const footerNav = {
     links: [
       { label: "Despre noi", href: "/despre" },
       { label: "Blog", href: "/blog" },
+      { label: "RSS", href: "/rss.xml" },
       { label: "Contact", href: "/contact" },
-      { label: "Carieră", href: "/cariera" },
     ],
   },
   legal: {
@@ -30,9 +32,6 @@ export const footerNav = {
     links: [
       { label: "Termeni și condiții", href: "/legal/termeni" },
       { label: "Confidențialitate", href: "/legal/confidentialitate" },
-      { label: "Politica de refund", href: "/legal/refund" },
-      { label: "GDPR", href: "/legal/gdpr" },
     ],
   },
 } as const;
-

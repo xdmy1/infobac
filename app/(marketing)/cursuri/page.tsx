@@ -5,13 +5,28 @@ import { Pathway } from "@/components/marketing/pathway";
 import { CtaFinal } from "@/components/marketing/cta-final";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { courseSyllabi, pathway } from "@/lib/content";
-import { BreadcrumbJsonLd, CoursesJsonLd } from "@/lib/seo/json-ld";
+import {
+  BreadcrumbJsonLd,
+  CoursesJsonLd,
+  ItemListJsonLd,
+} from "@/lib/seo/json-ld";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Cursuri — Python, SQL, Networking pentru BAC",
+  title: "Cursuri Certiport pentru BAC informatică — Python, SQL, Devices",
   description:
-    "Programa exactă a celor 3 certificări Certiport care echivalează nota 10 la BAC informatică. Topics, durată, format examen — totul transparent.",
-  alternates: { canonical: "/cursuri" },
+    "Programa exactă a celor 3 certificări Certiport care echivalează nota 10 la BAC informatică Moldova: Python, SQL și Devices. Topics, durată și format examen — totul transparent.",
+  alternates: {
+    canonical: "/cursuri",
+    languages: { "ro-MD": "/cursuri" },
+  },
+  openGraph: {
+    title: "Cursuri Certiport pentru BAC informatică",
+    description:
+      "Python, SQL și Devices — 3 certificări care echivalează nota 10 la BAC informatică Moldova.",
+    url: `${siteConfig.url}/cursuri`,
+    type: "website",
+  },
 };
 
 export default function CursuriPage() {
@@ -38,6 +53,15 @@ export default function CursuriPage() {
           { name: "Acasă", url: "/" },
           { name: "Cursuri", url: "/cursuri" },
         ]}
+      />
+      <ItemListJsonLd
+        name="Cursuri Certiport pentru BAC informatică"
+        description="Cele 3 certificări Certiport care echivalează nota 10 la BAC informatică în Moldova."
+        items={pathway.map((step) => ({
+          url: `/cursuri#${step.slug}`,
+          name: `${step.title} — ${step.certName}`,
+          description: step.description,
+        }))}
       />
       <CursuriHero totalTopics={totalTopics} totalBullets={totalBullets} />
 

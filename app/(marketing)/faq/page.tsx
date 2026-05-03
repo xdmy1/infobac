@@ -6,10 +6,19 @@ import { faqItems } from "@/lib/content";
 import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Întrebări frecvente",
+  title: "FAQ BAC informatică Moldova — Certiport, prețuri, echivalare",
   description:
     "Răspunsuri la întrebările frecvente despre InfoBac, certificările Certiport, BAC informatică Moldova, prețuri și pregătire.",
-  alternates: { canonical: "/faq" },
+  alternates: {
+    canonical: "/faq",
+    languages: { "ro-MD": "/faq" },
+  },
+  openGraph: {
+    title: "Întrebări frecvente · InfoBac.md",
+    description:
+      "Cum funcționează echivalarea Certiport pentru BAC informatică, prețuri și pregătire.",
+    type: "website",
+  },
 };
 
 export default function FaqPage() {
@@ -43,10 +52,9 @@ function FaqHero({ featured }: { featured: { q: string; a: string } }) {
             </p>
           </RevealItem>
           <RevealItem variant="fade-blur">
-            <h1 className="mt-4 text-balance text-5xl font-bold leading-[1] tracking-tight md:text-6xl lg:text-[5.5rem]">
-              Tot ce vrei{" "}
-              <span className="italic text-muted-foreground">să știi</span>{" "}
-              înainte.
+            <h1 className="mt-4 text-balance text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+              Tot ce vrei să știi{" "}
+              <span className="text-muted-foreground">înainte.</span>
             </h1>
           </RevealItem>
         </Reveal>

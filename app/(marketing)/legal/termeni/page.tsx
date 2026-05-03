@@ -1,17 +1,39 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/marketing/legal-doc";
 import { siteConfig } from "@/lib/site";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/lib/seo/json-ld";
+
+const TITLE = "Termeni și condiții";
+const DESCRIPTION =
+  "Termenii și condițiile de utilizare a platformei InfoBac.md, conform legislației Republicii Moldova.";
 
 export const metadata: Metadata = {
-  title: "Termeni și condiții",
-  description:
-    "Termenii și condițiile de utilizare a platformei InfoBac.md, conform legislației Republicii Moldova.",
-  alternates: { canonical: "/legal/termeni" },
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {
+    canonical: "/legal/termeni",
+    languages: { "ro-MD": "/legal/termeni" },
+  },
   robots: { index: true, follow: true },
 };
 
 export default function TermeniPage() {
   return (
+    <>
+      <WebPageJsonLd
+        page={{
+          path: "/legal/termeni",
+          title: TITLE,
+          description: DESCRIPTION,
+          dateModified: "2026-04-30",
+        }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          { name: "Termeni și condiții", url: "/legal/termeni" },
+        ]}
+      />
     <LegalDoc
       title="Termeni și condiții"
       lastUpdated="30 aprilie 2026"
@@ -211,5 +233,6 @@ export default function TermeniPage() {
         </p>
       </section>
     </LegalDoc>
+    </>
   );
 }

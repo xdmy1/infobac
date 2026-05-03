@@ -1,17 +1,42 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/marketing/legal-doc";
 import { siteConfig } from "@/lib/site";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/lib/seo/json-ld";
+
+const TITLE = "Politica de confidențialitate";
+const DESCRIPTION =
+  "Cum colectăm, folosim și protejăm datele tale pe InfoBac.md — conform Legii 133/2011 din Republica Moldova și GDPR.";
 
 export const metadata: Metadata = {
-  title: "Politica de confidențialitate",
-  description:
-    "Cum colectăm, folosim și protejăm datele tale pe InfoBac.md — conform Legii 133/2011 din Republica Moldova și GDPR.",
-  alternates: { canonical: "/legal/confidentialitate" },
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: {
+    canonical: "/legal/confidentialitate",
+    languages: { "ro-MD": "/legal/confidentialitate" },
+  },
   robots: { index: true, follow: true },
 };
 
 export default function ConfidentialitatePage() {
   return (
+    <>
+      <WebPageJsonLd
+        page={{
+          path: "/legal/confidentialitate",
+          title: TITLE,
+          description: DESCRIPTION,
+          dateModified: "2026-04-30",
+        }}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Acasă", url: "/" },
+          {
+            name: "Politica de confidențialitate",
+            url: "/legal/confidentialitate",
+          },
+        ]}
+      />
     <LegalDoc
       title="Politica de confidențialitate"
       lastUpdated="30 aprilie 2026"
@@ -243,5 +268,6 @@ export default function ConfidentialitatePage() {
         </p>
       </section>
     </LegalDoc>
+    </>
   );
 }

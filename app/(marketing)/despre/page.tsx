@@ -19,10 +19,20 @@ import { siteConfig } from "@/lib/site";
 import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Despre noi",
+  title: "Despre InfoBac — echipa din Chișinău pentru BAC informatică",
   description:
     "InfoBac e construit de elevi care au dat aceleași examene Certiport anul trecut. Misiunea: să facem BAC informatică accesibil pentru orice elev din Moldova.",
-  alternates: { canonical: "/despre" },
+  alternates: {
+    canonical: "/despre",
+    languages: { "ro-MD": "/despre" },
+  },
+  openGraph: {
+    title: "Despre InfoBac — făcut de elevi pentru elevi",
+    description:
+      "Echipa InfoBac.md din Chișinău. Misiunea: BAC informatică accesibil pentru toți elevii din Moldova.",
+    url: `${siteConfig.url}/despre`,
+    type: "website",
+  },
 };
 
 const values = [

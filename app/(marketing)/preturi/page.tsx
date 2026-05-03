@@ -12,13 +12,28 @@ import {
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
 import { pricingFaq, pricingPlans } from "@/lib/content";
-import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/lib/seo/json-ld";
+import { siteConfig } from "@/lib/site";
+import {
+  BreadcrumbJsonLd,
+  FaqPageJsonLd,
+  OffersJsonLd,
+} from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Prețuri — de la 25 EUR/lună",
+  title: "Prețuri — de la 250 MDL/lună pentru BAC informatică",
   description:
-    "3 planuri pentru pregătirea BAC informatică: Basic 499 MDL/lună, Standard 899 MDL/lună (recomandat), Lifetime 1.999 MDL plată unică. Refund 7 zile.",
-  alternates: { canonical: "/preturi" },
+    "3 planuri pentru pregătirea BAC informatică Moldova: Un modul 250 MDL/lună, Toate modulele 550 MDL/lună (popular), Pe 6 luni 950 MDL (~158 MDL/lună). Plată locală prin MIA.",
+  alternates: {
+    canonical: "/preturi",
+    languages: { "ro-MD": "/preturi" },
+  },
+  openGraph: {
+    title: "Prețuri InfoBac — de la 250 MDL/lună",
+    description:
+      "3 planuri pentru BAC informatică Moldova: Un modul, Toate modulele, Pe 6 luni. Plată prin MIA.",
+    url: `${siteConfig.url}/preturi`,
+    type: "website",
+  },
 };
 
 export default function PricingPage() {
@@ -31,6 +46,7 @@ export default function PricingPage() {
         ]}
       />
       <FaqPageJsonLd items={pricingFaq} />
+      <OffersJsonLd plans={pricingPlans} />
       <PreturiHero />
       <Pricing />
       <PricingCompare />

@@ -12,10 +12,20 @@ import { siteConfig } from "@/lib/site";
 import { BreadcrumbJsonLd } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact — InfoBac.md, Chișinău",
   description:
     "Scrie-ne despre orice — întrebări, parteneriate, presa. Răspundem în câteva ore. Echipa InfoBac.md, Chișinău, Moldova.",
-  alternates: { canonical: "/contact" },
+  alternates: {
+    canonical: "/contact",
+    languages: { "ro-MD": "/contact" },
+  },
+  openGraph: {
+    title: "Contact InfoBac.md",
+    description:
+      "Întrebări, parteneriate, presă — răspundem în câteva ore. Chișinău, Moldova.",
+    url: `${siteConfig.url}/contact`,
+    type: "website",
+  },
 };
 
 const socials = [
