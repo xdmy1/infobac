@@ -151,10 +151,6 @@ export default function PaymentSuccessEmail({
         </Text>
       )}
 
-      <Text style={emailStyles.paragraphMuted}>
-        Politica de refund: 7 zile fără întrebări. Răspunde la acest email
-        dacă ai schimbat părerea.
-      </Text>
     </EmailLayout>
   );
 }

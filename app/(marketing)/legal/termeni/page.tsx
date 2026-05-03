@@ -134,19 +134,18 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>6. Politica de refund</h2>
+        <h2>6. Plata și anularea</h2>
         <p>
-          În primele <strong>7 zile calendaristice</strong> de la prima plată,
-          poți solicita refund integral fără explicații, prin email la{" "}
-          <a href={`mailto:${siteConfig.contact.email}`}>
-            {siteConfig.contact.email}
-          </a>
-          . Refund-ul se procesează în maximum 5 zile lucrătoare pe aceeași
-          metodă de plată.
+          Toate plățile efectuate către InfoBac sunt <strong>finale</strong>{" "}
+          și <strong>nerambursabile</strong>. Înainte de a plăti, poți încerca
+          gratuit primele 2 lecții ale fiecărui curs ca să te asiguri că
+          platforma e potrivită pentru tine.
         </p>
         <p>
-          După cele 7 zile, anularea abonamentului se aplică începând cu
-          următoarea perioadă, fără rambursarea perioadei curente.
+          Pentru planurile lunare, poți anula abonamentul oricând din contul
+          tău. Anularea oprește taxarea pentru perioada următoare, iar
+          accesul rămâne activ până la sfârșitul perioadei deja plătite.
+          Pachetul pe 6 luni e plată unică, fără posibilitate de rambursare.
         </p>
       </section>
 

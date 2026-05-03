@@ -175,7 +175,7 @@ export default async function AbonamentPage() {
           >
             hello@infobac.md
           </a>
-          . Refund 7 zile, fără întrebări.
+          .
         </p>
       </section>
     </div>

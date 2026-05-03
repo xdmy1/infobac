@@ -70,7 +70,7 @@ Echivalarea Certiport ↔ BAC informatică = ancoră de credibilitate masivă. P
 
 ### F. Risc redus pentru cumpărător
 
-„Plătești după ce-ți creezi contul, anulezi oricând" există deja — **fă-o vizibilă pe banner**, nu doar pe `/preturi`. Și consideră serios o **garanție „nu treci certificarea → bani înapoi"** (chiar simbolic, returnează în <2% din cazuri și convertește masiv).
+Plățile sunt finale, fără refund. Compensezi asta prin **preview-ul gratis al primelor 2 lecții** + **anulare oricând la planurile lunare**. Pune ambele vizibil pe banner („Primele 2 lecții — gratis. Plătești doar dacă continui."), nu doar îngropate pe `/preturi`. Mesajul cheie: cumpărătorul îți poate verifica produsul înainte de orice cheltuială.
 
 ### G. Comunitate vie
 
@@ -327,7 +327,7 @@ Nu folosi vanity metrics (impresii, like-uri, follow-eri). Folosește astea:
 - ❌ **Nu pune 2 mesaje pe un banner.** Vrei #1 + #4? Fă 2 bannere.
 - ❌ **Nu scrie corporate.** „Soluție inovatoare de e-learning" = mort. „10 la BAC fără să dai BAC-ul" = trăiește.
 - ❌ **Nu folosi imagini stock.** Elevii reali, profii reali, dashboardul real. Stock = neîncredere instant.
-- ❌ **Nu promite ce nu poți livra.** „Garantat 10" + 2% rată de eșec = scandal. Folosește „Pregătire pentru 10" sau dă efectiv money-back garanție.
+- ❌ **Nu promite ce nu poți livra.** „Garantat 10" + 2% rată de eșec = scandal. Folosește „Pregătire pentru 10". Plata e finală, nu promite refund.
 - ❌ **Nu copia textele astea ca atare.** Sunt punct de plecare. Adaptează la tonul tău, testează 3 variante, păstrează pe cea care convertește.
 - ❌ **Nu lansa reclame plătite înainte de testimoniale reale.** Trafic plătit + 0 social proof = bani aruncați.
 
@@ -374,4 +374,4 @@ examenul CERTIPORT.
 4. **Lansează 1 reclamă** pe Instagram Stories cu Unghiul 1 (echivalare). 100 MDL/zi pentru 7 zile, vezi CPA. Optimizezi de acolo.
 5. **Pornește un Telegram channel** „InfoBac — pregătire BAC" cu posturi educaționale 3×/săpt. E free, scalează organic.
 6. **Adaugă întrebarea „de unde ai aflat?"** în signup form. Fără asta zbori orb.
-7. **Garanție money-back** pentru cei care nu trec Certiport. Atrage exact tipul de cumpărător care plătește fără să negocieze.
+7. **Investește în primele 2 lecții preview** ca substitut pentru garanție: trebuie să fie atât de bune încât elevul să zică „dacă astea sunt gratis, restul cum or fi". Asta convertește în lipsa unei politici de refund.

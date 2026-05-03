@@ -62,7 +62,7 @@ export function Pricing() {
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Check className="size-4" strokeWidth={2} />
-            Refund 7 zile pe pachetul de 6 luni
+            Primele 2 lecții — gratis
           </span>
           <span className="inline-flex items-center gap-1.5">
             <Check className="size-4" strokeWidth={2} />

@@ -339,7 +339,7 @@ export const faqItems: readonly FaqItem[] = [
   },
   {
     q: "Pot să-mi anulez abonamentul oricând?",
-    a: "Da, planurile lunare se anulează din cont — nu ești taxat la următoarea perioadă. Pachetul de 6 luni e plată unică, vezi politica de refund (7 zile) pentru detalii.",
+    a: "Da, planurile lunare se anulează din cont — nu ești taxat la următoarea perioadă, iar accesul rămâne activ până la sfârșitul lunii plătite. Pachetul de 6 luni e plată unică, fără rambursare.",
   },
   {
     q: "Aveți materiale și pentru clasa 11?",
@@ -651,7 +651,7 @@ export const pricingFaq: readonly FaqItem[] = [
   },
   {
     q: "Pachetul de 6 luni se poate anula?",
-    a: "Pachetul de 6 luni e plată unică, fără refund după primele 7 zile. Te avantajează doar dacă te angajezi pe termen mediu — altfel începe cu un plan lunar.",
+    a: "Pachetul de 6 luni e plată unică, nerambursabilă. Te avantajează doar dacă te angajezi pe termen mediu — altfel începe cu un plan lunar și încearcă mai întâi primele 2 lecții gratis.",
   },
   {
     q: `Cum aleg modulul pentru planul „Un modul"?`,

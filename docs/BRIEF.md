@@ -445,7 +445,7 @@ CTA: "Cumpără lifetime"
 
 Sub carduri:
 "Toate prețurile includ TVA (când va fi aplicabil). 
-Politica de refund: 7 zile, fără întrebări."
+Plata e finală, nerambursabilă. Încearcă primele 2 lecții gratis înainte."
 
 ═══ SECȚIUNE: "TESTIMONIALE" ═══
 Heading: "Elevi care au reușit."
@@ -499,8 +499,6 @@ Col 3: COMPANIE
 Col 4: LEGAL
 - Termeni și condiții
 - Politica de confidențialitate
-- Politica de refund
-- GDPR
 
 Bottom bar (separator):
 "© 2026 InfoBac. Făcut cu ☕ în Chișinău, Moldova."
