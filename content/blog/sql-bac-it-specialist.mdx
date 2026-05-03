@@ -6,7 +6,7 @@ publishedAt: "2026-05-01"
 updatedAt: "2026-05-01"
 category: "sql"
 tags: ["sql", "databases", "certiport", "bac", "it specialist"]
-author: "Andrei P."
+author: "Echipa InfoBac"
 isPillar: false
 related:
   - "python-bac-informatica-programa"
@@ -15,7 +15,7 @@ related:
 ogImage: null
 ---
 
-SQL e cea mai „logică" dintre cele 3 certificări Certiport care echivalează BAC-ul informatică. Spre deosebire de Python (unde e ușor să te încurci în sintaxă) și Devices (unde e materie de memorat), SQL recompensează gândirea declarativă: spui **ce** vrei, nu **cum**.
+SQL e cea mai „logică" dintre cele 3 certificări Certiport[*](#disclaimer) care echivalează BAC-ul informatică. Spre deosebire de Python (unde e ușor să te încurci în sintaxă) și Devices (unde e materie de memorat), SQL recompensează gândirea declarativă: spui **ce** vrei, nu **cum**.
 
 Articolul ăsta e supportingul pillar-ului [Python pentru BAC informatică: programa Certiport](/blog/python-bac-informatica-programa). Dacă încă te uiți de pe margine, citește [BAC informatică Moldova 2026: ghidul complet](/blog/bac-informatica-moldova-ghid-2026) întâi.
 
@@ -25,14 +25,16 @@ Articolul ăsta e supportingul pillar-ului [Python pentru BAC informatică: prog
 
 ## Domeniile examenate
 
-### 1. Database Concepts (≈10%)
+> Exemplele de cod de mai jos sunt elaborate de echipa InfoBac pe baza obiectivelor publice ale programei. Nu reproduc întrebări oficiale de examen.
+
+### 1. Database Concepts (≈10%, estimare bazată pe distribuția domeniilor publice)
 
 - Ce e o bază de date relațională
 - Tabel, rând, coloană, primary key, foreign key
 - Tipuri de date: `INT`, `VARCHAR`, `TEXT`, `DATE`, `DATETIME`, `BOOLEAN`, `DECIMAL`
 - Indexuri (concept, nu implementare)
 
-### 2. Database Design (≈20%)
+### 2. Database Design (≈20%, estimare bazată pe distribuția domeniilor publice)
 
 - Normalizare: 1NF, 2NF, 3NF (concept)
 - Relații: 1-1, 1-n, n-n (cu tabel de joncțiune)
@@ -42,7 +44,7 @@ Articolul ăsta e supportingul pillar-ului [Python pentru BAC informatică: prog
 *„Ai un tabel `comenzi(id, user_id, produs_id, cantitate)`. E în 3NF? Dacă nu, ce ai schimba?"* — răspunsul: e dependent de ce mai e în alte tabele. De obicei DA, e în 3NF.
 </Callout>
 
-### 3. SQL — DML (Data Manipulation Language) (≈40%)
+### 3. SQL — DML (Data Manipulation Language) (≈40%, estimare bazată pe distribuția domeniilor publice)
 
 Aici e nucleul examenului.
 
@@ -68,7 +70,7 @@ ORDER BY comenzi DESC
 LIMIT 10;
 ```
 
-### 4. SQL — DDL (Data Definition Language) (≈15%)
+### 4. SQL — DDL (Data Definition Language) (≈15%, estimare bazată pe distribuția domeniilor publice)
 
 - `CREATE TABLE` cu coloane, tipuri, constraints (`NOT NULL`, `UNIQUE`, `DEFAULT`, `CHECK`)
 - `PRIMARY KEY`, `FOREIGN KEY`
@@ -76,12 +78,12 @@ LIMIT 10;
 - `DROP TABLE`
 - `TRUNCATE TABLE` (vs `DELETE`)
 
-### 5. SQL — DCL (Data Control Language) (≈5%)
+### 5. SQL — DCL (Data Control Language) (≈5%, estimare bazată pe distribuția domeniilor publice)
 
 - `GRANT`, `REVOKE` (concept, nu implementare exactă)
 - Roluri și permisiuni
 
-### 6. Database Management (≈10%)
+### 6. Database Management (≈10%, estimare bazată pe distribuția domeniilor publice)
 
 - Tranzacții: `BEGIN`, `COMMIT`, `ROLLBACK`
 - ACID (concept: Atomicity, Consistency, Isolation, Durability)
@@ -157,3 +159,7 @@ Devices e ultimul examen. Materia e mult mai compactă (2-3 zile de citit). Vezi
   href="/cursuri"
   label="Vezi modulul SQL"
 />
+
+---
+<a id="disclaimer"></a>
+<small>* Certiport® și Pearson VUE® sunt mărci înregistrate ale proprietarilor lor. InfoBac nu este afiliat, autorizat sau aprobat oficial de Certiport sau Pearson VUE.</small>

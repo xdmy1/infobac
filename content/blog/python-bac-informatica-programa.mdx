@@ -6,7 +6,7 @@ publishedAt: "2026-05-01"
 updatedAt: "2026-05-01"
 category: "python"
 tags: ["python", "bac", "certiport", "it specialist", "programare"]
-author: "Andrei P."
+author: "Echipa InfoBac"
 isPillar: true
 related:
   - "sql-bac-it-specialist"
@@ -16,7 +16,7 @@ related:
 ogImage: null
 ---
 
-Python e cea mai grea dintre cele 3 certificări Certiport care echivalează BAC-ul. Nu pentru că Python ar fi un limbaj greu (e contrariul), ci pentru că **examenul testează nuanțe pe care manualele de liceu le sar**.
+Python e cea mai grea dintre cele 3 certificări Certiport[*](#disclaimer) care echivalează BAC-ul. Nu pentru că Python ar fi un limbaj greu (e contrariul), ci pentru că **examenul testează nuanțe pe care manualele de liceu le sar**.
 
 Articolul ăsta e harta completă a programei. Dacă ești în pregătire activă, folosește-l ca checklist. Dacă încă te uiți de pe margine, citește mai întâi pillar-ul [BAC informatică Moldova 2026: ghidul complet](/blog/bac-informatica-moldova-ghid-2026) ca să prinzi contextul.
 
@@ -34,7 +34,9 @@ Detalii cu screenshot-uri în [Cum arată un examen Certiport pe viu](/blog/exam
 
 Certiport publică oficial 6 domenii pentru Python. Le-am tradus și grupat aici, cu focus pe ce întreabă realist examenul.
 
-### 1. Operations using Data Types and Operators (≈22%)
+> Exemplele de cod de mai jos sunt elaborate de echipa InfoBac pe baza obiectivelor publice ale programei. Nu reproduc întrebări oficiale de examen.
+
+### 1. Operations using Data Types and Operators (≈22%, estimare bazată pe distribuția domeniilor publice)
 
 Bazic, dar cu capcane:
 
@@ -51,7 +53,7 @@ Bazic, dar cu capcane:
 Întrebări tipice testează diferența dintre `5/2` (=2.5) și `5//2` (=2). De asemenea, comportamentul lui `not` cu valori truthy/falsy: `not 0` = `True`, `not ""` = `True`, `not None` = `True`.
 </Callout>
 
-### 2. Flow Control with Decisions and Loops (≈25%)
+### 2. Flow Control with Decisions and Loops (≈25%, estimare bazată pe distribuția domeniilor publice)
 
 - `if`, `elif`, `else`
 - `while` și `for` (`for x in iterable`)
@@ -71,7 +73,7 @@ for i in range(1, 11):
 print(total)  # 25 — doar numere impare 1+3+5+7+9
 ```
 
-### 3. Input and Output Operations (≈10%)
+### 3. Input and Output Operations (≈10%, estimare bazată pe distribuția domeniilor publice)
 
 - `input()` — citire de la stdin (string)
 - `print()` cu separator (`sep=`) și terminator (`end=`)
@@ -90,7 +92,7 @@ with open("out.txt", "w") as f:
 
 - Moduri: `r`, `w`, `a`, `r+`, `b` (binary)
 
-### 4. Code Documentation and Structure (≈15%)
+### 4. Code Documentation and Structure (≈15%, estimare bazată pe distribuția domeniilor publice)
 
 - Comentarii: `# single line` vs `""" docstring """`
 - Indentare (4 spații, **nu** tab — capcană la mixaj)
@@ -98,7 +100,7 @@ with open("out.txt", "w") as f:
 - Module: `import`, `from x import y`, `as`
 - Module standard: `math`, `random`, `datetime`, `os`, `sys`
 
-### 5. Troubleshooting and Error Handling (≈18%)
+### 5. Troubleshooting and Error Handling (≈18%, estimare bazată pe distribuția domeniilor publice)
 
 - Tipuri de erori: `SyntaxError`, `NameError`, `TypeError`, `ValueError`, `IndexError`, `KeyError`, `ZeroDivisionError`, `FileNotFoundError`
 - `try`, `except`, `else`, `finally`
@@ -121,7 +123,7 @@ finally:
     print("Gata.")
 ```
 
-### 6. Operations Using Modules and Tools (≈10%)
+### 6. Operations Using Modules and Tools (≈10%, estimare bazată pe distribuția domeniilor publice)
 
 - Module standard frecvente: `math.sqrt`, `math.pi`, `random.randint`, `random.choice`, `datetime.now()`, `os.path.exists`, `os.listdir`
 - Module third-party (puțin testate, dar apar conceptual)
@@ -234,3 +236,7 @@ Dacă te interesează cum se ordonează cele 3 examene, citește [Pathway-ul rec
   href="/cursuri"
   label="Vezi modulul Python"
 />
+
+---
+<a id="disclaimer"></a>
+<small>* Certiport® și Pearson VUE® sunt mărci înregistrate ale proprietarilor lor. InfoBac nu este afiliat, autorizat sau aprobat oficial de Certiport sau Pearson VUE.</small>
