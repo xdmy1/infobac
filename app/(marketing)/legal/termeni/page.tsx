@@ -60,7 +60,7 @@ export default function TermeniPage() {
           </li>
           <li>
             <strong>Abonament</strong> — accesul plătit la Platformă pe baza
-            unui plan ales (Basic, Standard, Lifetime).
+            unui plan ales (Un modul, Toate modulele, Pe 6 luni).
           </li>
         </ul>
       </section>
@@ -107,10 +107,7 @@ export default function TermeniPage() {
           <li>
             ne notifici imediat dacă suspectezi acces neautorizat la cont;
           </li>
-          <li>
-            nu împărtășești contul cu alte persoane (cu excepția contului
-            extra inclus în planul Lifetime).
-          </li>
+          <li>nu împărtășești contul cu alte persoane.</li>
         </ul>
       </section>
 
@@ -118,16 +115,21 @@ export default function TermeniPage() {
         <h2>5. Plăți și facturare</h2>
         <p>
           Prețurile sunt afișate în lei moldovenești (MDL), cu echivalent
-          informativ în EUR. Plata se efectuează prin card bancar pentru
-          abonamente lunare sau prin transfer bancar pentru planul Lifetime.
+          informativ în EUR. Plata se efectuează prin aplicația MIA (Moldovan
+          Instant Payment Application) către numărul indicat la finalizarea
+          comenzii. După confirmarea plății (screenshot pe Telegram sau
+          încărcat pe Platformă), accesul este activat manual de echipă în
+          maximum 24 de ore lucrătoare.
         </p>
         <p>
-          Pentru abonamentele lunare, taxarea recurentă are loc automat la
-          aceeași dată în luna următoare, până la anularea abonamentului din
-          contul tău.
+          Planurile <strong>Un modul</strong> și <strong>Toate modulele</strong>{" "}
+          sunt lunare. Accesul e valabil pentru perioada plătită; pentru
+          continuare, refaci plata. Nu există taxare recurentă automată — nu
+          se încarcă cardul tău fără să acționezi.
         </p>
         <p>
-          Plata Lifetime e o tranzacție unică, fără reînnoire automată.
+          Planul <strong>Pe 6 luni</strong> e o plată unică ce acoperă 6 luni
+          consecutive de acces, fără reînnoire automată.
         </p>
       </section>
 
