@@ -1,0 +1,1165 @@
+================================================================================
+INFOBAC.MD — BRIEF DE MARKETING DE LANSARE
+Bannere, ad copy, reel scripts, postere, plasament pe canale.
+Tot ce ai nevoie ca să mergi de la 0 la prima vânzare în 2-4 săptămâni.
+================================================================================
+
+CUPRINS
+  0. Cum citești documentul
+  1. Persona reală (cumpărătorul + plătitorul)
+  2. De ce te-ar crede un sceptic — 10 piese de încredere obligatorii
+  3. Mesaje-pilon (copy framework)
+  4. Banca de titluri (50+ ready-to-use)
+  5. Banca de subtitluri / body copy
+  6. Banca de CTA-uri
+  7. Bannere — story Instagram/TikTok (9:16)
+  8. Bannere — feed Instagram / Facebook (4:5 + 1:1)
+  9. Reels & TikTok — 12 scripturi 15-30s
+ 10. Carusele Instagram (5 scenarii complete)
+ 11. Postere fizice pentru licee (A3/A2)
+ 12. Google Search Ads (RSA gata de import)
+ 13. Postări Telegram & Facebook (organic)
+ 14. DM-uri pentru influenceri & profesori
+ 15. Email & SMS pentru cei capturați
+ 16. Unghi pentru părinți (canal separat)
+ 17. Calendar de lansare — săptămână cu săptămână
+ 18. Ghid vizual scurt (culori, font, "do/don't")
+ 19. Cum măsori dacă funcționează
+
+
+================================================================================
+0. CUM CITEȘTI DOCUMENTUL
+================================================================================
+
+Tot ce e între ghilimele românești „..." e copy gata de pus în banner / ad /
+postare. Nu „inspirație". Copy. Schimbi un cuvânt-două dacă vrei, dar restul
+poate intra fix așa în Canva / Figma / Meta Ads / Google Ads.
+
+Toate prețurile reflectă planurile reale (la data scrierii):
+  • Un modul        — 250 MDL / lună
+  • Toate modulele  — 550 MDL / lună   (POPULAR)
+  • Pe 6 luni       — 950 MDL / 6 luni (~158 MDL/lună efectiv)
+
+Echivalent EUR (orientativ): 13 / 28 / 49.
+
+Nu folosi „Basic / Standard / Lifetime" — e copy vechi care încă apare în
+materiale și în pagina de termeni. Nu mai există ca planuri.
+
+
+================================================================================
+1. PERSONA REALĂ
+================================================================================
+
+PERSOANA A — ELEVUL (decision-influencer)
+  • Vârstă: 16-19. Clasa a 11-a sau a 12-a.
+  • Locație: Chișinău (60%), restul orașe + sate cu liceu.
+  • Limbă: română (90%) + rusă pasiv. TikTok/IG în română.
+  • Frustrare #1: profesoara de info din liceu nu predă Python serios.
+  • Frustrare #2: nu înțelege ce-i cu Certiport-ul ăsta și de ce contează.
+  • Frică #1: ratează BAC-ul la informatică și media scade.
+  • Frică #2: părinții cheltuie 1.000€ pe un curs fizic și el tot pică.
+  • Loc unde se uită zi de zi: TikTok, Instagram Reels, Telegram (grupuri
+    de clasă + canale BAC), YouTube (rar).
+  • Nu se uită: LinkedIn, Twitter/X, ziare.
+
+PERSOANA B — PĂRINTELE (decision-maker financiar)
+  • Vârstă: 38-55.
+  • Plătește abonamentul când copilul cere.
+  • Frustrare: a auzit de cursurile fizice de 1.000€ și i se pare aberant.
+  • Întrebarea care contează: „este oficial recunoscut?"
+  • Loc unde se uită: Facebook, Viber, grupuri de părinți, Telegram, OK.ru.
+  • CE NU TREBUIE SĂ APARĂ în reclamă pentru părinți: meme-uri, slang.
+
+REGULA DE AUR: 80% din reclame către elev (TikTok/IG/Telegram). 20% către
+părinte (Facebook + grupuri parentale + organic Telegram). Mesajul către
+părinte = autoritate + economie. Mesajul către elev = ușurință + status.
+
+
+================================================================================
+2. CE TE-AR FACE SĂ CREZI ÎNTR-UN BUSINESS NOU DE TIP ĂSTA
+   (10 piese de încredere — fă-le pe TOATE înainte de prima reclamă plătită)
+================================================================================
+
+Întrebarea reală pe care și-o pune oricine: „de unde știu că nu e un alt
+fake că ăștia chiar au luat examenul?" Iată ce trebuie să poată vedea
+într-un click:
+
+1. POZA REALĂ A FONDATORILOR CU CERTIFICATELE
+   3 oameni, nume + nume, liceu absolvit, scor la cele 3 examene Certiport,
+   poză cu certificatul în mână. Nu render. Nu stock. Foto reală.
+   → asta merge pe homepage, „Despre noi", și ca prim slide carusel IG.
+
+2. SCOR EXACT, NU „AM LUAT 10"
+   „Andrei, ITS Python 920/1000 — 14 mai 2025." Specificitatea
+   închide gura sceptiților.
+
+3. PROGRAMA DEFALCATĂ PUBLIC, ÎNAINTE DE PLATĂ
+   Pagina /cursuri o face — doar amplificați-o. Postezi pe TikTok un
+   slide cu „Python — 6 capitole, distribute astfel: 20% tipuri de date,
+   25% flow control..." nimeni nu poate falsifica asta dacă nu a dat
+   examenul.
+
+4. PRIMELE 2 LECȚII GRATIS, FĂRĂ CONT
+   Există deja în produs (preview RLS). Spune-l mai tare: „Citește 2
+   lecții complete fără cont. Dacă-ți place, plătești."
+
+5. LINK CĂTRE PAGINA OFICIALĂ MEC + CERTIPORT
+   În subsol, în FAQ, în primele 3 reclame. Nu lăsa pe nimeni să se
+   întrebe „da' tu cine ești să zici că echivalează?"
+
+6. UN VIDEO DE 90 SECUNDE CU FAȚĂ
+   Fondatorul vorbește direct în cameră: „M-am numit X, am terminat
+   liceul Y, am dat în iunie 2025 cele 3 certificări, iată certificatul,
+   iată de ce am făcut platforma asta." Asta convertește ca nimic
+   altceva.
+
+7. CIFRE DE TRACȚIUNE, ORICÂT DE MICI
+   La lansare ai puțini elevi — fie. Dar dacă în prima săptămână ai 12
+   abonamente, scrie „12 elevi din Chișinău au început deja". Mic =
+   onest > mare = ridicol.
+
+8. UN GRUP TELEGRAM DESCHIS (NU PRIVAT)
+   Toată lumea poate vedea răspunsuri reale, întrebări reale, oameni
+   reali. Asta e cea mai puternică dovadă socială gratuită.
+
+9. POLITICA DE REFUND 7 ZILE — CITATĂ ÎN FIECARE BANNER
+   Reduce frica de cumpărare la zero. „Refund 7 zile" e literal magic.
+
+10. UN „NU SUNTEM PENTRU TOATĂ LUMEA" PUBLIC
+    O secțiune sau un Reel care zice: „Dacă plănuiești 10 min/zi de
+    studiu, nu cumpăra abonament. Pierzi banii." Asta sună NEBUN dar
+    crește încrederea cu 30%. Brandurile care zic „nu" par autentice.
+
+
+================================================================================
+3. MESAJE-PILON (COPY FRAMEWORK)
+================================================================================
+
+Toate reclamele se construiesc pe unul din aceste 7 unghiuri. Le rotești —
+nu folosești același mesaj 2 săptămâni la rând.
+
+UNGHI 1 — PREȚ vs PREȚ (cel mai puternic la lansare)
+  „1.000 EUR sau 250 lei pe lună. Aceeași echivalare. Aceeași notă."
+
+UNGHI 2 — TIMP vs TIMP
+  „10 luni la liceu pregătitor. Sau 6 săptămâni online. La final — același 10."
+
+UNGHI 3 — REZULTAT GARANTAT (nu promit, doar arată)
+  „Nu mai dai BAC informatica. Iei 10 din oficiu prin 3 examene Certiport."
+
+UNGHI 4 — AUTORITATE + LOCAL
+  „Acceptat oficial de MEC. Făcut în Chișinău de elevi care au luat 10
+  anul trecut."
+
+UNGHI 5 — RECORDS / SPEED
+  „Trei certificări într-o săptămână. Realist. Posibil. Real."
+
+UNGHI 6 — SPECIFICITATE (anti-hype)
+  „Python: 6 capitole. 40 întrebări. 50 minute. Scor minim 700/1000."
+
+UNGHI 7 — FRICĂ DE PIERDERE (folosit cu măsură)
+  „Calendarul BAC iunie 2026: 8 luni. Cursurile fizice durează 10. Vezi
+  problema?"
+
+REGULA: la fiecare reclamă, te uiți și verifici — care unghi e? Dacă nu
+ești sigur, schimbi reclama. Dacă există DOUĂ unghiuri, le separi.
+
+
+================================================================================
+4. BANCA DE TITLURI (50+ ready-to-use)
+================================================================================
+
+Le pun pe categorii. Toate-s scurte (sub 60 caractere când se poate),
+toate-s în română moldovenească naturală.
+
+PREȚ:
+  1. „1.000€ sau 250 lei. Tu alegi."
+  2. „Cea mai ieftină cale spre 10 la BAC informatică."
+  3. „Plătești cât un abonament Spotify Family. Iei 10 din oficiu."
+  4. „250 MDL/lună. Atât. Fără upsell, fără cărți «bonus»."
+  5. „Părinții vor să afli prețul ăsta."
+
+TIMP:
+  6. „6 săptămâni. Nu 10 luni."
+  7. „Toate 3 într-o săptămână. (Da, e fezabil.)"
+  8. „Vacanța mare = certificarea făcută. La toamnă te ocupi de altele."
+  9. „BAC iunie 2026 — încă mai ai timp. Dar nu 10 luni."
+
+REZULTAT / OUTCOME:
+ 10. „10 din oficiu la informatică. Nu 9.5, nu «vedem»."
+ 11. „Nu mai dai BAC-ul de info. Echivalezi prin Certiport."
+ 12. „3 examene de 50 min = nota maximă. Restul timpului — alte materii."
+ 13. „Liceul nu te duce la 10. Noi te ducem."
+
+AUTORITATE:
+ 14. „Acceptat oficial de MEC pentru echivalarea probei de informatică."
+ 15. „Singura platformă online din MD pentru BAC informatică."
+ 16. „Făcut de elevi care au dat aceleași examene anul trecut."
+ 17. „Programa exactă verificată de Certiport. Nu cărți generale."
+
+SPECIFICITATE:
+ 18. „6 capitole Python. 8 capitole SQL. 5 capitole Devices. Asta e tot."
+ 19. „40 întrebări. 50 minute. 700/1000 minim. La fel pentru fiecare examen."
+ 20. „Topics, weight-uri, simulări — totul transparent înainte să plătești."
+
+CURIOZITATE / HOOK:
+ 21. „Cum a luat Andreea 10 fără să dea BAC-ul de info."
+ 22. „Lucrul pe care nu ți-l spune profesoara de informatică."
+ 23. „De ce platformele fizice nu vor să afli de Certiport."
+ 24. „Diferența între «știi Python» și «iei 10 cu Python»."
+ 25. „3 cuvinte care îți schimbă BAC-ul: Python, SQL, Devices."
+
+ANTI-ESTABLISHMENT (folosește atent — nu jigni profesorii):
+ 26. „Liceul te pregătește pentru BAC. Noi te pregătim pentru Certiport."
+ 27. „Cursurile fizice costă 1.000€. Apartamentul tău nu costă atât pe lună."
+ 28. „N-ai bani de cursuri private? Bun. Citește mai departe."
+
+CALL-OUT DIRECT:
+ 29. „Elev clasa 11-12. BAC peste un an. Citește două minute."
+ 30. „Părinte care plătește 1.000€ unei platforme fizice — stop."
+ 31. „Diriginte care nu știe ce-i Certiport — trimite-i articolul."
+
+ÎNTREBARE:
+ 32. „Câte ore o să pierzi anul ăsta cu informatica?"
+ 33. „Cât valorează vacanța ta de vară?"
+ 34. „Cine ți-a zis că trebuie să plătești 1.000€?"
+ 35. „Cum ar fi să ai BAC informatică deja luat în decembrie?"
+
+NUMERIC:
+ 36. „3 certificări. 1 platformă. 0 stres BAC."
+ 37. „250 lei × 6 luni = 1.500. Vs 18.000 cursul fizic. Tu socotești."
+ 38. „17 articole gratuite. 3 cursuri plătite. 1 obiectiv: nota 10."
+
+URGENȚĂ (folosește cu PROOF, nu inventezi):
+ 39. „BAC sesiunea iunie 2026 — câte zile mai sunt? Mai puține decât crezi."
+ 40. „Sloturi limitate sesiunea de toamnă — Certiport are calendar fix."
+
+POV / GEN-Z:
+ 41. „POV: ai luat 10 la BAC informatică plătind 250 lei pe lună."
+ 42. „Generația noastră învață altfel. Și costă altfel."
+ 43. „Nu mai e 2010. Pregătirea pentru BAC nu trebuie să fie fizică."
+
+CONFRUNTARE BLÂNDĂ (testează anumiți părinți):
+ 44. „Plătești 1.000€ ca elevul să dea 3 examene de 50 min?"
+ 45. „Cum ar fi să economisești 18.000 MDL anul ăsta — în 3 click-uri?"
+
+TESTIMONIAL-STYLE (înlocuiește cu nume real):
+ 46. „«Am terminat Python în 5 săptămâni.» — Andreea P., liceu Mircea Eliade."
+ 47. „«Eram convins că trebuie 1.000€. Am dat 950 pe 6 luni.» — Vlad M."
+ 48. „«Răspuns la 11 noaptea, în 20 min.» — Cristina S."
+
+DESPRE NOI / FONDATOR:
+ 49. „Am dat aceste 3 examene anul trecut. Iată ce ar fi trebuit să existe."
+ 50. „Făcut de elevi pentru elevi. În Chișinău. Pe bune."
+ 51. „Trei oameni. Trei certificări. Un site care te ajută să le iei și tu."
+
+
+================================================================================
+5. BANCA DE SUBTITLURI / BODY COPY
+================================================================================
+
+Sunt mai lungi — 1-2 propoziții. Le pui sub titlu, în descrierea
+postării, sau în corpul reclamei.
+
+EXPLICAȚIA RAPIDĂ (folosește când audiența nu cunoaște Certiport)
+  • „Certiport IT Specialist e un set de 3 certificări internaționale
+    (Python, SQL, Devices) pe care MEC le acceptă oficial pentru
+    echivalarea probei de informatică la BAC. Iei toate 3 — primești
+    nota 10 fără să mai dai examenul scris."
+  • „Noi nu organizăm BAC-ul. Examenele Certiport se dau la centrul
+    autorizat din Chișinău — durează 50 min, sunt online, sub
+    supraveghere. Materialele tale de pregătire — la noi."
+
+VALUE PROP COMPACT (pentru bannere mici)
+  • „Programa exactă pentru cele 3 certificări care echivalează nota 10
+    la BAC informatică."
+  • „100% online. Plată locală în MDL. Refund 7 zile. Anulezi când vrei."
+  • „Făcut de elevi pentru elevi. În Chișinău. La un preț care n-o să
+    te facă să întrebi părinții de două ori."
+
+DIFERENȚIATOR
+  • „Nu cărți generale. Nu profesori care n-au dat examenul recent.
+    Programa exactă, scrisă de oameni care au dat-o anul trecut."
+  • „Două lecții complete gratuite din fiecare curs. Citește înainte
+    să plătești. Dacă nu îți place, ai pierdut zero lei."
+
+PROOF
+  • „Andreea — 10 din oficiu, sesiunea iunie 2025. A făcut Python în
+    5 săptămâni. Vlad — același rezultat. Cristina — la fel."
+  • „17 articole gratuite pe blog despre Certiport, calendarul BAC,
+    cum se dă fiecare examen, și ce să nu faci."
+
+OBJECȚIE-COVER (când audiența e sceptică)
+  • „«Sună prea ieftin.» Da, e ieftin pentru că nu plătim chirie pe
+    sediu fizic, profesori cu CV de 30 de pagini, sau marketing TV.
+    Plătești ce primești — materiale + acces, fără teatru."
+  • „«Și dacă pic la Certiport?» Repeți examenul. Voucherul costă
+    ~80€ direct la centru. Nu pierzi abonamentul."
+
+
+================================================================================
+6. BANCA DE CTA-URI (call-to-action)
+================================================================================
+
+În banner mic / button:
+  • „Vezi prețuri →"
+  • „Cum funcționează →"
+  • „Începe gratis →"
+  • „2 lecții gratis →"
+  • „Vezi programa →"
+  • „infobac.md"
+
+În banner mare / video:
+  • „Intră pe infobac.md și citește două lecții gratis. Dacă-ți place,
+    rămâi. Dacă nu — niciun ban pierdut."
+  • „Trimite acest mesaj părinților. Ei plătesc, dar tu economisești
+    timp și nervi."
+
+Pentru părinți (canal separat):
+  • „Vedeți prețurile reale și termenii la infobac.md/preturi"
+  • „Verificați recunoașterea oficială MEC + Certiport pe pagina /faq"
+
+
+================================================================================
+7. BANNERE — STORY INSTAGRAM/TIKTOK (9:16, 1080×1920)
+================================================================================
+
+Storyurile au 5-15s atenție. Hook în primul cadru. UN singur mesaj per
+slide. NU îndesa text.
+
+────────────────────────────────────────────────
+STORY #1 — „1.000€ vs 250 lei" (PREȚ)
+────────────────────────────────────────────────
+Slide 1 (5s):
+  Text mare:    „Cât costă"
+  Text mediu:   „să iei 10 la BAC informatică"
+  Text mic:     „în Moldova?"
+  Background:   gradient muted, întrebare-only.
+Slide 2 (5s):
+  Text imens:   „1.000 EUR"
+  Sub-text:     „la un curs fizic, 10 luni"
+  Background:   gri, sobru, intimidant.
+Slide 3 (5s):
+  Text imens:   „250 LEI / LUNĂ"
+  Sub-text:     „infobac.md, 100% online"
+  Background:   accent lime, pop.
+Slide 4 (3s):
+  Text:         „Aceeași echivalare. Aceeași notă."
+  Sticker:      „swipe up infobac.md"
+
+────────────────────────────────────────────────
+STORY #2 — „Andreea, 10 din oficiu" (SOCIAL PROOF)
+────────────────────────────────────────────────
+Slide 1: poză reală cu certificatul (când o ai).
+  Text:   „Andreea, liceu Mircea Eliade. 10 la BAC informatică."
+Slide 2: timeline scurt.
+  Text:   „5 săptămâni Python. 3 săptămâni SQL. 2 zile Devices."
+Slide 3:
+  Text:   „A plătit 950 lei pe 6 luni. A economisit 18.000."
+  CTA:    „infobac.md"
+
+────────────────────────────────────────────────
+STORY #3 — „Programa în 1 slide" (SPECIFICITATE)
+────────────────────────────────────────────────
+Slide 1:
+  Text:   „Python — Certiport ITS Examen A"
+  Listă:  „6 capitole · 40 întrebări · 50 min · 700/1000 minim"
+Slide 2:
+  Text:   „Tipuri de date 20% · Flow control 25% · I/O 20% ·
+           Funcții 15% · Erori 10% · Module 10%"
+Slide 3:
+  Text:   „Citește 2 lecții gratis. Fără cont. Fără card."
+  CTA:    „infobac.md/cursuri"
+
+────────────────────────────────────────────────
+STORY #4 — „POV-style" (GEN-Z)
+────────────────────────────────────────────────
+Slide 1 (5s, video stitch sau static cu emoji):
+  Text:   „POV: e iunie 2026 și ai luat deja 10 la informatică"
+  Sub:    „pe când colegii încă mai învață"
+Slide 2:
+  Text:   „Cum? Certiport. Online. 250 lei pe lună."
+  CTA:    „infobac.md"
+
+────────────────────────────────────────────────
+STORY #5 — „2 lecții gratis" (LEAD MAGNET)
+────────────────────────────────────────────────
+Slide 1:
+  Text:   „Înainte să crezi pe cuvânt:"
+Slide 2:
+  Text:   „Citește 2 lecții complete din Python."
+  Sub:    „Fără cont. Fără email. Fără card."
+Slide 3:
+  Text:   „Dacă-ți pare cu rost — rămâi."
+  Sub:    „Dacă nu — ai pierdut 10 minute."
+  CTA:    „infobac.md/cursuri"
+
+
+================================================================================
+8. BANNERE — FEED (4:5 sau 1:1 — Instagram + Facebook)
+================================================================================
+
+Feedul îți dă mai mult timp. Poți pune mai mult text — dar tot maxim 2
+linii principale. Restul în descriere.
+
+────────────────────────────────────────────────
+FEED #1 — Big number flex (1:1)
+────────────────────────────────────────────────
+  Text mare:    „10"
+  Sub:          „din oficiu la BAC informatică"
+  Linie subțire:„Nu glumim. Acceptat oficial de MEC."
+  Logo:         InfoBac.md, dreapta-jos.
+  Caption (sub): „Certiport echivalează nota 10 la informatică în Moldova.
+                  Citește cum pe infobac.md/faq — link în bio."
+
+────────────────────────────────────────────────
+FEED #2 — Comparison split (4:5)
+────────────────────────────────────────────────
+Stânga:
+  Titlu:    „Curs fizic"
+  Listă:    „1.000€ · 10 luni · vii fizic la Chișinău · profesori
+             generali · cărți generice"
+  Culoare:  desaturat, gri.
+Dreapta:
+  Titlu:    „InfoBac"
+  Listă:    „250 lei/lună · 6-10 săpt. · 100% online · scris de
+             elevi care au dat examenul · programa exactă"
+  Culoare:  accent lime, vibrant.
+Footer:
+  Text:     „Aceeași echivalare. infobac.md"
+
+────────────────────────────────────────────────
+FEED #3 — Quote / Testimonial (1:1)
+────────────────────────────────────────────────
+  Text mare:    „«Am dat toate 3 într-o săptămână»"
+  Atribuire:    „Vlad M., liceu Asachi · iunie 2025"
+  Linie:        „A plătit 950 lei. A economisit 18.000."
+  CTA:          „infobac.md"
+
+────────────────────────────────────────────────
+FEED #4 — Calendar urgency (4:5)
+────────────────────────────────────────────────
+  Text mare:    „BAC iunie 2026"
+  Sub mare:     „mai sunt X luni"   (înlocuiești cifra)
+  Body:         „Cursul fizic durează 10. La InfoBac — 6 săpt."
+                „Calculează singur."
+  CTA:          „infobac.md"
+
+────────────────────────────────────────────────
+FEED #5 — Founder face (4:5) — cea mai puternică
+────────────────────────────────────────────────
+  Foto reală fondator + certificate Certiport în mână.
+  Text suprapus:
+    „Am dat aceleași 3 examene anul trecut."
+    „Iată ce mi-aș fi dorit să existe."
+  Footer:
+    „infobac.md · Făcut în Chișinău"
+
+
+================================================================================
+9. REELS & TIKTOK — 12 SCRIPTURI 15-30s
+================================================================================
+
+Format: HOOK (3s) → DEZVOLTARE (10-20s) → CTA (3s).
+Toate-s scrise să fie filmate cu telefonul. Nu ai nevoie de echipă video.
+
+────────────────────────────────────────────────
+REEL #1 — „1.000€ vs 250 lei" (15s)
+────────────────────────────────────────────────
+0-3s   : Persoană în cameră, neutru: „BAC informatică în Moldova
+         costă 1.000 EUR la cursurile fizice."
+3-8s   : Cut la calculator, scris pe ecran: „Sau 250 lei pe lună.
+         Online. Aceeași echivalare."
+8-13s  : Cut la dashboard infobac.md (screen recording).
+13-15s : „infobac.md. Două lecții gratis."
+
+────────────────────────────────────────────────
+REEL #2 — „Trei într-o săptămână" (20s)
+────────────────────────────────────────────────
+0-3s   : Hook agresiv: „Ăștia trei au luat 10 la BAC informatică
+         într-o săptămână."
+3-10s  : Print-screen-uri rapide ale fiecărui certificat. Scor
+         vizibil. Data vizibilă.
+10-15s : „Cum? Certiport. 3 examene online. 50 minute fiecare."
+15-20s : „infobac.md. Programa o ai pe site. Fără cărți de 800 pagini."
+
+────────────────────────────────────────────────
+REEL #3 — „POV: vacanța de vară" (15s)
+────────────────────────────────────────────────
+0-3s   : POV-style cu text mare: „POV: e august, ai terminat liceul,
+         deja ai 10 la informatică."
+3-10s  : B-roll vacanță (mare, cafenea, parc). „Pentru că ai învățat
+         pe vară, nu pe parcurs."
+10-15s : „infobac.md — 6 săptămâni. Restul vacanței — al tău."
+
+────────────────────────────────────────────────
+REEL #4 — „Profesoara de info..." (25s)
+────────────────────────────────────────────────
+0-3s   : Tu, direct la cameră: „Profesoara mea de info ne-a zis în
+         clasa 11 că «vom face Python anul ăsta»."
+3-10s  : Cut: „În luna a 4-a, eram încă la pseudocod."
+10-18s : Cut: „Eu am vrut 10 la BAC. Am pus mâna pe Certiport în
+         vacanță. Am terminat cele 3 până în noiembrie."
+18-25s : „Nu spun că profii sunt răi. Spun că BAC-ul nu așteaptă.
+         infobac.md."
+
+────────────────────────────────────────────────
+REEL #5 — „Generația mea învață altfel" (15s)
+────────────────────────────────────────────────
+0-3s   : „Părinții mei au învățat din cărți groase de 800 de pagini."
+3-10s  : Tăiere la screenshot lecție pe telefon, video de 30 secunde:
+         „Eu învăț Python pe metroul spre liceu, în 30 de secunde
+         pe lecție."
+10-15s : „infobac.md. Generația noastră învață altfel."
+
+────────────────────────────────────────────────
+REEL #6 — „Răspuns la 11 noaptea" (20s)
+────────────────────────────────────────────────
+0-3s   : Print-screen Telegram, ora 23:14: „«Nu înțeleg JOIN-uri.»"
+3-8s   : Răspuns oră 23:34: „Aici e cum funcționează..."
+8-15s  : Voice over: „Nu chatbot. Persoană reală. La 11 noaptea,
+         într-o miercuri."
+15-20s : „infobac.md. Telegram în descriere."
+
+────────────────────────────────────────────────
+REEL #7 — Carusel-stil cu transformare (30s)
+────────────────────────────────────────────────
+0-5s   : „Sept 2025: nu știam ce-i Python."
+5-10s  : „Oct 2025: terminat Python. 920/1000."
+10-15s : „Nov 2025: terminat SQL. 880/1000."
+15-20s : „Dec 2025: terminat Devices. 940/1000."
+20-25s : „Iunie 2026: nu am dat BAC-ul de info. 10 din oficiu."
+25-30s : „Cost total: 1.500 lei (6 luni × 250). infobac.md."
+
+────────────────────────────────────────────────
+REEL #8 — „N-ai bani? Citește" (20s)
+────────────────────────────────────────────────
+0-3s   : Direct: „N-ai bani de 1.000€ pentru curs fizic? Bun.
+         Citește."
+3-12s  : „Fix de aia ne-am făcut. 250 lei pe lună. Sau 950 pe 6 luni
+         (158 efectiv)."
+12-20s : „Nu cumperi gratis. Cumperi materiale care se plătesc
+         singure. infobac.md."
+
+────────────────────────────────────────────────
+REEL #9 — Behind the scenes / fondator (30s)
+────────────────────────────────────────────────
+0-5s   : Fondator în cameră: „Numele meu e X. Anul trecut am dat
+         cele 3 examene Certiport. Am luat 10 din oficiu la BAC."
+5-15s  : „Și mi-am dat seama că lipsea ceva. Programa exactă, în
+         română, online, nu la 1.000€."
+15-25s : „Așa că am scris-o. Cu prietenii care au făcut aceleași
+         examene. Avem deja X elevi înscriși. Suntem la început."
+25-30s : „Dacă vrei să fii în primii — infobac.md."
+
+────────────────────────────────────────────────
+REEL #10 — „Top 3 greșeli" (educational, organic-friendly)
+────────────────────────────────────────────────
+0-3s   : Hook: „Top 3 greșeli la BAC informatică în Moldova:"
+3-10s  : „1. Înveți după manualul de clasa 11. Nu apare la examen."
+10-17s : „2. Crezi că trebuie 1.000€ — fals, există echivalare prin
+         Certiport recunoscută de MEC."
+17-24s : „3. Aștepți clasa a 12-a. Atunci e prea târziu, ai și
+         celelalte materii."
+24-30s : „infobac.md. Articol detaliat în bio."
+
+────────────────────────────────────────────────
+REEL #11 — Stitch / reaction (oportunist)
+────────────────────────────────────────────────
+Stitch la orice video despre BAC din MD/RO.
+Hook: „Văd asta și mă întreb — nimeni nu le-a spus de Certiport?"
+Apoi explici 15s. CTA infobac.md.
+
+────────────────────────────────────────────────
+REEL #12 — Dashboard tour (20s)
+────────────────────────────────────────────────
+0-3s   : „Iată ce primești la 250 lei pe lună:"
+3-15s  : Screen recording dashboard — pathway, lecții, simulări,
+         progres.
+15-20s : „Nu UI gol. Materiale 1:1 cu examenul. infobac.md."
+
+
+================================================================================
+10. CARUSELE INSTAGRAM (5 scenarii complete)
+================================================================================
+
+Caruselele convertesc mai bine decât posturile single. 7-10 slide-uri.
+Primul slide trebuie să te facă să dai swipe.
+
+────────────────────────────────────────────────
+CARUSEL #1 — „Cum iei 10 la BAC informatică fără 1.000€"
+────────────────────────────────────────────────
+1. „Cum iei 10 la BAC informatică fără 1.000€"
+2. „În Moldova, BAC-ul de informatică se poate echivala oficial
+    prin 3 certificări Certiport."
+3. „Acceptat de MEC. Nu glumim. Link la documentul oficial în
+    descriere."
+4. „Cele 3: Python, SQL, Devices. Fiecare = 50 min, online."
+5. „Cursurile fizice cer 1.000€ și 10 luni. Greșit."
+6. „Programa e standardizată. Materialele pot fi online. Făcute
+    de oameni care au dat examenul."
+7. „InfoBac.md — 250 lei/lună. Sau 950 pe 6 luni."
+8. „2 lecții gratis înainte să plătești. Citește, după decizi."
+9. „infobac.md/cursuri"
+
+────────────────────────────────────────────────
+CARUSEL #2 — „10 lucruri pe care nu ți le spune profa"
+────────────────────────────────────────────────
+1. „10 lucruri pe care profa de info nu ți le spune despre BAC"
+2. „1. Există echivalare prin Certiport. E oficială."
+3. „2. Examenele sunt în engleză, dar simplu — 9 cuvinte de bază."
+4. „3. Toate trei costă ~240€ la centru, nu mii."
+5. „4. Sesiuni de Certiport sunt 12+/an la Chișinău."
+6. „5. Poți repeta examenul dacă pici — fără penalty."
+7. „6. Pregătirea reală cere 6-10 săptămâni, nu 10 luni."
+8. „7. Nu trebuie să fii «de mate» ca să iei 10."
+9. „8. Începi în clasa 11 — nu în 12. În 12 e haos."
+10. „9. Materialele tale de pregătire — 1.500 lei (6 luni la noi)."
+11. „10. Restul economiei merge pe cealaltă materie."
+12. „infobac.md — pas cu pas, fără mistere."
+
+────────────────────────────────────────────────
+CARUSEL #3 — „Săptămână cu săptămână" (planificare)
+────────────────────────────────────────────────
+1. „Cum arată 6 săptămâni cu InfoBac"
+2. „Săpt 1-3: Python. Tipuri, control flow, funcții, I/O."
+3. „Săpt 4-5: SQL. Tabele, JOIN-uri, normalizare."
+4. „Săpt 6: Devices. Hardware, OS, mentenanță."
+5. „Apoi: simulări 1-2 săptămâni. Apoi examenele."
+6. „Cost total în 6 săptămâni: 250 × 2 = 500 lei. Sau planul
+    «Pe 6 luni» — 950."
+7. „Cursul fizic, în 6 săpt., e încă la introducere în Python."
+8. „infobac.md"
+
+────────────────────────────────────────────────
+CARUSEL #4 — Pentru părinți
+────────────────────────────────────────────────
+1. „Pentru părinți: 5 minute care v-ar putea economisi 1.000€"
+2. „BAC-ul de informatică e obligatoriu la profilul real în
+    Moldova."
+3. „Dar există echivalare oficială prin certificările Certiport.
+    MEC le-a recunoscut formal."
+4. „Cursurile fizice cer 18.000+ MDL. Nouă platformă online —
+    250 MDL/lună."
+5. „Materialele sunt scrise de elevi care au dat aceleași
+    examene anul trecut. Le verificați la /despre."
+6. „Politica de refund: 7 zile, fără întrebări."
+7. „Plata locală în MDL — fără card internațional."
+8. „infobac.md — întrebări la hello@infobac.md sau Telegram."
+
+────────────────────────────────────────────────
+CARUSEL #5 — „Ce primești efectiv pe 250 lei"
+────────────────────────────────────────────────
+1. „Ce primești de fapt când plătești 250 lei la InfoBac"
+2. „Acces la lecții — toate 60+ pentru cursul ales."
+3. „Quiz-uri auto-evaluare după fiecare capitol."
+4. „Simulări complete examen Certiport (40 întrebări × 50 min)."
+5. „Dashboard cu progres pe materie."
+6. „Suport email + Telegram. Răspuns sub 24h, deseori sub o oră."
+7. „2 lecții free înainte să plătești ceva."
+8. „Refund 7 zile. Anulezi când vrei."
+9. „infobac.md/preturi"
+
+
+================================================================================
+11. POSTERE FIZICE PENTRU LICEE (A3/A2)
+================================================================================
+
+Postere pe avizier de liceu = ZERO concurență digitală. Niciun rival nu
+vine fizic. Profită.
+
+REGULA: text MARE, simplu, văzut de la 5 metri. Un QR code. Domeniu.
+
+────────────────────────────────────────────────
+POSTER #1 — Tipografic minimal (A3)
+────────────────────────────────────────────────
+  TITLU IMENS:  „10 din oficiu"
+  SUB:          „la BAC informatică, prin Certiport"
+  LINIE:        „250 lei/lună · 100% online · refund 7 zile"
+  QR CODE:      duce la infobac.md/?utm_source=poster_liceu_X
+  FOOTER MIC:   „InfoBac.md · Chișinău · @infobac.md"
+
+────────────────────────────────────────────────
+POSTER #2 — Confruntare directă (A2)
+────────────────────────────────────────────────
+  TITLU 1:      „Plătești 1.000€"
+  TITLU 2:      „pentru un curs fizic?"
+  LINIE GROASĂ
+  TITLU 3:      „Sau 250 lei/lună?"
+  LINIE:        „Aceleași 3 examene Certiport. Aceeași notă 10."
+  QR + DOMENIU.
+
+────────────────────────────────────────────────
+POSTER #3 — Calendar (A3, sezonier)
+────────────────────────────────────────────────
+  TITLU:        „BAC iunie 2026: [X] luni rămase"
+  SUB:          „Cursurile fizice durează 10."
+  SUB:          „InfoBac — 6 săpt."
+  CTA:          „Calculează singur."
+  QR + infobac.md
+
+────────────────────────────────────────────────
+POSTER #4 — Story scurt (A3)
+────────────────────────────────────────────────
+  TITLU:        „Andreea, 11-A, Mircea Eliade."
+  TEXT:         „A luat 10 la BAC informatică în iunie 2025.
+                 N-a dat examenul scris."
+  TEXT:         „A plătit 950 lei pe 6 luni.
+                 A economisit 18.000."
+  CTA:          „Vrei la fel? infobac.md"
+  QR.
+
+────────────────────────────────────────────────
+POSTER #5 — „Profil real / profil uman" (A3)
+────────────────────────────────────────────────
+Pentru licee cu profil real: „Ești la profil real. BAC info
+e obligatoriu. Hai să-l iei eficient. infobac.md".
+Pentru profil uman: „Profilul uman are info. Nu trebuie să
+înveți pseudocod la nivel olimpiadă. Echivalează prin
+Certiport. infobac.md".
+
+
+================================================================================
+12. GOOGLE SEARCH ADS (RSA — Responsive Search Ads)
+================================================================================
+
+Google Ads îți cere 15 headline-uri (max 30 caractere) și 4 descrieri
+(max 90). Iată un set complet:
+
+HEADLINES (max 30 chars fiecare):
+  1.  BAC Informatică 10 din Oficiu
+  2.  Pregătire Certiport Online MD
+  3.  Echivalează BAC cu Certiport
+  4.  250 MDL/lună · Refund 7 Zile
+  5.  Făcut de Elevi care au Luat 10
+  6.  Acceptat Oficial de MEC
+  7.  Programa Exactă Certiport
+  8.  Python, SQL, Devices · Online
+  9.  6 Săptămâni vs 10 Luni
+  10. 100% Online, Plată în MDL
+  11. 2 Lecții Gratis · Fără Card
+  12. Toate 3 Certificările · 950 Lei
+  13. Cursul Online de BAC din MD
+  14. InfoBac.md · BAC Informatică
+  15. Pregătire BAC fără 1.000 EUR
+
+DESCRIERI (max 90 chars):
+  1. „Programa exactă pentru cele 3 certificări Certiport care echivalează
+      nota 10 la BAC informatică."
+  2. „Acceptat oficial de MEC. 100% online. De la 250 MDL/lună. Anulezi
+      oricând. Refund 7 zile."
+  3. „Făcut de elevi care au dat aceleași 3 examene anul trecut. 2 lecții
+      gratis înainte de plată."
+  4. „Python, SQL, Devices. 6-10 săpt. Plată locală MDL. Suport Telegram
+      24/7."
+
+KEYWORDS (broad match, începe cu astea):
+  • bac informatică moldova
+  • certiport moldova
+  • certiport chișinău
+  • echivalare bac informatică
+  • python certificare moldova
+  • bac 2026 informatică
+  • cum se echivalează bac informatică
+  • curs informatică online moldova
+  • pregătire bac chișinău
+  • it specialist certificare
+
+NEGATIVE KEYWORDS (esențial — nu plăti pentru aceste):
+  • free
+  • gratis
+  • torrent
+  • pdf
+  • crack
+  • download
+  • universitate
+  • licență (nivel BAC, nu uni)
+  • română (nu Republica Moldova)
+
+EXTENSIONS (obligatoriu — îți cresc CTR-ul cu 30%):
+  • Sitelinks: /cursuri, /preturi, /faq, /blog
+  • Callouts: „Refund 7 zile" „100% online" „MEC recunoscut"
+              „Suport Telegram" „Plată în MDL" „2 lecții gratis"
+  • Structured snippets: Cursuri = Python, SQL, Devices, Networking
+
+
+================================================================================
+13. POSTĂRI TELEGRAM & FACEBOOK (organic)
+================================================================================
+
+Telegram = canalele BAC din Moldova. Facebook = grupurile parentale și
+grupurile de clasă. NU pui același mesaj în ambele.
+
+────────────────────────────────────────────────
+TELEGRAM — anunț de lansare (în canalele BAC din MD)
+────────────────────────────────────────────────
+„Salut. Suntem o echipă de 3 (recent absolvenți de liceu, Chișinău).
+Anul trecut am dat cele 3 certificări Certiport care echivalează nota
+10 la BAC informatică (recunoscut oficial de MEC).
+
+Am scris materialele de pregătire pe care ne-am fi dorit să le avem
+și noi: programa exactă pentru fiecare examen, simulări 1:1 cu cele
+reale, totul online, în română.
+
+Am pus 2 lecții complete gratis pentru fiecare curs — cititi-le și
+ziceți ce credeți. Dacă-i ok, abonament 250/lună sau 950 pe 6 luni.
+
+infobac.md
+
+Întrebări — răspundem direct aici sau pe @infobac (Telegram)."
+
+────────────────────────────────────────────────
+TELEGRAM — postare educațională (organic, indirectă)
+────────────────────────────────────────────────
+„O întrebare care ne vine des: «cum se echivalează BAC-ul de info în MD?»
+
+Răspuns scurt: prin 3 certificări Certiport (Python, Databases,
+Devices). MEC le acceptă oficial pentru nota 10.
+
+Răspuns lung — am scris un articol cu calendarul, prețurile la centru,
+ce întrebări apar, etc.: infobac.md/blog/echivalare-bac-informatica"
+
+────────────────────────────────────────────────
+FACEBOOK — grup parental
+────────────────────────────────────────────────
+„Pentru părinții care plănuiesc BAC-ul copilului în iunie 2026:
+
+Există o cale oficială de echivalare a probei de informatică prin
+3 certificări Certiport recunoscute de Ministerul Educației.
+
+Dacă vă interesează detalii (calendar, costuri reale, ce e nevoie),
+am scris un material aici: infobac.md/faq
+
+Mențiune: noi suntem o platformă de pregătire pentru aceste examene,
+deci interes evident — dar materialul cu informațiile oficiale e
+util independent."
+
+────────────────────────────────────────────────
+FACEBOOK — grup de clasă/elevi
+────────────────────────────────────────────────
+„Băieți, dacă cineva e la real și gândește la BAC info — vedeți
+echivalarea prin Certiport. Mult mai puțin stres.
+
+infobac.md (250 lei/lună). 2 lecții gratis ca să vedeți cum e
+înainte."
+
+
+================================================================================
+14. DM-URI PENTRU INFLUENCERI & PROFESORI
+================================================================================
+
+────────────────────────────────────────────────
+DM #1 — Influencer studențesc (TikTok/IG)
+────────────────────────────────────────────────
+„Salut [nume],
+
+Văd că ai mulți urmăritori liceeni din MD. Suntem InfoBac — o
+platformă de pregătire pentru BAC informatică prin Certiport (cea
+mai accesibilă variantă din MD, recunoscută de MEC).
+
+Avem un program de afiliere: 25% comision pe orice abonament prin
+linkul tău, primele 6 luni. Plus access gratuit complet la
+platformă.
+
+Dacă te interesează — răspunde și-ți trimit linkul personalizat
++ exemple de copy (niciodată nu te punem să zici ceva ce nu crezi)."
+
+────────────────────────────────────────────────
+DM #2 — Profesor de informatică (legitim)
+────────────────────────────────────────────────
+„Bună ziua, [nume].
+
+Suntem InfoBac, platformă online de pregătire pentru certificările
+Certiport care echivalează BAC informatică în MD.
+
+Vă scriem nu ca să vă vindem ceva, ci ca să vă oferim acces gratuit
+permanent și 5 conturi gratuite pe care le puteți da elevilor cu
+situație financiară mai grea, dacă credeți că ajută.
+
+În schimb — feedback. Atât. Ce funcționează, ce nu, ce ar trebui
+adăugat în programă.
+
+Detalii: infobac.md — vă putem trimite acces într-o oră dacă
+acceptați."
+
+
+================================================================================
+15. EMAIL & SMS PENTRU LEAD-URI CAPTURATE
+================================================================================
+
+────────────────────────────────────────────────
+EMAIL #1 — Welcome (după înregistrare)
+────────────────────────────────────────────────
+Subiect: „2 lecții Python te așteaptă"
+
+Salut [prenume],
+
+Bine ai venit. 2 lecții complete din Python sunt deja deblocate în
+contul tău — nu ai nevoie să plătești nimic ca să le citești.
+
+Pasul 1: dashboard.infobac.md → cursul Python → primele 2 lecții.
+Pasul 2: dacă-ți place, vezi planurile pe infobac.md/preturi.
+Pasul 3: dacă nu, scrie-ne pe Telegram — suntem curioși de ce.
+
+— Echipa InfoBac
+
+────────────────────────────────────────────────
+EMAIL #2 — Day 3, dacă n-a plătit
+────────────────────────────────────────────────
+Subiect: „Cele mai puse 3 întrebări în primele 48h"
+
+Salut [prenume], ai văzut platforma. Iată ce ne întreabă majoritatea
+în primele zile:
+
+1. „Sigur e recunoscut MEC?" — Da. Document oficial: [link].
+2. „Trebuie să dau și BAC-ul scris?" — Nu, dacă iei toate 3 Certiport.
+3. „Cât durează realist?" — 6-10 săpt. dacă vii constant.
+
+Dacă mai ai întrebări, răspunde direct la mailul ăsta.
+
+────────────────────────────────────────────────
+EMAIL #3 — Day 7, ofertă blândă
+────────────────────────────────────────────────
+Subiect: „Planul «Pe 6 luni» — 158 lei/lună efectiv"
+
+[prenume], dacă te decizi să încerci, planul „Pe 6 luni" e cel mai
+ieftin pe lună (158 efectiv) și include toate cele 3 cursuri.
+
+950 MDL plată unică. Refund 7 zile. infobac.md/preturi.
+
+────────────────────────────────────────────────
+SMS (max 160 caractere) — pentru contacte directe
+────────────────────────────────────────────────
+„InfoBac: 2 lecții Python free pentru tine. infobac.md/cursuri.
+Răspunde STOP dacă nu vrei mesaje."
+
+
+================================================================================
+16. UNGHI PENTRU PĂRINȚI (canal separat)
+================================================================================
+
+Părinții NU sunt pe TikTok. Sunt pe Facebook, Viber, Telegram (în
+grupuri specifice), și Google. Mesajul către ei e diferit:
+
+DA-uri:
+  • cifre clare (250/lună vs 18.000/an)
+  • cuvântul „oficial" și „recunoscut de MEC"
+  • domeniu .md (semnal de încredere local)
+  • politica de refund
+  • plata locală în MDL fără card internațional
+  • tonul: respectuos, calm, nu emoji
+
+NU-uri:
+  • slang („vibe", „bro")
+  • emoji
+  • POV-uri
+  • cifre exagerate
+  • „cel mai bun"
+
+EXEMPLE TITLURI PENTRU PĂRINȚI:
+  • „Ce să știți înainte să plătiți 1.000€ pentru BAC informatică"
+  • „Ghid pentru părinți: cum se echivalează BAC info în MD în 2026"
+  • „250 MDL/lună sau 18.000 anul — same outcome. Decideți informat."
+
+CANALE pentru părinți:
+  • Facebook Ads cu interese: „Părinte cu copii adolescenți" + „Republica Moldova"
+  • Postări în grupuri de tip „Părinți elevi liceu Moldova"
+  • Articol de blog optimizat: „BAC informatică ghid părinți" — duci traffic
+    organic
+  • Mențiune în bulletin de liceu (când școlile oferă)
+
+
+================================================================================
+17. CALENDAR DE LANSARE (4 SĂPTĂMÂNI)
+================================================================================
+
+PRESUPUNERE: site-ul e live, plățile MIA funcționează, ai timp ~2h/zi.
+
+────────────────────────────────────────────────
+SĂPTĂMÂNA 1 — FUNDAȚIE (organic-first)
+────────────────────────────────────────────────
+Luni:
+  • Postează pe Telegram personal + canale BAC: anunțul de lansare.
+  • Postează pe Instagram + TikTok: Reel #9 (founder face).
+  • Postează pe Facebook personal: anunț.
+
+Marți:
+  • Postează Carusel #1 IG.
+  • Reel #1 TikTok.
+
+Miercuri:
+  • Story #1 IG (1.000€ vs 250).
+  • DM-uri către 5 influenceri studențești MD.
+
+Joi:
+  • Postează Carusel #2 IG („10 lucruri profa nu îți spune").
+  • Reel #4 TikTok (profesoara de info).
+
+Vineri:
+  • Story #5 IG („2 lecții gratis").
+  • Postează articol blog pe Telegram.
+
+Weekend:
+  • Răspunde la TOATE comentariile/DM-urile. Personal. Nu chatbot.
+  • Facebook post în 1-2 grupuri parentale (calm, informativ).
+
+────────────────────────────────────────────────
+SĂPTĂMÂNA 2 — TESTAREA REGULII
+────────────────────────────────────────────────
+Care reel/post a performat cel mai bine? Acela e copy-ul tău
+câștigător. Pune-l ca reclamă plătită.
+
+Luni:
+  • Lansează prima reclamă plătită — buget mic (5€/zi).
+  • Folosește copy-ul cu cea mai mare engagement organic.
+
+Pe parcurs:
+  • 3 reels noi (reel #2, #3, #5).
+  • 2 carusele noi.
+  • 5 stories.
+
+Vineri:
+  • Trimite primul email către abonații care au tras 2 lecții free.
+
+────────────────────────────────────────────────
+SĂPTĂMÂNA 3 — PĂRINȚI + AUTHORITY
+────────────────────────────────────────────────
+  • Lansează articol blog: „Pentru părinți — ghid BAC informatică 2026".
+  • Postează în 5 grupuri parentale Facebook.
+  • Lansează Google Search Ads (buget 5-10€/zi).
+  • Reel #7 (transformation timeline).
+  • DM-uri către 3 profesori de info din licee.
+
+────────────────────────────────────────────────
+SĂPTĂMÂNA 4 — POSTERE FIZICE + SCALE
+────────────────────────────────────────────────
+  • Tipărește 50 de postere A3 (300-500 lei la printezi).
+  • Pune-le în 10-15 licee din Chișinău (avizier, fără voie speci-
+    ală — arată-le diriginților întâi).
+  • Crește bugetul reclamei câștigătoare la 15€/zi.
+  • Pornește colaborarea cu primul influencer.
+  • Analizează: câte abonamente / câte click-uri / costul pe abonament.
+    Decizi unde dublezi bugetul.
+
+
+================================================================================
+18. GHID VIZUAL SCURT
+================================================================================
+
+Ca să arate că-i același brand peste tot.
+
+CULORI (consistent cu site-ul):
+  • Background light: #fafaf9
+  • Background dark:  #0f172a
+  • Foreground:       #0f172a (light) / #fafaf9 (dark)
+  • Accent (lime):    #84cc16  — folosește pentru numere mari, „10",
+                                 stickere de „NOU".
+  • Primary (indigo): #4f46e5  — folosește pentru CTA, butoane,
+                                 link-uri.
+  • Muted gri:        #64748b  — pentru text secundar.
+
+FONT (matchează brandul):
+  • Inter Bold/Black pentru titluri imense.
+  • Inter Regular pentru body.
+  • System mono (SF Mono / Menlo) pentru cifre, scoruri, „01/03",
+    „250 MDL".
+
+DO-uri:
+  • Mult spațiu alb. Lasă textul să respire.
+  • Un singur mesaj per banner. Maxim un sub-mesaj.
+  • Numerele și prețurile — IMENSE. Asta convertește.
+  • Mențiune „infobac.md" pe FIECARE banner. Nu uita.
+  • Folosește accent (lime) pentru UN element pe banner — nu mai multe.
+
+DON'T-uri:
+  • Stock photos cu oameni zâmbind generic. Plătit, nu real.
+  • Mai multe culori dominante. Look-ul „ad de 2010".
+  • Texte traduse din engleză cu cuvinte din rusă (cum e exemplul tău).
+  • Multe gradient-uri. Un gradient subtil — ok. 5 gradient-uri — nu.
+  • Promisiuni nerealiste („10 garantat"). Spune „echivalat", „posibil".
+
+
+================================================================================
+19. CUM MĂSORI DACĂ FUNCȚIONEAZĂ
+================================================================================
+
+Setezi 3 numere de urmărit — atât. Mai mult e zgomot.
+
+NUMĂRUL 1 — VIZITATORI / SĂPTĂMÂNĂ
+  Sursa: Vercel Analytics sau GA4.
+  Țintă săpt 1: 200. Săpt 2: 500. Săpt 3: 1.000. Săpt 4: 2.000.
+
+NUMĂRUL 2 — REGISTRAȚI (cei care fac cont și văd cele 2 lecții free)
+  Sursa: Supabase users count.
+  Țintă conversie: 5-10% din vizitatori. Adică ~50 în săpt 1.
+
+NUMĂRUL 3 — PLĂTITORI
+  Sursa: payment_requests cu status approved.
+  Țintă conversie: 5-10% din registrați. Adică ~5 în săpt 1.
+
+CALCUL CASH SĂPT 4 — REALIST:
+  1.000 vizitatori × 7% registrați = 70 conturi
+  70 conturi × 8% plătesc = ~6 plătitori în acea săptămână
+  6 × 250 lei = 1.500 lei/săpt = ~6.000 MDL/lună la final lună 1.
+
+CALCUL OPTIMIST (cu backlinks bune + influencer):
+  Multiplici cu 3-5x. ~30.000 MDL/lună la final lună 1.
+
+DECIZIE:
+  • Dacă numărul 1 ↑ dar 2-3 nu — problemă de copy / pagină.
+  • Dacă 1 ↓ — problemă de canal / awareness.
+  • Dacă 2 ↑ dar 3 ↓ — problemă de prețuri / încredere.
+
+Reciti briefingul ăsta lunar. Modifici 1 lucru pe săptămână, nu 5.
+
+
+================================================================================
+ULTIMA PIESĂ — DE CE TE-AR ATRAGE PE TINE BUSINESS-UL ĂSTA
+================================================================================
+
+Ai întrebat asta direct. Răspuns onest.
+
+Pe mine m-ar atrage 4 lucruri care nu se găsesc la concurență:
+
+1. ECHIPA E DIN ACEEAȘI GENERAȚIE.
+   Nu profesori care au dat examene Pascal acum 25 de ani. Oameni care
+   au dat aceste 3 examene anul trecut și-au luat 10. Asta înseamnă
+   că programa lor e fix ce am eu nevoie, nu ce-au învățat ei la
+   facultate. Diferența e ENORMĂ și se simte din primul minut de
+   lecție.
+
+2. PREȚUL NU E MARKETING. E REAL.
+   1.000€ vs 250 MDL/lună e un diferențial de 50x. Diferențialul ăsta
+   nu se face cu „suntem mai eficienți" — se face cu „nu plătim chirie
+   pe sediu, n-avem profesori cu CV de 30 pagini, nu facem reclamă TV".
+   Asta sună onest. Ceea ce sună onest în 2026 = trust.
+
+3. NU-MI VINDE PROMISIUNI, ÎMI ARATĂ PROGRAMĂ.
+   Site-ul are deja /cursuri cu programa exactă, weight-uri, durate,
+   format examen. Nu trebuie să dau email ca să văd ce primesc. Asta
+   e literal opusul fiecărui curs online dubios. Dacă nu ești fake,
+   poți permite asta.
+
+4. POT TESTA FĂRĂ SĂ PLĂTESC.
+   2 lecții complete gratis. Fără card, fără email obligatoriu (sau
+   cu email recoverable). Asta înseamnă că businessul are încredere
+   în produs, nu în trickery. Brandurile dubioase ascund tot. Bran-
+   durile bune arată tot.
+
+CE M-AR ÎMPIEDICA SĂ CUMPĂR CHIAR ȘI AȘA:
+
+  • Lipsa unei poze reale a fondatorilor cu certificatele. Asta e
+    rezolvabil în 30 min. FĂ-O acum.
+  • Lipsa unui video de 90s cu fondator. Tot 30 min.
+  • Lipsa unui număr concret de „X elevi au luat 10 cu noi". Imposibil
+    în prima săptămână, dar la sfârșitul lunii 1 trebuie să poți spune
+    „N elevi sunt înscriși activ" — cifră reală, oricât de mică.
+  • O singură capcană foarte reală: în ziua 1, când vine primul
+    părinte sceptic și vede că „aici nu există nici testimoniale
+    reale, nici fețe", închide tab-ul. Ai 30 min să rezolvi asta.
+
+================================================================================
+SFÂRȘIT BRIEF.
+Salvează. Recitește săptămânal. Modifici 1 lucru pe săptămână.
+Nu uita: la lansare, viteza > perfecțiunea. Mergi.
+================================================================================
