@@ -103,7 +103,7 @@ fake că ăștia chiar au luat examenul?" Iată ce trebuie să poată vedea
    Există deja în produs (preview RLS). Spune-l mai tare: „Citește 2
    lecții complete fără cont. Dacă-ți place, plătești."
 
-5. LINK CĂTRE PAGINA OFICIALĂ MEC + CERTIPORT
+5. LINK CĂTRE PAGINA OFICIALĂ CERTIPORT + EXPLICAȚIA ECHIVALĂRII
    În subsol, în FAQ, în primele 3 reclame. Nu lăsa pe nimeni să se
    întrebe „da' tu cine ești să zici că echivalează?"
 
@@ -148,8 +148,8 @@ UNGHI 3 — REZULTAT GARANTAT (nu promit, doar arată)
   „Nu mai dai BAC informatica. Iei 10 din oficiu prin 3 examene Certiport."
 
 UNGHI 4 — AUTORITATE + LOCAL
-  „Acceptat oficial de MEC. Făcut în Chișinău de elevi care au luat 10
-  anul trecut."
+  „Certificare internațională Certiport. Făcut în Chișinău de elevi
+  care au luat 10 anul trecut."
 
 UNGHI 5 — RECORDS / SPEED
   „Trei certificări într-o săptămână. Realist. Posibil. Real."
@@ -192,7 +192,7 @@ REZULTAT / OUTCOME:
  13. „Liceul nu te duce la 10. Noi te ducem."
 
 AUTORITATE:
- 14. „Acceptat oficial de MEC pentru echivalarea probei de informatică."
+ 14. „Certificări Certiport internațional recunoscute, utile pentru BAC informatică."
  15. „Singura platformă online din MD pentru BAC informatică."
  16. „Făcut de elevi care au dat aceleași examene anul trecut."
  17. „Programa exactă verificată de Certiport. Nu cărți generale."
@@ -263,9 +263,10 @@ postării, sau în corpul reclamei.
 
 EXPLICAȚIA RAPIDĂ (folosește când audiența nu cunoaște Certiport)
   • „Certiport IT Specialist e un set de 3 certificări internaționale
-    (Python, SQL, Devices) pe care MEC le acceptă oficial pentru
-    echivalarea probei de informatică la BAC. Iei toate 3 — primești
-    nota 10 fără să mai dai examenul scris."
+    (Python, SQL, Devices) recunoscute în Republica Moldova pentru
+    pregătirea probei de informatică la BAC. Conform reglementărilor
+    în vigoare, dacă ai toate 3 poți depune dosarul de echivalare
+    pentru nota 10."
   • „Noi nu organizăm BAC-ul. Examenele Certiport se dau la centrul
     autorizat din Chișinău — durează 50 min, sunt online, sub
     supraveghere. Materialele tale de pregătire — la noi."
@@ -317,7 +318,7 @@ OBJECȚIE-COVER (când audiența e sceptică)
 
 Pentru părinți (canal separat):
   • „Vedeți prețurile reale și termenii la infobac.md/preturi"
-  • „Verificați recunoașterea oficială MEC + Certiport pe pagina /faq"
+  • „Detalii despre certificările Certiport și echivalarea pentru BAC pe pagina /faq"
 
 
 ================================================================================
@@ -407,7 +408,7 @@ FEED #1 — Big number flex (1:1)
 ────────────────────────────────────────────────
   Text mare:    „10"
   Sub:          „din oficiu la BAC informatică"
-  Linie subțire:„Nu glumim. Acceptat oficial de MEC."
+  Linie subțire:„Prin 3 certificări Certiport. Internațional recunoscute."
   Logo:         InfoBac.md, dreapta-jos.
   Caption (sub): „Certiport echivalează nota 10 la informatică în Moldova.
                   Citește cum pe infobac.md/faq — link în bio."
@@ -558,7 +559,7 @@ REEL #10 — „Top 3 greșeli" (educational, organic-friendly)
 0-3s   : Hook: „Top 3 greșeli la BAC informatică în Moldova:"
 3-10s  : „1. Înveți după manualul de clasa 11. Nu apare la examen."
 10-17s : „2. Crezi că trebuie 1.000€ — fals, există echivalare prin
-         Certiport recunoscută de MEC."
+         certificări Certiport internațional recunoscute."
 17-24s : „3. Aștepți clasa a 12-a. Atunci e prea târziu, ai și
          celelalte materii."
 24-30s : „infobac.md. Articol detaliat în bio."
@@ -590,10 +591,9 @@ Primul slide trebuie să te facă să dai swipe.
 CARUSEL #1 — „Cum iei 10 la BAC informatică fără 1.000€"
 ────────────────────────────────────────────────
 1. „Cum iei 10 la BAC informatică fără 1.000€"
-2. „În Moldova, BAC-ul de informatică se poate echivala oficial
-    prin 3 certificări Certiport."
-3. „Acceptat de MEC. Nu glumim. Link la documentul oficial în
-    descriere."
+2. „În Moldova, BAC-ul de informatică se poate echivala prin
+    3 certificări Certiport internațional recunoscute."
+3. „Conform reglementărilor în vigoare. Detalii și pași în descriere."
 4. „Cele 3: Python, SQL, Devices. Fiecare = 50 min, online."
 5. „Cursurile fizice cer 1.000€ și 10 luni. Greșit."
 6. „Programa e standardizată. Materialele pot fi online. Făcute
@@ -637,8 +637,8 @@ CARUSEL #4 — Pentru părinți
 1. „Pentru părinți: 5 minute care v-ar putea economisi 1.000€"
 2. „BAC-ul de informatică e obligatoriu la profilul real în
     Moldova."
-3. „Dar există echivalare oficială prin certificările Certiport.
-    MEC le-a recunoscut formal."
+3. „Dar există o cale de echivalare prin certificările Certiport,
+    conform reglementărilor în vigoare din Republica Moldova."
 4. „Cursurile fizice cer 18.000+ MDL. Nouă platformă online —
     250 MDL/lună."
 5. „Materialele sunt scrise de elevi care au dat aceleași
@@ -732,7 +732,7 @@ HEADLINES (max 30 chars fiecare):
   3.  Echivalează BAC cu Certiport
   4.  250 MDL/lună · Refund 7 Zile
   5.  Făcut de Elevi care au Luat 10
-  6.  Acceptat Oficial de MEC
+  6.  Certificare Internațională Certiport
   7.  Programa Exactă Certiport
   8.  Python, SQL, Devices · Online
   9.  6 Săptămâni vs 10 Luni
@@ -746,7 +746,7 @@ HEADLINES (max 30 chars fiecare):
 DESCRIERI (max 90 chars):
   1. „Programa exactă pentru cele 3 certificări Certiport care echivalează
       nota 10 la BAC informatică."
-  2. „Acceptat oficial de MEC. 100% online. De la 250 MDL/lună. Anulezi
+  2. „Certificări Certiport internațional recunoscute. 100% online. De la 250 MDL/lună. Anulezi
       oricând. Refund 7 zile."
   3. „Făcut de elevi care au dat aceleași 3 examene anul trecut. 2 lecții
       gratis înainte de plată."
@@ -778,7 +778,7 @@ NEGATIVE KEYWORDS (esențial — nu plăti pentru aceste):
 
 EXTENSIONS (obligatoriu — îți cresc CTR-ul cu 30%):
   • Sitelinks: /cursuri, /preturi, /faq, /blog
-  • Callouts: „Refund 7 zile" „100% online" „MEC recunoscut"
+  • Callouts: „Refund 7 zile" „100% online" „Certiport internațional"
               „Suport Telegram" „Plată în MDL" „2 lecții gratis"
   • Structured snippets: Cursuri = Python, SQL, Devices, Networking
 
@@ -794,8 +794,9 @@ grupurile de clasă. NU pui același mesaj în ambele.
 TELEGRAM — anunț de lansare (în canalele BAC din MD)
 ────────────────────────────────────────────────
 „Salut. Suntem o echipă de 3 (recent absolvenți de liceu, Chișinău).
-Anul trecut am dat cele 3 certificări Certiport care echivalează nota
-10 la BAC informatică (recunoscut oficial de MEC).
+Anul trecut am dat cele 3 certificări Certiport care permit
+echivalarea probei de informatică la BAC pentru nota 10 (conform
+reglementărilor în vigoare).
 
 Am scris materialele de pregătire pe care ne-am fi dorit să le avem
 și noi: programa exactă pentru fiecare examen, simulări 1:1 cu cele
@@ -814,7 +815,8 @@ TELEGRAM — postare educațională (organic, indirectă)
 „O întrebare care ne vine des: «cum se echivalează BAC-ul de info în MD?»
 
 Răspuns scurt: prin 3 certificări Certiport (Python, Databases,
-Devices). MEC le acceptă oficial pentru nota 10.
+Devices), care sunt internațional recunoscute și pot fi folosite
+în procedura de echivalare conform reglementărilor în vigoare.
 
 Răspuns lung — am scris un articol cu calendarul, prețurile la centru,
 ce întrebări apar, etc.: infobac.md/blog/echivalare-bac-informatica"
@@ -824,8 +826,9 @@ FACEBOOK — grup parental
 ────────────────────────────────────────────────
 „Pentru părinții care plănuiesc BAC-ul copilului în iunie 2026:
 
-Există o cale oficială de echivalare a probei de informatică prin
-3 certificări Certiport recunoscute de Ministerul Educației.
+Există o cale recunoscută de echivalare a probei de informatică prin
+3 certificări Certiport internațional valide, conform reglementărilor
+în vigoare din Republica Moldova.
 
 Dacă vă interesează detalii (calendar, costuri reale, ce e nevoie),
 am scris un material aici: infobac.md/faq
@@ -855,7 +858,7 @@ DM #1 — Influencer studențesc (TikTok/IG)
 
 Văd că ai mulți urmăritori liceeni din MD. Suntem InfoBac — o
 platformă de pregătire pentru BAC informatică prin Certiport (cea
-mai accesibilă variantă din MD, recunoscută de MEC).
+mai accesibilă variantă din MD, certificare internațională).
 
 Avem un program de afiliere: 25% comision pe orice abonament prin
 linkul tău, primele 6 luni. Plus access gratuit complet la
@@ -911,7 +914,7 @@ Subiect: „Cele mai puse 3 întrebări în primele 48h"
 Salut [prenume], ai văzut platforma. Iată ce ne întreabă majoritatea
 în primele zile:
 
-1. „Sigur e recunoscut MEC?" — Da. Document oficial: [link].
+1. „E recunoscut în Moldova?" — Da, conform reglementărilor în vigoare. Detalii: [link].
 2. „Trebuie să dau și BAC-ul scris?" — Nu, dacă iei toate 3 Certiport.
 3. „Cât durează realist?" — 6-10 săpt. dacă vii constant.
 
@@ -943,7 +946,7 @@ grupuri specifice), și Google. Mesajul către ei e diferit:
 
 DA-uri:
   • cifre clare (250/lună vs 18.000/an)
-  • cuvântul „oficial" și „recunoscut de MEC"
+  • formulări factuale: „certificări internaționale", „conform reglementărilor în vigoare"
   • domeniu .md (semnal de încredere local)
   • politica de refund
   • plata locală în MDL fără card internațional

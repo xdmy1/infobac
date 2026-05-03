@@ -319,8 +319,8 @@ CTA group:
 - Ghost: "Vezi cum funcționează" (cu icon ArrowDown subtil)
 
 Sub CTA-uri, trust indicators (flex, gap-6, text-sm muted):
-✓ Acceptat oficial de MEC
-✓ 3 certificări internaționale
+✓ Certificări internațional recunoscute
+✓ Pregătire BAC informatică
 ✓ Acces 24/7
 
 Visual right side (hidden mobile, vizibil lg+):
@@ -676,8 +676,9 @@ Pentru fiecare curs, 1 quiz de practice + 1 simulare examen cu 5-10
 - Title template: "%s | InfoBac"
 - Default title: "InfoBac — 10 din oficiu la BAC informatică"
 - Description: "Platformă online de pregătire pentru certificările 
-  Certiport. Acceptat oficial de MEC pentru echivalarea probei de 
-  informatică la BAC. Făcut de elevi pentru elevi în Chișinău."
+  Certiport IT Specialist — o cale internațională pentru pregătirea 
+  și recunoașterea cunoștințelor de informatică. Făcut de elevi 
+  pentru elevi în Chișinău."
 - Keywords: bac informatică moldova, certiport moldova, 10 din oficiu 
   bac, pregătire bac informatică, IT specialist certificare
 - OG image (creează placeholder /public/og.png 1200x630)

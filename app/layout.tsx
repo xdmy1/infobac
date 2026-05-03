@@ -14,7 +14,7 @@ const inter = Inter({
 
 const HOMEPAGE_TITLE = `InfoBac.md — 10 din oficiu la BAC informatică Moldova | Certiport`;
 const HOMEPAGE_DESCRIPTION =
-  "Pregătire online pentru BAC informatică Moldova prin 3 certificări Certiport (Python, SQL, Devices). Acceptat oficial de MEC pentru echivalarea probei. De la 250 MDL/lună. Făcut în Chișinău de elevi care au luat 10.";
+  "Pregătire online pentru BAC informatică Moldova prin 3 certificări Certiport (Python, SQL, Devices) — certificări internațional recunoscute, utile pentru pregătirea probei de informatică. De la 250 MDL/lună. Făcut în Chișinău de elevi care au luat 10.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

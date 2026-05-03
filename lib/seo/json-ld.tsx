@@ -384,7 +384,7 @@ export function buildHowTo() {
     "@type": "HowTo",
     name: "Cum iei 10 din oficiu la BAC informatică în Moldova",
     description:
-      "Pașii concreți pentru a echivala nota maximă la proba de informatică din BAC prin 3 certificări Certiport (acceptate oficial de MEC).",
+      "Pașii concreți pentru a-ți susține pregătirea în vederea probei de informatică din BAC prin 3 certificări Certiport IT Specialist, internațional recunoscute.",
     totalTime: "P8W",
     inLanguage: "ro-MD",
     image: `${siteConfig.url}${siteConfig.ogImage}`,

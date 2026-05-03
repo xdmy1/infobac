@@ -105,7 +105,7 @@ export default function OpengraphImage() {
           }}
         >
           <div style={{ display: "flex", gap: 24 }}>
-            <span>✓ Acceptat oficial de MEC</span>
+            <span>✓ Pregătire BAC informatică</span>
             <span>✓ 3 certificări Certiport</span>
           </div>
           <div style={{ fontWeight: 700, color: "#0f172a" }}>infobac.md</div>

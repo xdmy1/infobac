@@ -314,8 +314,8 @@ export interface FaqItem {
 
 export const faqItems: readonly FaqItem[] = [
   {
-    q: "Cum echivalează Certiport BAC-ul exact?",
-    a: "Certificările Certiport IT Specialist (Python, Databases, Networking & Devices) sunt acceptate oficial de Ministerul Educației și Cercetării din Moldova pentru echivalarea probei de informatică la BAC. Dacă obții cele 3 certificări, primești nota 10 la informatică din oficiu, fără să mai dai examenul scris.",
+    q: "Cum te ajută Certiport pentru BAC informatică?",
+    a: "Certificările Certiport IT Specialist (Python, Databases, Networking & Devices) sunt o cale recunoscută în Republica Moldova pentru a-ți susține pregătirea în vederea probei de informatică la BAC. Conținutul lor acoperă programa de bază a probei, iar examenele sunt internațional recunoscute. Pentru detalii despre procedura de echivalare și reglementările în vigoare, întreabă diriginta sau inspectoratul școlar.",
   },
   {
     q: "Câte examene trebuie să dau pentru 10 din oficiu?",
@@ -360,8 +360,8 @@ export const faqItems: readonly FaqItem[] = [
 // -----------------------------------------------------------------------------
 
 export const heroTrustIndicators = [
-  "Acceptat oficial de MEC",
-  "3 certificări internaționale",
+  "Certificări internațional recunoscute",
+  "Pregătire BAC informatică",
   "Acces 24/7",
 ] as const;
 

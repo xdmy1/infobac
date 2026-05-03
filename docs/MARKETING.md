@@ -64,9 +64,9 @@ Marketingul tău trebuie să așeze prețul **lângă alternativa reală**:
 
 Așezat clar pe banner, comparația **se vinde singură**.
 
-### E. Recunoaștere oficială
+### E. Recunoaștere internațională
 
-Echivalarea Certiport ↔ BAC informatică = ancoră de credibilitate masivă. Pune-o pe **toate** landing pages, **toate** reclamele, în **subsol**. Cu link spre actul ministerial / pagina oficială MEC.
+Certificările Certiport IT Specialist sunt internațional recunoscute (Pearson VUE) și utile pentru pregătirea probei de informatică la BAC, conform reglementărilor în vigoare. Pune ancora pe **toate** landing pages, **toate** reclamele, în **subsol**. Formulează factual, fără a invoca o aprobare ministerială specifică.
 
 ### F. Risc redus pentru cumpărător
 
@@ -101,11 +101,11 @@ Reguli de bază:
 **Headline-uri (alege 1):**
 - Treci o singură certificare. Iei 10 la BAC. Oficial.
 - 10 din oficiu la BAC informatică. Fără să dai BAC-ul.
-- Certiport = BAC informatică cu 10. Recunoscut de MEC.
+- Certiport = BAC informatică cu 10. Certificare internațională.
 - Pregătește-te de Certiport, nu de BAC. Rezultatul e același.
 
 **Sub-text:**
-> *Ministerul Educației acceptă oficial certificarea Certiport ca echivalare pentru proba de informatică la BAC, cu nota 10.*
+> *Certificările Certiport IT Specialist sunt o cale recunoscută în Republica Moldova pentru a-ți susține pregătirea în vederea probei de informatică la BAC.*
 
 **CTA:** Vezi cele 3 cursuri → infobac.md/cursuri
 
@@ -255,7 +255,7 @@ Probabil cel mai eficient pe segment, cel mai puțin folosit.
 
 ### Google Ads (search intent)
 Cuvinte: „pregătire bac informatică Moldova", „certiport Chișinău", „cum iau 10 la bac"
-- Headline: `10 din oficiu la BAC informatică | Certiport | MEC`
+- Headline: `10 din oficiu la BAC informatică | Certiport | InfoBac`
 - Description: `Pregătire online pentru certificarea Certiport. Echivalare oficială BAC = 10. De la 250 MDL/lună. Primele 2 lecții gratis.`
 
 ### Facebook Ads (părinți!)
@@ -345,7 +345,7 @@ Ce trebuie reparat:
 - ⚠️ **„învatare"** → **„învățare"** (lipsesc diacriticele). În banner ele se văd, în search engines la fel.
 - ⚠️ **Textul rusesc din template** trebuie șters complet — e leftover din șablonul Canva. Nu lăsa absolut nimic în rusă pe vreun banner românesc, distrugerea credibilității e instantă.
 - ⚠️ **Nu există CTA explicit** — adaugă jos un buton sau linie text mare: **„Începe gratis pe infobac.md"** sau un QR code.
-- ⚠️ **Lipsă proof point** — undiscret sub headline: **„Recunoscut oficial de MEC"** + logo MEC mic. Asta convertește.
+- ⚠️ **Lipsă proof point** — undiscret sub headline: **„Certificare internațională Certiport"** + logo Certiport mic. Asta convertește.
 - ⚠️ **Prea multe „pile-uri" decorative** (table fake cu numere, fulger) — distrag de la mesaj. 1–2 elemente vizuale max, nu 5.
 
 ### Versiune finală sugerată (pentru același mockup)
@@ -357,7 +357,7 @@ Cursuri online, fără să plătești mii pe meditații,
 și fără informație inutilă — doar materialul 1:1 cu
 examenul CERTIPORT.
 
-✓ Recunoscut oficial de MEC
+✓ Certificare internațională Certiport
 ✓ De la 250 MDL/lună
 ✓ Primele 2 lecții — gratis
 

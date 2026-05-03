@@ -7,12 +7,12 @@
 -- via PostgREST and set `role = 'admin'`, then call admin_grant_subscription
 -- on themselves. The app's assertAdmin() guard reads is_admin() from the DB,
 -- so once the DB row says admin, the app trusts it.
---
+
 -- Defense in depth: (1) revoke column-level UPDATE on `role` from authenticated,
 -- (2) add a BEFORE UPDATE trigger that blocks role changes by non-admins.
--- Either alone would suffice; both together cover misconfig in the future.
+-- Either alone would suffice; both together cover misconfig inxsmtpsib-dab1352c23f608b56154bd3b14d73b26b1f5149b3610ca6e402dbd9cc2b8f54e-s7VhPBDQLBk5OWRq the future.
 -- =============================================================================
-
+Couldn't finish setting up this account. Make sure that you've correctly entered the settings from your email provider. For more help, contact the provider.
 -- -----------------------------------------------------------------------------
 -- (1) Column-level grant: authenticated cannot UPDATE the role column at all.
 -- We re-grant UPDATE on every other mutable column so the existing

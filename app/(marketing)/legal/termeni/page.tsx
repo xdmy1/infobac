@@ -84,9 +84,10 @@ export default function TermeniPage() {
         <p>
           InfoBac oferă materiale educaționale online pentru pregătirea
           examenelor Certiport IT Specialist (Python, Databases, Networking
-          &amp; Devices), care sunt acceptate de Ministerul Educației și
-          Cercetării din Republica Moldova pentru echivalarea probei de
-          informatică la examenul de bacalaureat.
+          &amp; Devices) — certificări internațional recunoscute, utile pentru
+          pregătirea probei de informatică din cadrul examenului de
+          bacalaureat din Republica Moldova, conform reglementărilor în
+          vigoare.
         </p>
         <p>
           <strong>Important:</strong> InfoBac nu organizează examenele
@@ -199,11 +200,11 @@ export default function TermeniPage() {
           Predăm domeniul de cunoștințe (Python, SQL, hardware, rețele) ca
           atare. Faptul că aceste cunoștințe sunt utile pentru obținerea
           unor certificări internaționale (inclusiv cele Certiport care, în
-          baza unor reglementări ale MEC, pot fi folosite pentru
-          echivalarea probei de informatică la BAC) este un beneficiu
-          colateral, nu un parteneriat oficial. Voucherele și sesiunile de
-          examinare se obțin separat, direct de la centrele de testare
-          autorizate.
+          baza reglementărilor în vigoare din Republica Moldova, pot fi
+          folosite pentru pregătirea probei de informatică la BAC) este un
+          beneficiu colateral, nu un parteneriat oficial. Voucherele și
+          sesiunile de examinare se obțin separat, direct de la centrele
+          de testare autorizate.
         </p>
         <p>
           Dacă ești titular de drepturi (Certiport, Pearson VUE etc.) și
