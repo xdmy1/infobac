@@ -152,11 +152,15 @@ export default function TermeniPage() {
       <section>
         <h2>7. Drepturi de proprietate intelectuală</h2>
         <p>
-          Tot conținutul Platformei (texte, video, quiz-uri, structură,
-          design, software) e protejat de legea drepturilor de autor și
-          aparține echipei InfoBac. Ai dreptul să folosești conținutul pentru
-          studiul personal, dar:
+          Tot conținutul original al Platformei (texte, video, quiz-uri,
+          structură, design, software) e creație proprie a echipei InfoBac
+          și e protejat de legea drepturilor de autor (Legea 139/2010 a
+          Republicii Moldova și Convenția de la Berna). Toate întrebările
+          de auto-evaluare și simulările au fost scrise de la zero de
+          echipa noastră, pe baza obiectivelor publice de programă și a
+          cunoștințelor noastre din domeniu.
         </p>
+        <p>Ai dreptul să folosești conținutul pentru studiul personal, dar:</p>
         <ul>
           <li>
             nu poți redistribui materialele în niciun fel (upload pe alte
@@ -173,7 +177,49 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>8. Conduita utilizatorului</h2>
+        <h2>
+          8. Independența față de Certiport, Pearson VUE și alte mărci
+        </h2>
+        <p>
+          InfoBac e o platformă independentă de educație în tehnologia
+          informației. <strong>Nu suntem afiliați</strong> cu, sponsorizați
+          de, sau aprobați oficial de Certiport, Pearson VUE, Microsoft,
+          sau orice deținător de marcă comercială menționat pe Platformă.
+        </p>
+        <p>
+          Mărcile <em>Certiport</em>, <em>IT Specialist</em>,{" "}
+          <em>Pearson VUE</em> și orice alte denumiri ale unor produse sau
+          servicii ale terților sunt mărci comerciale ale proprietarilor
+          lor respectivi. Le folosim exclusiv în mod descriptiv (
+          <em>nominative fair use</em>), pentru a indica subiectele
+          tehnologice pe care le predăm și certificările pe care utilizatorii
+          noștri pot alege să le obțină independent.
+        </p>
+        <p>
+          Predăm domeniul de cunoștințe (Python, SQL, hardware, rețele) ca
+          atare. Faptul că aceste cunoștințe sunt utile pentru obținerea
+          unor certificări internaționale (inclusiv cele Certiport care, în
+          baza unor reglementări ale MEC, pot fi folosite pentru
+          echivalarea probei de informatică la BAC) este un beneficiu
+          colateral, nu un parteneriat oficial. Voucherele și sesiunile de
+          examinare se obțin separat, direct de la centrele de testare
+          autorizate.
+        </p>
+        <p>
+          Dacă ești titular de drepturi (Certiport, Pearson VUE etc.) și
+          consideri că un material publicat de noi îți încalcă drepturile,
+          te rugăm să ne notifici la{" "}
+          <a href={`mailto:${siteConfig.contact.email}`}>
+            {siteConfig.contact.email}
+          </a>{" "}
+          cu detalii privind materialul vizat. Investigăm și acționăm în
+          maximum 48 de ore lucrătoare, conform procedurii standard
+          DMCA / drept de autor.
+        </p>
+      </section>
+
+      <section>
+        <h2>9. Conduita utilizatorului</h2>
         <p>Te angajezi să nu:</p>
         <ul>
           <li>încerci să accesezi conturi sau zone restricționate;</li>
@@ -190,7 +236,7 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>9. Limitarea răspunderii</h2>
+        <h2>10. Limitarea răspunderii</h2>
         <p>
           InfoBac depune efort să ofere materiale corecte și actualizate, dar
           nu garantează rezultatul examenelor. Promovarea certificărilor
@@ -204,7 +250,7 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>10. Modificări ale termenilor</h2>
+        <h2>11. Modificări ale termenilor</h2>
         <p>
           Putem actualiza acești termeni periodic. Schimbările materiale vor
           fi notificate prin email cu cel puțin 14 zile înainte de intrarea
@@ -214,7 +260,7 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>11. Lege aplicabilă și jurisdicție</h2>
+        <h2>12. Lege aplicabilă și jurisdicție</h2>
         <p>
           Acești termeni sunt guvernați de legislația Republicii Moldova. În
           caz de litigiu, părțile vor încerca soluționarea amiabilă; dacă nu
@@ -224,7 +270,7 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>12. Contact</h2>
+        <h2>13. Contact</h2>
         <p>
           Pentru întrebări despre acești termeni:{" "}
           <a href={`mailto:${siteConfig.contact.email}`}>

@@ -71,9 +71,17 @@ export function Footer() {
           />
         </div>
 
-        <div className="mt-10 border-t border-border pt-6 md:mt-12 md:pt-8">
+        <div className="mt-10 space-y-3 border-t border-border pt-6 md:mt-12 md:pt-8">
           <p className="text-xs text-muted-foreground sm:text-sm">
             © {year} {siteConfig.name}. Făcut în Chișinău, Moldova.
+          </p>
+          <p className="text-[11px] leading-relaxed text-muted-foreground/80 sm:text-xs">
+            InfoBac e o platformă independentă de educație în tehnologia
+            informației. Nu suntem afiliați, sponsorizați sau aprobați
+            oficial de Certiport, Pearson VUE, Microsoft sau alți deținători
+            de mărci comerciale menționați. Numele lor sunt folosite
+            descriptiv pentru a indica subiectele predate și certificările
+            disponibile independent.
           </p>
         </div>
       </div>
