@@ -93,10 +93,10 @@ export const comparison = {
   them: {
     title: "Platforme fizice din MD",
     items: [
-      "~1.000 EUR per program",
+      "Pachete care pot ajunge la ~1.000 EUR per program",
       "10 luni, o singură ședință pe săptămână",
       "Trebuie să vii fizic în Chișinău",
-      "Profesori care n-au dat examenul recent",
+      "Profesori cu experiență didactică tradițională",
       "Materiale generice",
       "Timpul tău e legat de programul lor",
     ],
@@ -145,7 +145,7 @@ export const features: readonly Feature[] = [
     icon: Target,
     title: "Teste șablon ca la examen",
     description:
-      "Simulări identice cu examenele reale Certiport. Fără surprize în ziua X.",
+      "Simulări construite pe obiectivele oficiale de programă Certiport — același format, același timp, aceleași tipuri de întrebări.",
   },
   {
     icon: LineChart,
@@ -155,7 +155,7 @@ export const features: readonly Feature[] = [
   },
   {
     icon: LifeBuoy,
-    title: "Suport 24/7",
+    title: "Acces 24/7 la platformă",
     description:
       "Întrebare la 2 noaptea? Răspuns în câteva ore. Suntem real, nu chatbot.",
   },
@@ -231,7 +231,7 @@ export const pricingPlans: readonly PricingPlan[] = [
       "Toate cele 3 module",
       "Simulări complete examene Certiport",
       "Monitorizare puncte forte / slabe",
-      "Suport 24/7 prioritar",
+      "Acces 24/7 la platformă · suport prioritar",
       "Sesiuni Q&A live săptămânale",
     ],
   },
@@ -273,31 +273,31 @@ export interface Testimonial {
 export const testimonials: readonly Testimonial[] = [
   {
     name: "Andreea P.",
-    school: "Liceul Mircea Eliade, Chișinău",
+    school: "Liceu, Chișinău",
     rating: 5,
     quote:
       "Am terminat Python în 5 săptămâni și SQL în 3. Networking-ul l-am dat după două zile de citit. Materia e exact cât trebuie — nu am pierdut timp cu lucruri care nu erau la examen.",
-    result: "10 din oficiu — sesiunea iunie 2025",
+    result: "Profil-elev țintă · rezultat țintit la sesiunea de iunie",
     initials: "AP",
     placeholder: true,
   },
   {
     name: "Vlad M.",
-    school: "Liceul Gheorghe Asachi, Chișinău",
+    school: "Liceu, Chișinău",
     rating: 5,
     quote:
       "Eram convins că trebuie să dau 1000 EUR la o platformă fizică. Părinții mei au fost sceptici la început, dar simulările seamănă atât de mult cu examenul real încât am știut că e safe.",
-    result: "10 din oficiu — sesiunea iunie 2025",
+    result: "Profil-elev țintă · rezultat țintit la sesiunea de iunie",
     initials: "VM",
     placeholder: true,
   },
   {
     name: "Cristina S.",
-    school: "Liceul Spiru Haret, Chișinău",
+    school: "Liceu, Bălți",
     rating: 5,
     quote:
-      "Suportul 24/7 m-a salvat de două ori la 11 noaptea, când nu înțelegeam JOIN-uri. Mi-au răspuns în 20 de minute. Asta nu primești la o platformă fizică.",
-    result: "10 din oficiu — sesiunea iunie 2025",
+      "Platforma e accesibilă oricând și mi-au răspuns rapid de două ori la 11 noaptea, când nu înțelegeam JOIN-uri. Asta nu primești la o platformă fizică.",
+    result: "Profil-elev țintă · rezultat țintit la sesiunea de iunie",
     initials: "CS",
     placeholder: true,
   },
@@ -335,7 +335,7 @@ export const faqItems: readonly FaqItem[] = [
   },
   {
     q: "Ce se întâmplă dacă nu trec un examen?",
-    a: "Poți redă examenul Certiport (cost suplimentar pentru voucher nou). În InfoBac analizăm împreună unde ai greșit și revedem secțiunea respectivă. Avem rate de promovare 90%+ pentru elevii care termină simulările noastre.",
+    a: "Poți redă examenul Certiport (cost suplimentar pentru voucher nou). În InfoBac analizăm împreună unde ai greșit și revedem secțiunea respectivă. Țintim pragul minim de 700/1000 la fiecare examen. Promovarea finală depinde de pregătirea ta și de execuția în ziua examenului — vezi termenii pentru detalii.",
   },
   {
     q: "Pot să-mi anulez abonamentul oricând?",
@@ -624,7 +624,7 @@ export const comparisonMatrix: readonly ComparisonFeatureRowNew[] = [
   { label: "Plan personalizat de pregătire", category: "exam", module: false, all: false, semester: true },
 
   { label: "Suport email", category: "support", module: "48h", all: "12h", semester: "12h" },
-  { label: "Suport 24/7 prioritar", category: "support", module: false, all: true, semester: true },
+  { label: "Acces 24/7 la platformă · suport prioritar", category: "support", module: false, all: true, semester: true },
   { label: "Sesiuni Q&A live săptămânale", category: "support", module: false, all: true, semester: true },
   { label: "1 sesiune 1-1 cu mentor", category: "support", module: false, all: false, semester: true },
 

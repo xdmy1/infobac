@@ -121,7 +121,7 @@ export default function ContactPage() {
                           Sub 4 ore lucrătoare
                         </span>
                       }
-                      sub="Suport prioritar pentru abonați Standard / Lifetime"
+                      sub="Suport prioritar pentru abonați Toate modulele / Pachet 6 luni"
                     />
                   </ul>
                 </div>

@@ -68,8 +68,8 @@ export function Hero() {
               className="max-w-2xl text-pretty text-lg text-muted-foreground md:text-xl"
             >
               Platforma online cu programa exactă pentru certificările
-              Certiport. Construită de elevi care au trecut prin asta — unii
-              au luat toate 3 certificările într-o săptămână.
+              Certiport. Construită de un absolvent care a trecut prin asta —
+              toate 3 certificările luate înainte de lansare.
             </motion.p>
 
             <motion.div

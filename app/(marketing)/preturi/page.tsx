@@ -187,11 +187,15 @@ function PreturiHero() {
             />
 
             <div className="mt-3 flex items-baseline justify-between border-t border-border pt-3 text-xs text-muted-foreground">
-              <span>Diferență pachet 6 luni vs platforme fizice</span>
+              <span>Estimare: pachet 6 luni vs platforme fizice</span>
               <span className="font-mono text-base font-bold tabular-nums text-foreground">
                 −95%
               </span>
             </div>
+            <p className="mt-2 text-xs text-muted-foreground/70">
+              *Prețuri orientative bazate pe oferte publice observate ale
+              platformelor fizice locale (2024–2025).
+            </p>
           </div>
         </Reveal>
       </div>

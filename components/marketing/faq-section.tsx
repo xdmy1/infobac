@@ -68,7 +68,7 @@ export function FaqSection() {
                       Mai ai întrebări?
                     </p>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Răspundem în câteva ore. Niciodată mai târziu de 12.
+                      Răspundem în câteva ore. De regulă în maxim 12.
                     </p>
                     <a
                       href="mailto:hello@infobac.md"

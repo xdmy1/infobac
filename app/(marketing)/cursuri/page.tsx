@@ -15,7 +15,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Cursuri Certiport pentru BAC informatică — Python, SQL, Devices",
   description:
-    "Programa exactă a celor 3 certificări Certiport care echivalează nota 10 la BAC informatică Moldova: Python, SQL și Devices. Topics, durată și format examen — totul transparent.",
+    "Programa exactă a celor 3 certificări Certiport care pot fi folosite pentru pregătirea probei de informatică la BAC: Python, SQL și Devices. Topics, durată și format examen — totul transparent.",
   alternates: {
     canonical: "/cursuri",
     languages: { "ro-MD": "/cursuri" },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Cursuri Certiport pentru BAC informatică",
     description:
-      "Python, SQL și Devices — 3 certificări care echivalează nota 10 la BAC informatică Moldova.",
+      "Python, SQL și Devices — 3 certificări relevante pentru pregătirea probei de informatică la BAC.",
     url: `${siteConfig.url}/cursuri`,
     type: "website",
   },
@@ -56,7 +56,7 @@ export default function CursuriPage() {
       />
       <ItemListJsonLd
         name="Cursuri Certiport pentru BAC informatică"
-        description="Cele 3 certificări Certiport care echivalează nota 10 la BAC informatică în Moldova."
+        description="Cele 3 certificări Certiport relevante pentru pregătirea probei de informatică la BAC."
         items={pathway.map((step) => ({
           url: `/cursuri#${step.slug}`,
           name: `${step.title} — ${step.certName}`,

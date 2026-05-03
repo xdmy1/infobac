@@ -15,11 +15,15 @@ const avatarBgs = [
   "bg-destructive/15 text-destructive",
 ];
 
+// Only render testimonials explicitly flagged as placeholder examples.
+// Real testimonials replace these once we have post-cohort feedback.
+const placeholderTestimonials = testimonials.filter((t) => t.placeholder);
+
 // Build a longer list by repeating + light variations so the marquee
 // has enough content to feel infinite without obvious seams.
 const expandedTestimonials = [
-  ...testimonials,
-  ...testimonials,
+  ...placeholderTestimonials,
+  ...placeholderTestimonials,
 ];
 
 export function Testimonials() {
@@ -37,12 +41,13 @@ export function Testimonials() {
           </RevealItem>
           <RevealItem variant="fade-blur">
             <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Elevi care au reușit.
+              Cum sună un parcurs țintit.
             </h2>
           </RevealItem>
           <RevealItem variant="fade-up">
             <p className="mt-5 text-pretty text-base text-muted-foreground md:text-lg">
-              Mărturii de la primii absolvenți care au luat 10 din oficiu.
+              Exemple ilustrative de profil-elev. Vor fi înlocuite cu mărturii
+              reale după primele cohorte.
             </p>
           </RevealItem>
         </Reveal>
@@ -69,8 +74,8 @@ export function Testimonials() {
         variant="fade-up"
         className="mx-auto mt-12 max-w-2xl px-4 text-center text-xs text-muted-foreground/80 md:px-6"
       >
-        * Testimoniale ilustrative. Vor fi înlocuite cu mărturii reale după
-        primii absolvenți (sesiunea iunie 2026).
+        * Exemple ilustrative de profil-elev. Vor fi înlocuite cu mărturii
+        reale după primele cohorte.
       </Reveal>
     </section>
   );
@@ -84,8 +89,15 @@ function TestimonialCard({
   avatarColor: string;
 }) {
   return (
-    <article className="flex w-[360px] shrink-0 flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm md:w-[400px]">
-      <div className="flex items-center gap-3">
+    <article className="relative flex w-[360px] shrink-0 flex-col gap-4 rounded-2xl border border-dashed border-border bg-card p-6 shadow-sm md:w-[400px]">
+      <span
+        aria-label="Exemplu ilustrativ"
+        className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full border border-border bg-muted/60 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground"
+      >
+        Exemplu ilustrativ
+      </span>
+
+      <div className="flex items-center gap-3 pr-24">
         <Avatar className="size-11">
           <AvatarFallback className={cn("text-sm font-semibold", avatarColor)}>
             {t.initials}
@@ -118,8 +130,8 @@ function TestimonialCard({
       </blockquote>
 
       <div className="mt-auto pt-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 px-2.5 py-1 text-xs font-medium text-success">
-          <span className="size-1.5 rounded-full bg-success" aria-hidden />
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground">
+          <span className="size-1.5 rounded-full bg-muted-foreground/60" aria-hidden />
           {t.result}
         </span>
       </div>

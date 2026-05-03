@@ -42,8 +42,8 @@ const rows: ContrastRow[] = [
   {
     no: "04",
     label: "Predare",
-    before: "Profesori vechi",
-    beforeNote: "n-au dat examenul recent",
+    before: "Profesori cu experiență didactică tradițională",
+    beforeNote: "format clasic, ritm fix",
     after: "Elevi care au luat 10",
     afterNote: "acum câteva luni",
   },
@@ -77,10 +77,11 @@ export function WhyUs() {
           </RevealItem>
           <RevealItem variant="fade-blur">
             <h2 className="mt-4 text-balance text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl lg:text-6xl">
+              Circa{" "}
               <span className="text-muted-foreground line-through decoration-muted-foreground/30">
                 1.000 EUR
               </span>{" "}
-              pentru 10 luni de cursuri o dată pe săptămână?
+              pentru 10 luni de cursuri săptămânale?
             </h2>
           </RevealItem>
           <RevealItem variant="fade-up">
@@ -133,6 +134,9 @@ export function WhyUs() {
                   </span>
                 </div>
               </div>
+              <p className="mt-2 text-xs text-muted-foreground/70">
+                Calcul orientativ pe baza ofertelor publice observate.
+              </p>
             </div>
           </div>
         </Reveal>

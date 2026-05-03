@@ -126,7 +126,7 @@ function CourseDetailSection({
 
             <div className="flex flex-wrap gap-3 pt-2">
               <Link
-                href={`/inregistrare?from=cursuri&plan=standard`}
+                href={`/inregistrare?from=cursuri&plan=all`}
                 className={cn(
                   buttonVariants(),
                   "h-11 gap-1.5 px-5 text-sm font-medium"

@@ -297,7 +297,7 @@ function CardSuport() {
         </span>
       </div>
 
-      <h3 className="text-xl font-bold tracking-tight">Suport 24/7.</h3>
+      <h3 className="text-xl font-bold tracking-tight">Acces 24/7.</h3>
 
       <div className="grow space-y-1.5 rounded-xl bg-muted/40 p-3">
         <div className="flex items-baseline gap-2">
@@ -363,7 +363,7 @@ function CardEchipa() {
         <div className="flex flex-col justify-between gap-5 border-t border-border pt-5 md:col-span-2 md:border-l md:border-t-0 md:pl-6 md:pt-0">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-              Media absolvenți
+              Echipa fondatorilor
             </p>
             <p className="mt-1 font-mono text-5xl font-bold tabular-nums leading-none">
               <CountUp to={10} />
@@ -390,12 +390,9 @@ function CardEchipa() {
                   {t.initials}
                 </motion.span>
               ))}
-              <span className="inline-flex size-9 items-center justify-center rounded-full bg-muted text-[11px] font-semibold text-muted-foreground ring-2 ring-card">
-                +9
-              </span>
             </div>
             <p className="mt-2 font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
-              13 absolvenți · sesiunea iunie 2025
+              Echipa fondatorilor — pathway-ul Certiport complet
             </p>
           </div>
         </div>

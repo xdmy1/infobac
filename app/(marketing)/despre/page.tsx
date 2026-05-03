@@ -116,7 +116,7 @@ export default function DesprePage() {
           >
             <RevealItem variant="fade-blur" as="p">
               Anul trecut, mulți colegi de-ai noștri au renunțat la ideea de „10
-              din oficiu" pentru că singurele opțiuni costau{" "}
+              din oficiu" pentru că opțiunile dominante costau{" "}
               <span className="font-semibold">~1.000 EUR</span> și se întindeau
               pe 10 luni.
             </RevealItem>
@@ -127,7 +127,7 @@ export default function DesprePage() {
               ce să nu pierdem timpul.
             </RevealItem>
             <RevealItem variant="fade-blur" as="p" className="text-muted-foreground">
-              Diferența între „1.000 EUR și 10 luni" și „100 EUR și 6
+              Diferența între „1.000 EUR și 10 luni" și „100 EUR și 6–10
               săptămâni" nu e talentul.{" "}
               <span className="text-foreground">E informația structurată corect.</span>
             </RevealItem>
