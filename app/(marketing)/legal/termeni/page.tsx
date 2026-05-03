@@ -257,17 +257,7 @@ export default function TermeniPage() {
       </section>
 
       <section>
-        <h2>12. Lege aplicabilă și jurisdicție</h2>
-        <p>
-          Acești termeni sunt guvernați de legislația Republicii Moldova. În
-          caz de litigiu, părțile vor încerca soluționarea amiabilă; dacă nu
-          se reușește, competența aparține instanțelor de la sediul InfoBac
-          din Chișinău.
-        </p>
-      </section>
-
-      <section>
-        <h2>13. Contact</h2>
+        <h2>12. Contact</h2>
         <p>
           Pentru întrebări despre acești termeni:{" "}
           <a href={`mailto:${siteConfig.contact.email}`}>
