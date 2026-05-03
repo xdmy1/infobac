@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieBanner } from "@/components/shared/cookie-banner";
 import { siteConfig } from "@/lib/site";
 
 const inter = Inter({
@@ -117,8 +119,37 @@ export default function RootLayout({
           <Toaster position="top-right" richColors closeButton />
         </ThemeProvider>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+          <>
+            {/*
+              Google Consent Mode v2: default-deny analytics_storage so GA
+              fires in cookieless / consent-pending mode until the cookie
+              banner flips it to "granted". Reads stored consent on load so
+              returning visitors don't re-decide.
+            */}
+            <Script id="ga-consent-default" strategy="beforeInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                window.gtag = gtag;
+                gtag('consent', 'default', {
+                  'ad_storage': 'denied',
+                  'ad_user_data': 'denied',
+                  'ad_personalization': 'denied',
+                  'analytics_storage': 'denied',
+                  'wait_for_update': 500
+                });
+                try {
+                  var stored = (typeof localStorage !== 'undefined') ? localStorage.getItem('cookie-consent') : null;
+                  if (stored === 'accepted') {
+                    gtag('consent', 'update', { analytics_storage: 'granted' });
+                  }
+                } catch (e) { /* localStorage may be blocked; stay denied */ }
+              `}
+            </Script>
+            <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+          </>
         )}
+        <CookieBanner />
       </body>
     </html>
   );

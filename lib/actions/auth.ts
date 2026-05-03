@@ -146,6 +146,12 @@ export async function signupAction(input: unknown): Promise<SignupResult> {
   const supabase = await createClient();
   const emailOrigin = getEmailLinkOrigin();
 
+  const parentEmail =
+    parsed.data.parentEmail && parsed.data.parentEmail.length > 0
+      ? parsed.data.parentEmail
+      : null;
+  const consentTimestamp = parsed.data.isMinor ? new Date().toISOString() : null;
+
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
@@ -153,12 +159,42 @@ export async function signupAction(input: unknown): Promise<SignupResult> {
       emailRedirectTo: `${emailOrigin}/auth/callback?next=/confirmare-reusita`,
       data: {
         full_name: parsed.data.fullName,
+        // Stored in raw_user_meta_data so the handle_new_user trigger (and
+        // any future audit) can see the original consent payload even if the
+        // profiles row is later overwritten.
+        is_minor: parsed.data.isMinor,
+        parental_consent_at: consentTimestamp,
+        parent_email: parentEmail,
       },
     },
   });
 
   if (error) {
     return { ok: false, error: humanize(error.message) };
+  }
+
+  // Mirror consent fields onto the profiles row. The handle_new_user trigger
+  // creates the row from auth.users; we then write the consent fields (which
+  // the trigger doesn't know about) so they're queryable via the public
+  // schema and respect the column-level grants from migration 0009.
+  if (data.user) {
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .update({
+        is_minor: parsed.data.isMinor,
+        parental_consent_at: consentTimestamp,
+        parent_email: parentEmail,
+      })
+      .eq("id", data.user.id);
+
+    if (profileError) {
+      // Non-fatal: the auth account exists and consent is preserved in
+      // user_metadata. Log so we can backfill if this ever fires.
+      console.warn(
+        "[auth] Failed to mirror consent fields onto profiles:",
+        profileError.message,
+      );
+    }
   }
 
   return {

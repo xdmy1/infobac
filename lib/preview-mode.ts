@@ -58,6 +58,9 @@ export const previewProfile: ProfileRow = {
   role: "student",
   created_at: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
   updated_at: new Date().toISOString(),
+  is_minor: false,
+  parental_consent_at: null,
+  parent_email: null,
 };
 
 const courseIds = {

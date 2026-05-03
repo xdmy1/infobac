@@ -29,6 +29,7 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     setError,
   } = useForm<SignupInput>({
@@ -38,8 +39,15 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
       email: "",
       password: "",
       terms: false,
+      // Default to adult; minors flip the radio explicitly so we don't
+      // accidentally classify everyone as needing parental consent.
+      isMinor: false,
+      parentalConsent: false,
+      parentEmail: "",
     },
   });
+
+  const isMinor = watch("isMinor");
 
   useEffect(() => {
     if (fromPath === "cursuri") {
@@ -186,6 +194,102 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
             </p>
           )}
         </div>
+
+        <fieldset
+          className="space-y-2 rounded-lg border border-border bg-muted/30 p-3"
+          aria-invalid={!!errors.isMinor}
+        >
+          <legend className="px-1 text-xs font-medium text-foreground">
+            Vârsta ta
+          </legend>
+          <label className="flex cursor-pointer items-start gap-2.5 text-xs">
+            <input
+              type="radio"
+              value="false"
+              disabled={isPending}
+              className="mt-0.5 size-4 cursor-pointer border-border text-primary focus:ring-2 focus:ring-ring focus:ring-offset-1 focus:ring-offset-card"
+              {...register("isMinor", {
+                setValueAs: (v) => v === "true" || v === true,
+              })}
+            />
+            <span className="text-muted-foreground">
+              Am 18 ani sau mai mult
+            </span>
+          </label>
+          <label className="flex cursor-pointer items-start gap-2.5 text-xs">
+            <input
+              type="radio"
+              value="true"
+              disabled={isPending}
+              className="mt-0.5 size-4 cursor-pointer border-border text-primary focus:ring-2 focus:ring-ring focus:ring-offset-1 focus:ring-offset-card"
+              {...register("isMinor", {
+                setValueAs: (v) => v === "true" || v === true,
+              })}
+            />
+            <span className="text-muted-foreground">
+              Sunt minor (sub 18 ani)
+            </span>
+          </label>
+          {errors.isMinor && (
+            <p role="alert" className="text-xs font-medium text-destructive">
+              {errors.isMinor.message}
+            </p>
+          )}
+        </fieldset>
+
+        {isMinor && (
+          <div className="space-y-3 rounded-lg border border-primary/30 bg-primary/5 p-3">
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              Conform legii din Moldova (Codul civil art. 21), minorii au
+              nevoie de acordul unui părinte/tutore pentru contracte cu plată.
+            </p>
+
+            <label className="flex cursor-pointer items-start gap-2.5 text-xs">
+              <input
+                type="checkbox"
+                disabled={isPending}
+                className="mt-0.5 size-4 cursor-pointer rounded border-border text-primary focus:ring-2 focus:ring-ring focus:ring-offset-1 focus:ring-offset-card"
+                aria-invalid={!!errors.parentalConsent}
+                {...register("parentalConsent")}
+              />
+              <span className="text-muted-foreground">
+                Am citit termenii împreună cu un părinte/tutore care e de acord
+                cu contul și plata.
+              </span>
+            </label>
+            {errors.parentalConsent && (
+              <p role="alert" className="text-xs font-medium text-destructive">
+                {errors.parentalConsent.message}
+              </p>
+            )}
+
+            <div className="space-y-1.5">
+              <Label htmlFor="parentEmail" className="text-xs">
+                Email părinte/tutore{" "}
+                <span className="font-normal text-muted-foreground">
+                  (opțional, pentru notificări)
+                </span>
+              </Label>
+              <Input
+                id="parentEmail"
+                type="email"
+                autoComplete="off"
+                disabled={isPending}
+                aria-invalid={!!errors.parentEmail}
+                placeholder="parinte@exemplu.md"
+                {...register("parentEmail")}
+              />
+              {errors.parentEmail && (
+                <p
+                  role="alert"
+                  className="text-xs font-medium text-destructive"
+                >
+                  {errors.parentEmail.message}
+                </p>
+              )}
+            </div>
+          </div>
+        )}
 
         <label className="flex cursor-pointer items-start gap-2.5 text-xs">
           <input

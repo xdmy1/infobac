@@ -47,6 +47,11 @@ export type ContactInput = z.infer<typeof contactSchema>;
 // Auth (used in PAS 6 — login + signup)
 // -----------------------------------------------------------------------------
 
+// Audience is 16-19 year-olds; under MD law (Codul civil RM art. 21) those under
+// 18 have restricted contractual capacity, so we capture parental consent at
+// signup. `isMinor` is self-declared via a radio. When true, `parentalConsent`
+// must be checked; `parentEmail` stays optional (used for notifications, not
+// hard verification — at least not yet).
 export const signupSchema = z
   .object({
     fullName: z
@@ -66,6 +71,26 @@ export const signupSchema = z
     terms: z
       .boolean()
       .refine((v) => v === true, "Trebuie să accepți termenii."),
+    isMinor: z.boolean({
+      message: "Te rugăm să indici dacă ai sau nu 18 ani.",
+    }),
+    parentalConsent: z.boolean(),
+    parentEmail: z
+      .string()
+      .trim()
+      .email("Adresa de email a părintelui nu pare validă.")
+      .or(z.literal(""))
+      .optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.isMinor && !data.parentalConsent) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["parentalConsent"],
+        message:
+          "Pentru utilizatorii sub 18 ani, e necesar acordul părintelui/tutorelui.",
+      });
+    }
   });
 
 export type SignupInput = z.infer<typeof signupSchema>;

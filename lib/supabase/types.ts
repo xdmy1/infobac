@@ -52,6 +52,10 @@ export interface Database {
           role: UserRole;
           created_at: string;
           updated_at: string;
+          // Added in migration 0009 — minor consent flow.
+          is_minor: boolean | null;
+          parental_consent_at: string | null;
+          parent_email: string | null;
         };
         Insert: {
           id: string;
@@ -63,6 +67,9 @@ export interface Database {
           role?: UserRole;
           created_at?: string;
           updated_at?: string;
+          is_minor?: boolean | null;
+          parental_consent_at?: string | null;
+          parent_email?: string | null;
         };
         Update: Partial<Database["public"]["Tables"]["profiles"]["Insert"]>;
         Relationships: [];
