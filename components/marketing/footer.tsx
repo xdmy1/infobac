@@ -75,17 +75,6 @@ export function Footer() {
           <p className="text-xs text-muted-foreground sm:text-sm">
             © {year} {siteConfig.name}. Făcut în Chișinău, Moldova.
           </p>
-          <p className="text-xs text-muted-foreground sm:text-sm">
-            Powered by{" "}
-            <a
-              href="https://landings.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary-hover"
-            >
-              landings.md
-            </a>
-          </p>
           <p className="text-[11px] leading-relaxed text-muted-foreground/80 sm:text-xs">
             InfoBac e o platformă independentă de educație în tehnologia
             informației. Nu suntem afiliați, sponsorizați sau aprobați
@@ -95,6 +84,18 @@ export function Footer() {
             disponibile independent.
           </p>
         </div>
+
+        <p className="mt-8 text-center text-xs text-muted-foreground md:mt-10">
+          Powered by{" "}
+          <a
+            href="https://landings.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary-hover"
+          >
+            landings.md
+          </a>
+        </p>
       </div>
     </footer>
   );
