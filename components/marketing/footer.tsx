@@ -75,13 +75,13 @@ export function Footer() {
           <p className="text-xs text-muted-foreground sm:text-sm">
             © {year} {siteConfig.name}. Făcut în Chișinău, Moldova.
           </p>
-          <p className="text-xs font-thin tracking-wide text-muted-foreground/70">
+          <p className="text-xs text-muted-foreground sm:text-sm">
             Powered by{" "}
             <a
               href="https://landings.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-normal underline-offset-4 transition-colors hover:text-foreground hover:underline"
+              className="font-medium text-primary underline underline-offset-4 transition-colors hover:text-primary-hover"
             >
               landings.md
             </a>
