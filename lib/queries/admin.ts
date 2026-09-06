@@ -17,12 +17,27 @@ export interface AdminUserSummary {
   bestScore: number | null;
   attemptsCount: number;
   latestSubscription: SubscriptionRow | null;
+  /** latestSubscription.status, but "expired" once the period has lapsed. */
+  latestEffectiveStatus: EffectiveStatus | null;
   lastActivityAt: string | null;
 }
 
 export type EffectiveStatus =
   | SubscriptionRow["status"]
   | "expired";
+
+/** A subscription's real state: "expired" once its period end has passed. */
+function effectiveStatus(
+  sub: SubscriptionRow | null,
+  now: number,
+): EffectiveStatus | null {
+  if (!sub) return null;
+  if (sub.status === "canceled") return "canceled";
+  const end = sub.current_period_end
+    ? new Date(sub.current_period_end).getTime()
+    : null;
+  return end !== null && end <= now ? "expired" : sub.status;
+}
 
 export interface AdminUserDetail {
   profile: ProfileRow;
@@ -52,7 +67,7 @@ export async function listAllUsers(
       .from("subscriptions")
       .select("*")
       .order("current_period_start", { ascending: false }),
-    client.from("course_access").select("user_id, course_id"),
+    client.from("course_access").select("user_id, course_id, expires_at"),
     client
       .from("quiz_attempts")
       .select("user_id, score, completed_at")
@@ -69,8 +84,13 @@ export async function listAllUsers(
 
   const totalCourses = courses.data?.length ?? 0;
 
+  const now = Date.now();
   const accessByUser = new Map<string, Set<string>>();
   for (const row of access.data ?? []) {
+    // Only currently-valid access counts — an expired grant is not access.
+    const active =
+      row.expires_at === null || new Date(row.expires_at).getTime() > now;
+    if (!active) continue;
     const set = accessByUser.get(row.user_id) ?? new Set<string>();
     set.add(row.course_id);
     accessByUser.set(row.user_id, set);
@@ -105,6 +125,7 @@ export async function listAllUsers(
     bestScore: bestByUser.get(p.id) ?? null,
     attemptsCount: countByUser.get(p.id) ?? 0,
     latestSubscription: subsByUser.get(p.id) ?? null,
+    latestEffectiveStatus: effectiveStatus(subsByUser.get(p.id) ?? null, now),
     lastActivityAt: lastByUser.get(p.id) ?? null,
   }));
 }

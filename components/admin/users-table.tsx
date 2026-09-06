@@ -16,7 +16,8 @@ function formatRelative(iso: string | null): string {
   return `${Math.round(days / 365)} ani`;
 }
 
-function planBadge(sub: AdminUserSummary["latestSubscription"]) {
+function planBadge(user: AdminUserSummary) {
+  const sub = user.latestSubscription;
   if (!sub) {
     return (
       <Badge variant="outline" className="text-muted-foreground">
@@ -24,14 +25,17 @@ function planBadge(sub: AdminUserSummary["latestSubscription"]) {
       </Badge>
     );
   }
+  const status = user.latestEffectiveStatus ?? sub.status;
   const label = SubscriptionPlanLabels[sub.plan] ?? sub.plan;
   const tone =
-    sub.status === "active" || sub.status === "trialing"
+    status === "active" || status === "trialing"
       ? "border-success/30 bg-success/10 text-success"
-      : "border-muted-foreground/20 bg-muted text-muted-foreground";
+      : status === "expired"
+        ? "border-destructive/30 bg-destructive/10 text-destructive"
+        : "border-muted-foreground/20 bg-muted text-muted-foreground";
   return (
     <Badge variant="outline" className={cn("font-mono text-[10px]", tone)}>
-      {label} · {sub.status}
+      {label} · {status}
     </Badge>
   );
 }
@@ -89,7 +93,7 @@ export function UsersTable({ users }: { users: AdminUserSummary[] }) {
                     </Badge>
                   ) : null}
                 </td>
-                <td className="px-4 py-3">{planBadge(u.latestSubscription)}</td>
+                <td className="px-4 py-3">{planBadge(u)}</td>
                 <td className="px-4 py-3 font-mono tabular-nums">
                   {u.accessCount}/{u.totalCourses}
                 </td>
