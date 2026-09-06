@@ -33,6 +33,13 @@ export type PaymentRequestStatus = "pending" | "approved" | "rejected";
 
 export type PaymentProofVia = "upload" | "telegram" | "none";
 
+/**
+ * Which rail the payment came in on. 'manual' = MIA transfer reviewed by an
+ * admin; 'creem' = card paid through Creem (merchant of record), approved by
+ * the webhook at app/api/webhooks/creem.
+ */
+export type PaymentProvider = "manual" | "creem";
+
 export interface QuizOption {
   id: string;
   text: string;
@@ -229,6 +236,14 @@ export interface Database {
           reviewed_by: string | null;
           reviewed_notes: string | null;
           created_at: string;
+          provider: PaymentProvider;
+          provider_session_id: string | null;
+          provider_order_id: string | null;
+          provider_event_id: string | null;
+          provider_subscription_id: string | null;
+          period_end: string | null;
+          amount_cents: number | null;
+          currency: string | null;
         };
         Insert: {
           id?: string;
@@ -244,6 +259,14 @@ export interface Database {
           reviewed_by?: string | null;
           reviewed_notes?: string | null;
           created_at?: string;
+          provider?: PaymentProvider;
+          provider_session_id?: string | null;
+          provider_order_id?: string | null;
+          provider_event_id?: string | null;
+          provider_subscription_id?: string | null;
+          period_end?: string | null;
+          amount_cents?: number | null;
+          currency?: string | null;
         };
         Update: Partial<
           Database["public"]["Tables"]["payment_requests"]["Insert"]
@@ -316,6 +339,35 @@ export interface Database {
         };
         Returns: undefined;
       };
+      // service_role only — called from the Creem webhook, never from a
+      // logged-in session. See migration 0010.
+      grant_subscription_internal: {
+        Args: {
+          p_user_id: string;
+          p_plan: SubscriptionPlan;
+          p_course_slug: string | null;
+        };
+        Returns: undefined;
+      };
+      revoke_subscription_internal: {
+        Args: {
+          p_user_id: string;
+          p_plan: SubscriptionPlan;
+          p_course_slug: string | null;
+        };
+        Returns: undefined;
+      };
+      // service_role only — grants access up to an explicit expiry rather than
+      // a plan-derived interval, so renewals track the billed period. See 0011.
+      grant_subscription_until: {
+        Args: {
+          p_user_id: string;
+          p_plan: SubscriptionPlan;
+          p_course_slug: string | null;
+          p_expires_at: string;
+        };
+        Returns: undefined;
+      };
     };
     Enums: {
       subscription_plan: SubscriptionPlan;
@@ -324,6 +376,7 @@ export interface Database {
       quiz_type: QuizType;
       access_source: AccessSource;
       user_role: UserRole;
+      payment_provider: PaymentProvider;
     };
     CompositeTypes: Record<string, never>;
   };

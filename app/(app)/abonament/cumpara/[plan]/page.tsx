@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ShieldCheck, Clock } from "lucide-react";
 import { PaymentRequestForm } from "@/components/app/payment-request-form";
 import { pricingPlans, type PlanId } from "@/lib/content";
+import { gateway, isCardCheckoutEnabled } from "@/lib/payments";
 import type { CourseSlug } from "@/lib/content/courses";
 
 interface PageProps {
@@ -72,17 +73,25 @@ export default async function CheckoutPage({
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <Note
             icon={<Clock className="size-4" />}
-            title={`${periodDays} zile acces`}
+            title={
+              isCardCheckoutEnabled
+                ? "Card: recurent · MIA: o dată"
+                : `${periodDays} zile acces`
+            }
             description={
-              plan === "semester"
-                ? "180 de zile de la aprobarea plății."
-                : "30 de zile de la aprobarea plății."
+              isCardCheckoutEnabled
+                ? `Cu cardul se reînnoiește automat la fiecare ${planData.priceUnit}. Prin MIA plătești o singură dată, pentru ${periodDays} de zile.`
+                : `${periodDays} de zile de la aprobarea plății.`
             }
           />
           <Note
             icon={<ShieldCheck className="size-4" />}
-            title="Aprobare manuală"
-            description="Vedem cererea, confirmăm plata, activăm cursul. De obicei sub o oră."
+            title={isCardCheckoutEnabled ? "Card sau MIA" : "Aprobare manuală"}
+            description={
+              isCardCheckoutEnabled
+                ? "Cu cardul accesul e instant. Prin MIA, confirmăm manual — de obicei sub o oră."
+                : "Vedem cererea, confirmăm plata, activăm cursul. De obicei sub o oră."
+            }
           />
         </div>
       </header>
@@ -92,6 +101,8 @@ export default async function CheckoutPage({
         amountMDL={planData.priceMDL}
         initialCourseSlug={initialCourse}
         requiresCourseSelection={!!planData.requiresCourseSelection}
+        cardCheckoutEnabled={isCardCheckoutEnabled}
+        cardTestMode={gateway.isTestMode}
       />
     </div>
   );

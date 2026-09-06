@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
   CheckCircle2,
+  CreditCard,
   Send,
   Upload,
   X,
@@ -14,6 +15,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { CourseIcon } from "@/components/shared/course-icon";
 import { cn } from "@/lib/utils";
 import { submitPaymentRequestAction } from "@/lib/actions/payment";
+import { startCardCheckoutAction } from "@/lib/actions/checkout";
 import { allCoursesMeta, type CourseSlug } from "@/lib/content/courses";
 import { pricingPlans, type PlanId } from "@/lib/content";
 
@@ -26,6 +28,10 @@ interface PaymentRequestFormProps {
   initialCourseSlug?: CourseSlug;
   /** Whether the user must pick a course (true for module plan). */
   requiresCourseSelection: boolean;
+  /** Show the card option — false when Creem env vars are missing. */
+  cardCheckoutEnabled?: boolean;
+  /** Creem sandbox — badge it so nobody mistakes a test charge for real. */
+  cardTestMode?: boolean;
 }
 
 type ProofMode = "upload" | "telegram";
@@ -35,9 +41,12 @@ export function PaymentRequestForm({
   amountMDL,
   initialCourseSlug,
   requiresCourseSelection,
+  cardCheckoutEnabled = false,
+  cardTestMode = false,
 }: PaymentRequestFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [isCardPending, startCardTransition] = useTransition();
   const [courseSlug, setCourseSlug] = useState<CourseSlug | "">(
     initialCourseSlug ?? "",
   );
@@ -46,8 +55,11 @@ export function PaymentRequestForm({
   const [notes, setNotes] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const planName =
-    pricingPlans.find((p) => p.id === plan)?.name ?? plan;
+  const planData = pricingPlans.find((p) => p.id === plan);
+  const planName = planData?.name ?? plan;
+  // "lună" | "6 luni" — mirrors the Creem product's billing period, so the
+  // recurrence disclosure stays true for every plan.
+  const priceUnit = planData?.priceUnit ?? "lună";
   const selectedCourseName = courseSlug
     ? allCoursesMeta
         .find((c) => c.slug === courseSlug)
@@ -57,6 +69,30 @@ export function PaymentRequestForm({
     ? `Am achitat pentru abonamentul „${planName}" (${selectedCourseName})`
     : `Am achitat pentru abonamentul „${planName}"`;
   const telegramUrl = `https://t.me/${TELEGRAM_PHONE}?text=${encodeURIComponent(telegramMessage)}`;
+
+  const handleCardCheckout = () => {
+    if (requiresCourseSelection && !courseSlug) {
+      toast.error("Alege un curs înainte.");
+      return;
+    }
+
+    startCardTransition(async () => {
+      try {
+        // On success the action redirects to the hosted checkout and this
+        // promise never resolves — a returned value always means failure.
+        const result = await startCardCheckoutAction({
+          plan,
+          courseSlug: requiresCourseSelection && courseSlug ? courseSlug : null,
+        });
+        if (result && !result.ok) {
+          toast.error(result.error);
+        }
+      } catch (err) {
+        console.warn("[checkout] card start failed:", err);
+        toast.error("Nu am putut deschide plata cu cardul. Încearcă MIA.");
+      }
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -152,6 +188,69 @@ export function PaymentRequestForm({
             })}
           </div>
         </fieldset>
+      )}
+
+      {/* Card checkout — instant, no manual review. Shares the course picker
+          above, so the module plan can't reach checkout without a course. */}
+      {cardCheckoutEnabled && (
+        <>
+          <div className="rounded-2xl border border-primary/30 bg-primary/5 p-4 sm:p-5">
+            <div className="flex items-start gap-3">
+              <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                <CreditCard className="size-4" strokeWidth={2.25} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm font-bold">
+                  Plătește cu cardul
+                  {cardTestMode && (
+                    <span className="ml-2 rounded-full bg-warning/15 px-2 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-warning">
+                      Test
+                    </span>
+                  )}
+                </p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Visa sau Mastercard. Accesul se activează automat, fără
+                  aprobare manuală.
+                </p>
+                <p className="mt-1.5 text-[11px] leading-relaxed text-foreground/70">
+                  <span className="font-semibold">Abonament recurent</span> — se
+                  reînnoiește automat la fiecare {priceUnit} până când îl
+                  anulezi. Poți anula oricând; accesul rămâne activ până la
+                  finalul perioadei deja plătite.
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleCardCheckout}
+              disabled={isCardPending}
+              className={cn(
+                buttonVariants(),
+                "mt-4 h-12 w-full gap-2 text-sm font-semibold",
+                isCardPending && "cursor-wait",
+              )}
+            >
+              <CreditCard className="size-4" />
+              {isCardPending
+                ? "Se deschide checkout-ul..."
+                : `Abonează-te — ${amountMDL} MDL / ${priceUnit}`}
+            </button>
+
+            <p className="mt-2 text-center text-[11px] text-muted-foreground">
+              Plata e procesată de Creem, care taxează în euro. Suma exactă în
+              lei depinde de cursul băncii tale.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="h-px flex-1 bg-border" />
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              sau
+            </span>
+            <span className="h-px flex-1 bg-border" />
+          </div>
+        </>
       )}
 
       {/* Payment instructions */}

@@ -33,6 +33,12 @@ function isAuthOnly(pathname: string) {
  * marketing site working without a real Supabase project.
  */
 export async function updateSession(request: NextRequest) {
+  // Inbound provider callbacks carry no session and must never be redirected.
+  // Skipping here also avoids a pointless getUser() round-trip per delivery.
+  if (request.nextUrl.pathname.startsWith("/api/webhooks/")) {
+    return NextResponse.next({ request });
+  }
+
   if (!url || !anonKey) {
     if (isPathProtected(request.nextUrl.pathname)) {
       if (previewMode) {

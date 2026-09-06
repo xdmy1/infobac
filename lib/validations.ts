@@ -175,3 +175,23 @@ export const grantSubscriptionSchema = z
     },
   );
 export type GrantSubscriptionInput = z.infer<typeof grantSubscriptionSchema>;
+
+// -----------------------------------------------------------------------------
+// Card checkout (Creem)
+// -----------------------------------------------------------------------------
+
+export const startCardCheckoutSchema = z
+  .object({
+    plan: z.enum(["module", "all", "semester"], {
+      message: "Plan invalid.",
+    }),
+    courseSlug: z.enum(["python", "sql", "devices"]).nullable().optional(),
+  })
+  .refine(
+    (d) => d.plan !== "module" || (d.courseSlug && d.courseSlug.length > 0),
+    {
+      message: `Pentru planul „Un modul" trebuie să alegi un curs.`,
+      path: ["courseSlug"],
+    },
+  );
+export type StartCardCheckoutInput = z.infer<typeof startCardCheckoutSchema>;
