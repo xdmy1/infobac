@@ -35,6 +35,32 @@ export interface PaymentGateway {
    * reachable from inside the product rather than by contacting support.
    */
   createBillingPortal(customerId: string): Promise<string>;
+
+  /**
+   * Resolves the provider customer id from an email, or null if none exists.
+   * Lets billing work off the user's email even when we never stored the id,
+   * so an older payment isn't stranded without a portal.
+   */
+  findCustomerIdByEmail(email: string): Promise<string | null>;
+
+  /** Active (non-cancelled) subscriptions for a customer. */
+  listActiveSubscriptions(customerId: string): Promise<ProviderSubscription[]>;
+
+  /**
+   * Cancels a subscription. "scheduled" keeps access until the paid period
+   * ends (the default for a user cancel); "immediate" ends it now (used when
+   * the whole account is being deleted).
+   */
+  cancelSubscription(
+    subscriptionId: string,
+    mode: "scheduled" | "immediate",
+  ): Promise<void>;
+}
+
+export interface ProviderSubscription {
+  id: string;
+  status: string;
+  currentPeriodEnd: string | null;
 }
 
 export interface CreateCheckoutInput {

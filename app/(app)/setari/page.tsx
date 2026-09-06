@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ProfileForm } from "@/components/app/profile-form";
+import { DeleteAccount } from "@/components/app/delete-account";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile, getCurrentUser } from "@/lib/queries/user";
 import {
@@ -72,17 +73,12 @@ export default async function SetariPage() {
 
       <section className="rounded-2xl border border-destructive/30 bg-card p-6">
         <h2 className="text-base font-bold tracking-tight">Zona periculoasă</h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Pentru ștergerea contului și a tuturor datelor asociate, scrie-ne
-          pe{" "}
-          <a
-            href="mailto:hello@infobac.md?subject=Cerere%20%C8%99tergere%20cont"
-            className="font-medium text-foreground underline-offset-4 hover:underline"
-          >
-            hello@infobac.md
-          </a>
-          . Procesăm cererea în maximum 30 de zile, conform GDPR.
+        <p className="mt-1 mb-4 text-sm text-muted-foreground">
+          Ștergerea contului elimină definitiv profilul, progresul și accesul
+          la cursuri. Dacă ai un abonament activ, îl anulăm automat înainte de
+          ștergere, ca să nu-ți mai fie taxat cardul.
         </p>
+        <DeleteAccount />
       </section>
     </div>
   );

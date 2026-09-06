@@ -6,6 +6,7 @@ import type {
   CreateCheckoutInput,
   GatewayEvent,
   PaymentGateway,
+  ProviderSubscription,
   WebhookResult,
 } from "./types";
 
@@ -98,6 +99,85 @@ export const creemGateway: PaymentGateway = {
     const link = data.customer_portal_link ?? data.url;
     if (!link) throw new Error("Creem billing portal response had no link.");
     return link;
+  },
+
+  async findCustomerIdByEmail(email: string): Promise<string | null> {
+    if (!apiKey) throw new Error("CREEM_API_KEY is not set.");
+
+    const url = new URL(`${API_BASE}/customers`);
+    url.searchParams.set("email", email);
+    const response = await fetch(url, {
+      headers: { "x-api-key": apiKey },
+      cache: "no-store",
+    });
+
+    // 404 = this email was never a paying customer. Not an error, just no id.
+    if (response.status === 404) return null;
+    if (!response.ok) {
+      const body = await response.text().catch(() => "");
+      throw new Error(
+        `Creem customer lookup failed (${response.status}): ${body.slice(0, 200)}`,
+      );
+    }
+
+    const data = (await response.json()) as { id?: string };
+    return data?.id ?? null;
+  },
+
+  async listActiveSubscriptions(
+    customerId: string,
+  ): Promise<ProviderSubscription[]> {
+    if (!apiKey) throw new Error("CREEM_API_KEY is not set.");
+
+    const response = await fetch(
+      `${API_BASE}/customers/${encodeURIComponent(customerId)}/subscriptions`,
+      { headers: { "x-api-key": apiKey }, cache: "no-store" },
+    );
+    if (!response.ok) {
+      const body = await response.text().catch(() => "");
+      throw new Error(
+        `Creem subscriptions list failed (${response.status}): ${body.slice(0, 200)}`,
+      );
+    }
+
+    const data = (await response.json()) as { items?: unknown };
+    const items = Array.isArray(data.items) ? data.items : [];
+    return items
+      .filter(isRecord)
+      .map((s) => ({
+        id: asString(s.id) ?? "",
+        status: asString(s.status) ?? "unknown",
+        currentPeriodEnd: asString(s.current_period_end_date),
+      }))
+      .filter(
+        (s) =>
+          s.id !== "" &&
+          s.status !== "canceled" &&
+          s.status !== "expired",
+      );
+  },
+
+  async cancelSubscription(
+    subscriptionId: string,
+    mode: "scheduled" | "immediate",
+  ): Promise<void> {
+    if (!apiKey) throw new Error("CREEM_API_KEY is not set.");
+
+    const response = await fetch(
+      `${API_BASE}/subscriptions/${encodeURIComponent(subscriptionId)}/cancel`,
+      {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ mode }),
+        cache: "no-store",
+      },
+    );
+    if (!response.ok) {
+      const body = await response.text().catch(() => "");
+      throw new Error(
+        `Creem cancel failed (${response.status}): ${body.slice(0, 200)}`,
+      );
+    }
   },
 
   async createCheckout(input: CreateCheckoutInput): Promise<CheckoutSession> {

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Crown, Sparkles, Calendar } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { SubscriptionStatusCard } from "@/components/app/subscription-status-card";
-import { ManageSubscriptionButton } from "@/components/app/manage-subscription-button";
+import { SubscriptionManager } from "@/components/app/subscription-manager";
 import { isCardCheckoutEnabled } from "@/lib/payments";
 import { siteConfig } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
@@ -96,9 +96,9 @@ export default async function AbonamentPage() {
             <div className="min-w-0">
               <p className="text-base font-semibold">Facturare și anulare</p>
               <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-                Anulează abonamentul, schimbă cardul sau descarcă facturile în
-                portalul procesatorului. După anulare, accesul rămâne activ
-                până la finalul perioadei deja plătite.
+                Anulează abonamentul dintr-un clic. Accesul rămâne activ până
+                la finalul perioadei deja plătite. Pentru schimbarea cardului
+                sau facturi, deschide portalul procesatorului.
               </p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Ai nevoie de ajutor? Scrie-ne la{" "}
@@ -111,7 +111,7 @@ export default async function AbonamentPage() {
                 .
               </p>
             </div>
-            <ManageSubscriptionButton className="shrink-0" />
+            <SubscriptionManager canceled={active?.status === "canceled"} />
           </div>
         </section>
       )}

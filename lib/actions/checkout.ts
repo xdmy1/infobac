@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
@@ -131,14 +132,19 @@ export type BillingPortalResult =
   | { ok: true; url: string };
 
 /**
- * Opens Creem's self-service portal, where the customer can cancel the
- * subscription, swap the card and pull invoices.
+ * Resolves the caller's Creem customer id.
  *
- * Creem requires cancellation to be reachable from inside the product rather
- * than through support, so this is not optional convenience — an account can
- * be rejected for its absence.
+ * Prefers the id we stored on a payment row, but falls back to looking the
+ * customer up by email — so a payment made before we captured the id, or any
+ * gap in the webhook, still resolves. When the fallback finds one, it is
+ * written back to the user's rows so the next call is a single query.
+ *
+ * Returns the Supabase client alongside, since every caller needs it.
  */
-export async function openBillingPortalAction(): Promise<BillingPortalResult> {
+async function resolveCustomerId(): Promise<
+  | { ok: false; error: string }
+  | { ok: true; customerId: string; userId: string }
+> {
   if (!isSupabaseConfigured) {
     return { ok: false, error: "Supabase nu e configurat." };
   }
@@ -154,9 +160,8 @@ export async function openBillingPortalAction(): Promise<BillingPortalResult> {
     return { ok: false, error: "Sesiunea a expirat. Re-loghează-te." };
   }
 
-  // RLS keeps this to the caller's own rows, so the customer id can only ever
-  // be one this user actually paid with.
-  const { data: row, error } = await supabase
+  // 1. Stored id (RLS keeps it to this user's own rows).
+  const { data: row } = await supabase
     .from("payment_requests")
     .select("provider_customer_id")
     .eq("user_id", user.id)
@@ -166,20 +171,48 @@ export async function openBillingPortalAction(): Promise<BillingPortalResult> {
     .limit(1)
     .maybeSingle();
 
-  if (error) {
-    console.warn("[billing] customer lookup failed:", error.message);
-    return { ok: false, error: "Nu am putut deschide portalul. Reîncearcă." };
-  }
-  if (!row?.provider_customer_id) {
-    return {
-      ok: false,
-      error: "Nu găsim o plată cu cardul pe contul tău.",
-    };
+  if (row?.provider_customer_id) {
+    return { ok: true, customerId: row.provider_customer_id, userId: user.id };
   }
 
-  let portalUrl: string;
+  // 2. Fall back to the provider's own record, keyed by email.
+  if (!user.email) {
+    return { ok: false, error: "Nu găsim o plată cu cardul pe contul tău." };
+  }
+
+  let customerId: string | null;
   try {
-    portalUrl = await gateway.createBillingPortal(row.provider_customer_id);
+    customerId = await gateway.findCustomerIdByEmail(user.email);
+  } catch (err) {
+    console.warn("[billing] customer lookup failed:", err);
+    return { ok: false, error: "Procesatorul nu răspunde. Reîncearcă." };
+  }
+
+  if (!customerId) {
+    return { ok: false, error: "Nu găsim o plată cu cardul pe contul tău." };
+  }
+
+  // Self-heal: stamp the id onto this user's creem rows for next time.
+  await supabase
+    .from("payment_requests")
+    .update({ provider_customer_id: customerId })
+    .eq("user_id", user.id)
+    .eq("provider", "creem")
+    .is("provider_customer_id", null);
+
+  return { ok: true, customerId, userId: user.id };
+}
+
+/**
+ * Opens Creem's self-service portal (change card, download invoices, cancel).
+ */
+export async function openBillingPortalAction(): Promise<BillingPortalResult> {
+  const resolved = await resolveCustomerId();
+  if (!resolved.ok) return resolved;
+
+  try {
+    const url = await gateway.createBillingPortal(resolved.customerId);
+    return { ok: true, url };
   } catch (err) {
     console.warn("[billing] portal link failed:", err);
     return {
@@ -187,6 +220,57 @@ export async function openBillingPortalAction(): Promise<BillingPortalResult> {
       error: "Procesatorul nu răspunde. Reîncearcă în câteva minute.",
     };
   }
+}
 
-  return { ok: true, url: portalUrl };
+export type CancelResult =
+  | { ok: false; error: string }
+  | { ok: true; endsAt: string | null };
+
+/**
+ * One-click cancel from inside the product.
+ *
+ * Cancels at period end ("scheduled"), so access stays live until the time the
+ * user already paid for — matching what the UI promises. Our subscriptions row
+ * is flagged canceled while keeping its period end, so the card can show "no
+ * more renewals" without cutting access.
+ */
+export async function cancelSubscriptionAction(): Promise<CancelResult> {
+  const resolved = await resolveCustomerId();
+  if (!resolved.ok) return resolved;
+
+  let subs;
+  try {
+    subs = await gateway.listActiveSubscriptions(resolved.customerId);
+  } catch (err) {
+    console.warn("[billing] list subs failed:", err);
+    return { ok: false, error: "Procesatorul nu răspunde. Reîncearcă." };
+  }
+
+  if (subs.length === 0) {
+    return { ok: false, error: "Nu ai un abonament activ de anulat." };
+  }
+
+  let endsAt: string | null = null;
+  try {
+    for (const sub of subs) {
+      await gateway.cancelSubscription(sub.id, "scheduled");
+      endsAt = endsAt ?? sub.currentPeriodEnd;
+    }
+  } catch (err) {
+    console.warn("[billing] cancel failed:", err);
+    return { ok: false, error: "Anularea nu a reușit. Reîncearcă." };
+  }
+
+  // Reflect the intent locally. Access (course_access.expires_at) is left as
+  // is, so it lapses naturally at period end.
+  const supabase = await createClient();
+  await supabase
+    .from("subscriptions")
+    .update({ status: "canceled" })
+    .eq("user_id", resolved.userId)
+    .eq("status", "active");
+
+  revalidatePath("/abonament");
+  revalidatePath("/dashboard");
+  return { ok: true, endsAt };
 }

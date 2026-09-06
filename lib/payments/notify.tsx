@@ -2,6 +2,7 @@ import "server-only";
 import { sendEmail } from "@/lib/resend";
 import { pricingPlans, type PlanId } from "@/lib/content";
 import PaymentSuccessEmail from "@/emails/payment-success";
+import OwnerPaymentEmail from "@/emails/owner-payment";
 
 interface PaymentSuccessNotification {
   to: string;
@@ -61,4 +62,47 @@ export async function sendPaymentSuccessEmail({
 function firstName(email: string, fullName?: string | null): string {
   if (fullName?.trim()) return fullName.trim().split(/\s+/)[0]!;
   return email.split("@")[0] ?? "elev";
+}
+
+
+const OWNER_EMAIL =
+  process.env.OWNER_NOTIFY_EMAIL ?? "damian.bobernaga@gmail.com";
+
+interface OwnerPaymentNotification {
+  planName: string;
+  amountMDL: number;
+  amountCharged?: string;
+  customerName?: string | null;
+  customerEmail: string;
+  courseName?: string | null;
+  isRenewal?: boolean;
+}
+
+/**
+ * Internal heads-up to the owner on every cleared card payment. Best-effort:
+ * the webhook has already granted access, so a failed email is logged only.
+ */
+export async function sendOwnerPaymentEmail(
+  n: OwnerPaymentNotification,
+): Promise<void> {
+  try {
+    await sendEmail({
+      to: OWNER_EMAIL,
+      subject: `${n.isRenewal ? "Reînnoire" : "Plată nouă"}: ${n.planName} — ${n.customerEmail}`,
+      react: (
+        <OwnerPaymentEmail
+          planName={n.planName}
+          amountMDL={n.amountMDL}
+          amountCharged={n.amountCharged}
+          customerName={n.customerName ?? undefined}
+          customerEmail={n.customerEmail}
+          courseName={n.courseName ?? undefined}
+          isRenewal={n.isRenewal}
+        />
+      ),
+      tags: [{ name: "type", value: "owner-payment" }],
+    });
+  } catch (err) {
+    console.warn("[creem] owner notification failed:", err);
+  }
 }

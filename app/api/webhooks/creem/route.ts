@@ -2,7 +2,9 @@ import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import { createAdminClient, isServiceRoleConfigured } from "@/lib/supabase/admin";
 import { gateway, isCardCheckoutEnabled, type GatewayEvent } from "@/lib/payments";
-import { sendPaymentSuccessEmail } from "@/lib/payments/notify";
+import { sendPaymentSuccessEmail, sendOwnerPaymentEmail } from "@/lib/payments/notify";
+import { pricingPlans } from "@/lib/content";
+import { allCoursesMeta } from "@/lib/content/courses";
 import type { PlanId } from "@/lib/content";
 
 /**
@@ -150,7 +152,10 @@ async function handleCompleted(event: GatewayEvent): Promise<Response> {
     console.error("[creem] granted but row not marked approved:", updateErr);
   }
 
-  await notifyUser(supabase, row.user_id, row.plan as PlanId, row.amount_mdl);
+  await notifyUser(supabase, row.user_id, row.plan as PlanId, row.amount_mdl, {
+    courseSlug: row.selected_course_slug,
+    amountCharged: formatCharged(event.amountCents, event.currency),
+  });
 
   revalidatePath("/dashboard");
   revalidatePath("/abonament");
@@ -269,6 +274,16 @@ async function handleRenewed(event: GatewayEvent): Promise<Response> {
   });
   if (grantErr) throw grantErr;
 
+  // Only ping the owner on a genuine renewal — the first period already sent
+  // both emails from handleCompleted.
+  if (!isFirstPeriod) {
+    await notifyUser(supabase, origin.user_id, origin.plan as PlanId, origin.amount_mdl, {
+      courseSlug: origin.selected_course_slug,
+      amountCharged: formatCharged(event.amountCents, event.currency),
+      isRenewal: true,
+    });
+  }
+
   revalidatePath("/dashboard");
   revalidatePath("/abonament");
   revalidatePath("/admin/plati");
@@ -363,6 +378,7 @@ async function notifyUser(
   userId: string,
   plan: PlanId,
   amountMDL: number,
+  opts: { courseSlug?: string | null; amountCharged?: string; isRenewal?: boolean } = {},
 ): Promise<void> {
   try {
     const { data: profile } = await supabase
@@ -371,22 +387,54 @@ async function notifyUser(
       .eq("id", userId)
       .maybeSingle();
 
-    if (!profile?.email) return;
-
     const { data: sub } = await supabase
       .from("subscriptions")
       .select("current_period_end")
       .eq("user_id", userId)
       .maybeSingle();
 
-    await sendPaymentSuccessEmail({
-      to: profile.email,
-      fullName: profile.full_name,
-      plan,
-      amountMDL,
-      accessUntil: sub?.current_period_end,
-    });
+    const planName = pricingPlans.find((p) => p.id === plan)?.name ?? plan;
+    const courseName = opts.courseSlug
+      ? allCoursesMeta.find((c) => c.slug === opts.courseSlug)?.title.split(" — ")[0]
+      : undefined;
+
+    // The buyer's receipt — skip on renewals, they already have access.
+    if (profile?.email && !opts.isRenewal) {
+      await sendPaymentSuccessEmail({
+        to: profile.email,
+        fullName: profile.full_name,
+        plan,
+        amountMDL,
+        accessUntil: sub?.current_period_end,
+      });
+    }
+
+    // The owner's heads-up — on every cleared payment, new or renewal.
+    if (profile?.email) {
+      await sendOwnerPaymentEmail({
+        planName,
+        amountMDL,
+        amountCharged: opts.amountCharged,
+        customerName: profile.full_name,
+        customerEmail: profile.email,
+        courseName,
+        isRenewal: opts.isRenewal,
+      });
+    }
   } catch (err) {
     console.warn("[creem] notification lookup failed:", err);
+  }
+}
+
+/** "€28.00" from minor units + currency, or undefined when unknown. */
+function formatCharged(cents: number | null, currency: string | null): string | undefined {
+  if (cents == null || !currency) return undefined;
+  try {
+    return new Intl.NumberFormat("en", {
+      style: "currency",
+      currency,
+    }).format(cents / 100);
+  } catch {
+    return `${(cents / 100).toFixed(2)} ${currency}`;
   }
 }
