@@ -39,6 +39,14 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.next({ request });
   }
 
+  // The OAuth handshake owns its own cookie writes — the route handler builds
+  // the redirect response and sets the session on it. Running getUser() here
+  // first would be a wasted round-trip on a request that has no session yet,
+  // and leaves a second writer touching the same auth cookies mid-exchange.
+  if (request.nextUrl.pathname === "/auth/callback") {
+    return NextResponse.next({ request });
+  }
+
   if (!url || !anonKey) {
     if (isPathProtected(request.nextUrl.pathname)) {
       if (previewMode) {
