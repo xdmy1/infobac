@@ -20,9 +20,13 @@ export interface AdminUserSummary {
   lastActivityAt: string | null;
 }
 
+export type EffectiveStatus =
+  | SubscriptionRow["status"]
+  | "expired";
+
 export interface AdminUserDetail {
   profile: ProfileRow;
-  subscriptions: SubscriptionRow[];
+  subscriptions: Array<SubscriptionRow & { effectiveStatus: EffectiveStatus }>;
   courseAccess: Array<
     CourseAccessRow & { course: Pick<CourseRow, "slug" | "title"> | null }
   >;
@@ -147,7 +151,20 @@ export async function getUserDetail(
 
   return {
     profile: profile.data,
-    subscriptions: subs.data ?? [],
+    subscriptions: (subs.data ?? []).map((s) => {
+      // The status column isn't swept when a period lapses. Derive the real
+      // state from the end date so admin sees "expired" the day it lapses.
+      const end = s.current_period_end
+        ? new Date(s.current_period_end).getTime()
+        : null;
+      const effectiveStatus: EffectiveStatus =
+        s.status === "canceled"
+          ? "canceled"
+          : end !== null && end <= Date.now()
+            ? "expired"
+            : s.status;
+      return { ...s, effectiveStatus };
+    }),
     courseAccess:
       (access.data as unknown as AdminUserDetail["courseAccess"]) ?? [],
     attempts: attempts.data ?? [],

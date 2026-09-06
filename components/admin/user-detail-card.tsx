@@ -90,10 +90,13 @@ export function UserDetailCard({ data }: { data: AdminUserDetail }) {
         ) : (
           <ul className="space-y-2">
             {subscriptions.map((s) => {
+              const effective = s.effectiveStatus;
               const tone =
-                s.status === "active" || s.status === "trialing"
+                effective === "active" || effective === "trialing"
                   ? "border-success/30 bg-success/10 text-success"
-                  : "border-muted-foreground/20 bg-muted text-muted-foreground";
+                  : effective === "expired"
+                    ? "border-destructive/30 bg-destructive/10 text-destructive"
+                    : "border-muted-foreground/20 bg-muted text-muted-foreground";
               return (
                 <li
                   key={s.id}
@@ -113,7 +116,7 @@ export function UserDetailCard({ data }: { data: AdminUserDetail }) {
                     variant="outline"
                     className={cn("font-mono text-[10px]", tone)}
                   >
-                    {s.status}
+                    {effective}
                   </Badge>
                 </li>
               );
