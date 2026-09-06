@@ -6,6 +6,10 @@ import { CheckoutForm } from "@/components/app/checkout-form";
 import { pricingPlans, type PlanId } from "@/lib/content";
 import { siteConfig } from "@/lib/site";
 import { isCardCheckoutEnabled } from "@/lib/payments";
+import { createClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { getPurchaseBlock } from "@/lib/queries/purchase";
+import { CheckCircle2 } from "lucide-react";
 import type { CourseSlug } from "@/lib/content/courses";
 
 interface PageProps {
@@ -45,6 +49,14 @@ export default async function CheckoutPage({
     ? (course as CourseSlug)
     : undefined;
 
+  // Server-side duplicate guard, so the form isn't even shown for a plan the
+  // user already owns. The action re-checks — this is just the friendly path.
+  let block = null;
+  if (isCardCheckoutEnabled && isSupabaseConfigured) {
+    const supabase = await createClient();
+    block = await getPurchaseBlock(supabase, plan as PlanId, initialCourse ?? null);
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-3 py-8 sm:px-4 sm:py-10 md:px-6 md:py-14 lg:px-8">
       <Link
@@ -83,7 +95,25 @@ export default async function CheckoutPage({
         </div>
       </header>
 
-      {isCardCheckoutEnabled ? (
+      {block ? (
+        <div className="rounded-2xl border border-primary/30 bg-primary/5 p-5">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary/15 text-primary">
+              <CheckCircle2 className="size-4" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold">Ai deja acces</p>
+              <p className="mt-1 text-sm text-muted-foreground">{block.reason}</p>
+              <Link
+                href="/abonament"
+                className="mt-3 inline-flex text-sm font-medium text-primary underline underline-offset-4"
+              >
+                Vezi abonamentul →
+              </Link>
+            </div>
+          </div>
+        </div>
+      ) : isCardCheckoutEnabled ? (
         <CheckoutForm
           plan={plan as PlanId}
           amountMDL={planData.priceMDL}

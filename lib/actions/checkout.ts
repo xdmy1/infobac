@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { gateway, isCardCheckoutEnabled } from "@/lib/payments";
 import { pricingPlans } from "@/lib/content";
+import { getPurchaseBlock } from "@/lib/queries/purchase";
 import { siteConfig } from "@/lib/site";
 import {
   startCardCheckoutSchema,
@@ -59,6 +60,13 @@ export async function startCardCheckoutAction(
   } = await supabase.auth.getUser();
   if (!user) {
     return { ok: false, error: "Sesiunea a expirat. Re-loghează-te." };
+  }
+
+  // Refuse a purchase that would duplicate access the user already has: one
+  // full plan at a time, and no second module for a course they already own.
+  const block = await getPurchaseBlock(supabase, plan, courseSlug ?? null);
+  if (block) {
+    return { ok: false, error: block.reason };
   }
 
   // The row exists before the session does, so `request_id` can point at it.
