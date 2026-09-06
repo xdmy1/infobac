@@ -259,49 +259,7 @@ export const pricingPlans: readonly PricingPlan[] = [
 // TESTIMONIALS — placeholder-uri realiste, marcate că vor fi înlocuite
 // -----------------------------------------------------------------------------
 
-export interface Testimonial {
-  name: string;
-  school: string;
-  rating: 5;
-  quote: string;
-  result: string;
-  initials: string;
-  /** Marker intern: testimoniale reale înlocuiesc aceste placeholder-e. */
-  placeholder: true;
-}
 
-export const testimonials: readonly Testimonial[] = [
-  {
-    name: "Andreea P.",
-    school: "Liceu, Chișinău",
-    rating: 5,
-    quote:
-      "Am terminat Python în 5 săptămâni și SQL în 3. Networking-ul l-am dat după două zile de citit. Materia e exact cât trebuie — nu am pierdut timp cu lucruri care nu erau la examen.",
-    result: "Profil-elev țintă · rezultat țintit la sesiunea de iunie",
-    initials: "AP",
-    placeholder: true,
-  },
-  {
-    name: "Vlad M.",
-    school: "Liceu, Chișinău",
-    rating: 5,
-    quote:
-      "Eram convins că trebuie să dau 1000 EUR la o platformă fizică. Părinții mei au fost sceptici la început, dar simulările seamănă atât de mult cu examenul real încât am știut că e safe.",
-    result: "Profil-elev țintă · rezultat țintit la sesiunea de iunie",
-    initials: "VM",
-    placeholder: true,
-  },
-  {
-    name: "Cristina S.",
-    school: "Liceu, Bălți",
-    rating: 5,
-    quote:
-      "Platforma e accesibilă oricând și mi-au răspuns rapid de două ori la 11 noaptea, când nu înțelegeam JOIN-uri. Asta nu primești la o platformă fizică.",
-    result: "Profil-elev țintă · rezultat țintit la sesiunea de iunie",
-    initials: "CS",
-    placeholder: true,
-  },
-] as const;
 
 // -----------------------------------------------------------------------------
 // FAQ — 10 întrebări frecvente

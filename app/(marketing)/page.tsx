@@ -4,7 +4,6 @@ import { WhyUs } from "@/components/marketing/why-us";
 import { Pathway } from "@/components/marketing/pathway";
 import { Features } from "@/components/marketing/features";
 import { Pricing } from "@/components/marketing/pricing";
-import { Testimonials } from "@/components/marketing/testimonials";
 import { FaqSection } from "@/components/marketing/faq-section";
 import { BlogStrip } from "@/components/marketing/blog-strip";
 import { CtaFinal } from "@/components/marketing/cta-final";
@@ -38,7 +37,6 @@ export default async function HomePage({
       <Pathway />
       <Features />
       <Pricing />
-      <Testimonials />
       <FaqSection />
       <BlogStrip />
       <CtaFinal />

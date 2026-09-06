@@ -115,22 +115,45 @@ export default function TermeniPage() {
       <section>
         <h2>5. Plăți și facturare</h2>
         <p>
-          Prețurile sunt afișate în lei moldovenești (MDL), cu echivalent
-          informativ în EUR. Plata se efectuează prin aplicația MIA (Moldovan
-          Instant Payment Application) către numărul indicat la finalizarea
-          comenzii. După confirmarea plății (screenshot pe Telegram sau
-          încărcat pe Platformă), accesul este activat manual de echipă în
-          maximum 24 de ore lucrătoare.
+          Prețurile sunt afișate în lei moldovenești (MDL). Plata se
+          efectuează cu cardul (Visa, Mastercard, Apple Pay, Google Pay) prin{" "}
+          <strong>Creem</strong>, care acționează ca vânzător înregistrat
+          (<em>merchant of record</em>) pentru această tranzacție: Creem
+          încasează plata, aplică TVA-ul aplicabil și emite documentul fiscal.
+          Tranzacția este procesată în euro, astfel încât suma exactă debitată
+          în lei depinde de cursul de schimb al băncii tale emitente. InfoBac
+          nu vede și nu stochează datele cardului.
         </p>
         <p>
-          Planurile <strong>Un modul</strong> și <strong>Toate modulele</strong>{" "}
-          sunt lunare. Accesul e valabil pentru perioada plătită; pentru
-          continuare, refaci plata. Nu există taxare recurentă automată — nu
-          se încarcă cardul tău fără să acționezi.
+          <strong>Abonamentele se reînnoiesc automat.</strong> Planurile{" "}
+          <strong>Un modul</strong> și <strong>Toate modulele</strong> se
+          facturează lunar, iar planul <strong>Pe 6 luni</strong> se
+          facturează o dată la șase luni, până când anulezi. Ești informat
+          despre caracterul recurent înainte de a plăti, la finalizarea
+          comenzii.
         </p>
         <p>
-          Planul <strong>Pe 6 luni</strong> e o plată unică ce acoperă 6 luni
-          consecutive de acces, fără reînnoire automată.
+          <strong>Anulare.</strong> Poți anula oricând, fără motivare, din
+          pagina <strong>Abonament</strong> din contul tău, secțiunea
+          „Facturare și anulare". Anularea oprește reînnoirile viitoare;
+          accesul rămâne activ până la finalul perioadei deja plătite și nu
+          se face o rambursare proporțională pentru perioada rămasă.
+        </p>
+        <p>
+          <strong>Activare.</strong> Accesul se activează automat, în câteva
+          secunde de la confirmarea plății. Dacă nu se activează în 5 minute,
+          scrie-ne și rezolvăm.
+        </p>
+        <p>
+          <strong>Rambursări.</strong> Dacă serviciul nu funcționează conform
+          descrierii sau ai fost taxat din eroare, scrie-ne la adresa de
+          contact în termen de 14 zile de la plată și analizăm cererea. La
+          aprobarea unei rambursări, accesul acordat pentru perioada
+          respectivă este revocat.
+        </p>
+        <p>
+          <strong>Suport.</strong> Răspundem la solicitări în maximum 3 zile
+          lucrătoare, la adresa de contact indicată în secțiunea Contact.
         </p>
       </section>
 

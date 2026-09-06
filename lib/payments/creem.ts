@@ -77,6 +77,29 @@ export const creemGateway: PaymentGateway = {
     return PRODUCT_BY_PLAN[plan];
   },
 
+  async createBillingPortal(customerId: string): Promise<string> {
+    if (!apiKey) throw new Error("CREEM_API_KEY is not set.");
+
+    const response = await fetch(`${API_BASE}/customers/billing`, {
+      method: "POST",
+      headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ customer_id: customerId }),
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      const body = await response.text().catch(() => "");
+      throw new Error(
+        `Creem billing portal failed (${response.status}): ${body.slice(0, 300)}`,
+      );
+    }
+
+    const data = (await response.json()) as { customer_portal_link?: string; url?: string };
+    const link = data.customer_portal_link ?? data.url;
+    if (!link) throw new Error("Creem billing portal response had no link.");
+    return link;
+  },
+
   async createCheckout(input: CreateCheckoutInput): Promise<CheckoutSession> {
     if (!apiKey) {
       throw new Error("CREEM_API_KEY is not set.");
@@ -167,6 +190,7 @@ function fromCheckout(
   const order = isRecord(object.order) ? object.order : {};
   const product = isRecord(object.product) ? object.product : {};
   const subscription = isRecord(object.subscription) ? object.subscription : {};
+  const customer = isRecord(object.customer) ? object.customer : {};
 
   // checkout.completed carries no period dates, only the product's cadence.
   // That is enough for a correct first grant; the `subscription.paid` that
@@ -185,6 +209,7 @@ function fromCheckout(
     // `order.product` is the id; `product.id` is the same value expanded.
     productId: asString(order.product) ?? asString(product.id),
     subscriptionId,
+    customerId: asString(customer.id) ?? asString(order.customer),
     periodEnd,
     amountCents: asNumber(order.amount),
     currency: asString(order.currency),
@@ -197,6 +222,7 @@ function fromSubscriptionPaid(
   object: Record<string, unknown>,
 ): GatewayEvent {
   const product = isRecord(object.product) ? object.product : {};
+  const customer = isRecord(object.customer) ? object.customer : {};
 
   return {
     id: eventId,
@@ -207,6 +233,7 @@ function fromSubscriptionPaid(
     orderId: null,
     productId: asString(product.id),
     subscriptionId: asString(object.id),
+    customerId: asString(customer.id),
     periodEnd: asString(object.current_period_end_date),
     amountCents: asNumber(product.price),
     currency: asString(product.currency),
@@ -230,6 +257,7 @@ function fromRefund(
     orderId: asString(transaction.order),
     productId: null,
     subscriptionId: asString(subscription.id) ?? asString(transaction.subscription),
+    customerId: null,
     periodEnd: null,
     amountCents: asNumber(object.refund_amount),
     currency: asString(object.refund_currency),

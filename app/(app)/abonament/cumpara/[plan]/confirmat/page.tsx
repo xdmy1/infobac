@@ -3,35 +3,26 @@ import Link from "next/link";
 import {
   CheckCircle2,
   ArrowRight,
-  Clock,
   CreditCard,
   MessageCircle,
 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Cerere trimisă · InfoBac",
+  title: "Plată confirmată · InfoBac",
   robots: { index: false, follow: false },
 };
 
-interface PageProps {
-  searchParams: Promise<{ checkout_id?: string }>;
-}
-
 /**
- * Two ways to land here:
- *   - the MIA form submitted → the request is queued for manual review
- *   - Creem redirected after a card payment → `checkout_id` is present
+ * Where Creem sends the browser after a successful payment.
  *
- * The card branch deliberately does not claim access is already granted. The
- * webhook is what grants it, and it can land a beat after this redirect, so
- * promising "you're in" here would sometimes be a lie.
+ * Deliberately does not claim access is already granted: the webhook is what
+ * grants it, and it can land a beat after this redirect — so promising
+ * "you're in" here would sometimes be a lie.
  */
-export default async function ConfirmedPage({ searchParams }: PageProps) {
-  const { checkout_id } = await searchParams;
-  const paidByCard = Boolean(checkout_id);
-
+export default function ConfirmedPage() {
   return (
     <div className="mx-auto max-w-2xl px-3 py-12 sm:px-4 sm:py-16 md:px-6 md:py-20 lg:px-8">
       <div className="text-center">
@@ -39,43 +30,25 @@ export default async function ConfirmedPage({ searchParams }: PageProps) {
           <CheckCircle2 className="size-8" strokeWidth={2} />
         </span>
         <h1 className="mt-6 text-balance text-3xl font-bold tracking-tight md:text-4xl">
-          {paidByCard ? "Plata a fost primită" : "Cererea ta e în review"}
+          Plata a fost primită
         </h1>
         <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground md:text-base">
-          {paidByCard
-            ? "Confirmăm plata cu procesatorul și activăm accesul — durează câteva secunde. Îți trimitem și un email."
-            : "Verificăm plata și activăm accesul. De obicei sub o oră în zile lucrătoare. Te anunțăm pe email când totul e gata."}
+          Confirmăm plata cu procesatorul și activăm accesul — durează câteva
+          secunde. Îți trimitem și un email cu confirmarea.
         </p>
       </div>
 
       <div className="mt-10 grid gap-3 sm:grid-cols-2">
-        {paidByCard ? (
-          <>
-            <Card
-              icon={<CreditCard className="size-5" />}
-              title="Automat"
-              body="Nu trebuie să trimiți nimic. Reîncarcă dashboard-ul peste câteva secunde."
-            />
-            <Card
-              icon={<MessageCircle className="size-5" />}
-              title="Nu s-a activat?"
-              body="Dacă după 5 minute accesul lipsește, scrie-ne pe Telegram: +373 68 327 082."
-            />
-          </>
-        ) : (
-          <>
-            <Card
-              icon={<Clock className="size-5" />}
-              title="Sub 1 oră"
-              body="În program normal, cererile sunt aprobate în câteva minute."
-            />
-            <Card
-              icon={<MessageCircle className="size-5" />}
-              title="Telegram: +373 68 327 082"
-              body="Dacă ai uitat să trimiți screenshot-ul, scrie-ne pe Telegram cu numele de pe cont."
-            />
-          </>
-        )}
+        <Card
+          icon={<CreditCard className="size-5" />}
+          title="Se activează automat"
+          body="Nu trebuie să trimiți nimic. Reîncarcă dashboard-ul peste câteva secunde."
+        />
+        <Card
+          icon={<MessageCircle className="size-5" />}
+          title="Nu s-a activat?"
+          body={`Dacă după 5 minute accesul lipsește, scrie-ne la ${siteConfig.contact.email} — răspundem în maxim o zi lucrătoare.`}
+        />
       </div>
 
       <div className="mt-10 flex flex-col items-center gap-3">
@@ -93,7 +66,7 @@ export default async function ConfirmedPage({ searchParams }: PageProps) {
           href="/abonament"
           className="text-xs text-muted-foreground hover:text-foreground"
         >
-          {paidByCard ? "Vezi statusul plății" : "Vezi statusul cererii"}
+          Vezi abonamentul
         </Link>
       </div>
     </div>

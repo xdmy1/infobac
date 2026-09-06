@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ShieldCheck, Clock } from "lucide-react";
-import { PaymentRequestForm } from "@/components/app/payment-request-form";
+import { CheckoutForm } from "@/components/app/checkout-form";
 import { pricingPlans, type PlanId } from "@/lib/content";
+import { siteConfig } from "@/lib/site";
 import { gateway, isCardCheckoutEnabled } from "@/lib/payments";
 import type { CourseSlug } from "@/lib/content/courses";
 
@@ -44,8 +45,6 @@ export default async function CheckoutPage({
     ? (course as CourseSlug)
     : undefined;
 
-  const periodDays = plan === "semester" ? 180 : 30;
-
   return (
     <div className="mx-auto max-w-3xl px-3 py-8 sm:px-4 sm:py-10 md:px-6 md:py-14 lg:px-8">
       <Link
@@ -73,37 +72,37 @@ export default async function CheckoutPage({
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
           <Note
             icon={<Clock className="size-4" />}
-            title={
-              isCardCheckoutEnabled
-                ? "Card: recurent · MIA: o dată"
-                : `${periodDays} zile acces`
-            }
-            description={
-              isCardCheckoutEnabled
-                ? `Cu cardul se reînnoiește automat la fiecare ${planData.priceUnit}. Prin MIA plătești o singură dată, pentru ${periodDays} de zile.`
-                : `${periodDays} de zile de la aprobarea plății.`
-            }
+            title={`Reînnoire la ${planData.priceUnit}`}
+            description={`Abonament recurent. Anulezi oricând din pagina Abonament, iar accesul rămâne până la finalul perioadei plătite.`}
           />
           <Note
             icon={<ShieldCheck className="size-4" />}
-            title={isCardCheckoutEnabled ? "Card sau MIA" : "Aprobare manuală"}
-            description={
-              isCardCheckoutEnabled
-                ? "Cu cardul accesul e instant. Prin MIA, confirmăm manual — de obicei sub o oră."
-                : "Vedem cererea, confirmăm plata, activăm cursul. De obicei sub o oră."
-            }
+            title="Activare instantă"
+            description="Plătești cu cardul și accesul se deschide automat, fără aprobare manuală."
           />
         </div>
       </header>
 
-      <PaymentRequestForm
-        plan={plan as PlanId}
-        amountMDL={planData.priceMDL}
-        initialCourseSlug={initialCourse}
-        requiresCourseSelection={!!planData.requiresCourseSelection}
-        cardCheckoutEnabled={isCardCheckoutEnabled}
-        cardTestMode={gateway.isTestMode}
-      />
+      {isCardCheckoutEnabled ? (
+        <CheckoutForm
+          plan={plan as PlanId}
+          amountMDL={planData.priceMDL}
+          initialCourseSlug={initialCourse}
+          requiresCourseSelection={!!planData.requiresCourseSelection}
+          cardTestMode={gateway.isTestMode}
+        />
+      ) : (
+        <div className="rounded-2xl border border-border bg-card p-5 text-sm text-muted-foreground">
+          Plățile sunt temporar indisponibile. Scrie-ne la{" "}
+          <a
+            href={`mailto:${siteConfig.contact.email}`}
+            className="font-medium text-foreground underline underline-offset-4"
+          >
+            {siteConfig.contact.email}
+          </a>{" "}
+          și te anunțăm imediat ce revin.
+        </div>
+      )}
     </div>
   );
 }

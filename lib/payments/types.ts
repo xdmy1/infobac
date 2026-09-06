@@ -28,6 +28,13 @@ export interface PaymentGateway {
 
   /** The provider's product id backing a plan, or undefined if unmapped. */
   productIdForPlan(plan: PlanId): string | undefined;
+
+  /**
+   * A self-service portal URL where the customer can cancel, change payment
+   * method and download invoices. Creem requires that cancellation is
+   * reachable from inside the product rather than by contacting support.
+   */
+  createBillingPortal(customerId: string): Promise<string>;
 }
 
 export interface CreateCheckoutInput {
@@ -66,6 +73,8 @@ export interface GatewayEvent {
   productId: string | null;
   /** Provider subscription id (`sub_…`) — how renewals find their row. */
   subscriptionId: string | null;
+  /** Provider customer id (`cust_…`) — needed to open the billing portal. */
+  customerId: string | null;
   /**
    * ISO timestamp the paid period ends. Access is granted exactly up to here,
    * so a subscription that stops renewing lapses on its own.

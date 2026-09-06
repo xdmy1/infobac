@@ -44,7 +44,7 @@ export default async function AdminPlatiPage() {
           </span>
         </div>
         <p className="mt-2 text-sm text-muted-foreground md:text-base">
-          Aprobă cererea după ce verifici plata MIA. La aprobare, sistemul
+          Plățile cu cardul se aprobă singure prin webhook. Aici rămân doar acordările manuale — la aprobare, sistemul
           atribuie cursurile + perioada automat.
         </p>
       </header>

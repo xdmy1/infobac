@@ -241,6 +241,7 @@ export interface Database {
           provider_order_id: string | null;
           provider_event_id: string | null;
           provider_subscription_id: string | null;
+          provider_customer_id: string | null;
           period_end: string | null;
           amount_cents: number | null;
           currency: string | null;
@@ -264,6 +265,7 @@ export interface Database {
           provider_order_id?: string | null;
           provider_event_id?: string | null;
           provider_subscription_id?: string | null;
+          provider_customer_id?: string | null;
           period_end?: string | null;
           amount_cents?: number | null;
           currency?: string | null;

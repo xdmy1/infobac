@@ -44,7 +44,7 @@ export async function startCardCheckoutAction(
   if (!isCardCheckoutEnabled) {
     return {
       ok: false,
-      error: "Plata cu cardul nu e disponibilă momentan. Folosește MIA.",
+      error: "Plățile sunt temporar indisponibile. Scrie-ne pe email.",
     };
   }
 
@@ -116,11 +116,74 @@ export async function startCardCheckoutAction(
     await supabase.from("payment_requests").delete().eq("id", inserted.id);
     return {
       ok: false,
-      error: "Procesatorul de plăți nu răspunde. Încearcă MIA sau revino.",
+      error: "Procesatorul nu răspunde. Reîncearcă în câteva minute.",
     };
   }
 
   // Outside the try — redirect() signals by throwing, and catching it here
   // would swallow the navigation.
   redirect(checkoutUrl);
+}
+
+export type BillingPortalResult = { ok: false; error: string } | { ok: true };
+
+/**
+ * Opens Creem's self-service portal, where the customer can cancel the
+ * subscription, swap the card and pull invoices.
+ *
+ * Creem requires cancellation to be reachable from inside the product rather
+ * than through support, so this is not optional convenience — an account can
+ * be rejected for its absence.
+ */
+export async function openBillingPortalAction(): Promise<BillingPortalResult> {
+  if (!isSupabaseConfigured) {
+    return { ok: false, error: "Supabase nu e configurat." };
+  }
+  if (!isCardCheckoutEnabled) {
+    return { ok: false, error: "Plata cu cardul nu e configurată." };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { ok: false, error: "Sesiunea a expirat. Re-loghează-te." };
+  }
+
+  // RLS keeps this to the caller's own rows, so the customer id can only ever
+  // be one this user actually paid with.
+  const { data: row, error } = await supabase
+    .from("payment_requests")
+    .select("provider_customer_id")
+    .eq("user_id", user.id)
+    .eq("provider", "creem")
+    .not("provider_customer_id", "is", null)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.warn("[billing] customer lookup failed:", error.message);
+    return { ok: false, error: "Nu am putut deschide portalul. Reîncearcă." };
+  }
+  if (!row?.provider_customer_id) {
+    return {
+      ok: false,
+      error: "Nu găsim o plată cu cardul pe contul tău.",
+    };
+  }
+
+  let portalUrl: string;
+  try {
+    portalUrl = await gateway.createBillingPortal(row.provider_customer_id);
+  } catch (err) {
+    console.warn("[billing] portal link failed:", err);
+    return {
+      ok: false,
+      error: "Procesatorul nu răspunde. Reîncearcă în câteva minute.",
+    };
+  }
+
+  redirect(portalUrl);
 }

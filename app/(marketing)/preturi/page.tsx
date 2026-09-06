@@ -22,7 +22,7 @@ import {
 export const metadata: Metadata = {
   title: "Prețuri — de la 250 MDL/lună pentru BAC informatică",
   description:
-    "3 planuri pentru pregătirea BAC informatică Moldova: Un modul 250 MDL/lună, Toate modulele 550 MDL/lună (popular), Pe 6 luni 950 MDL (~158 MDL/lună). Plată locală prin MIA.",
+    "3 planuri pentru pregătirea BAC informatică Moldova: Un modul 250 MDL/lună, Toate modulele 550 MDL/lună (popular), Pe 6 luni 950 MDL (~158 MDL/lună). Plata cu cardul, activare instantă.",
   alternates: {
     canonical: "/preturi",
     languages: { "ro-MD": "/preturi" },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Prețuri InfoBac — de la 250 MDL/lună",
     description:
-      "3 planuri pentru BAC informatică Moldova: Un modul, Toate modulele, Pe 6 luni. Plată prin MIA.",
+      "3 planuri pentru BAC informatică Moldova: Un modul, Toate modulele, Pe 6 luni. Plata cu cardul.",
     url: `${siteConfig.url}/preturi`,
     type: "website",
   },

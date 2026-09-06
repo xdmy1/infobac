@@ -66,10 +66,11 @@ export default function ConfidentialitatePage() {
         <h3>Plată și facturare</h3>
         <ul>
           <li>
-            informațiile de card bancar nu sunt văzute, primite sau stocate
-            de InfoBac. Plata se face direct prin aplicația MIA către contul
-            nostru bancar. Banca emitentă este cea care procesează cardul;
-            noi primim doar confirmarea plății;
+            datele cardului bancar nu sunt văzute, primite sau stocate de
+            InfoBac. Plata este procesată integral de Creem, în calitate de
+            vânzător înregistrat; noi primim doar confirmarea plății și un
+            identificator de client, necesar pentru a-ți putea deschide
+            portalul de facturare și anulare;
           </li>
           <li>istoric tranzacții (date, sume, plan);</li>
           <li>opțional: nume + adresă de facturare pentru factură fiscală.</li>
@@ -141,12 +142,10 @@ export default function ConfidentialitatePage() {
             — Google Analytics 4 (cu consimțământ).
           </li>
           <li>
-            <strong>Telegram FZ-LLC</strong> — atunci când utilizatorul
-            ALEGE să trimită dovada plății prin Telegram.
-          </li>
-          <li>
-            <strong>Banca noastră</strong> — pentru încasarea plăților prin
-            MIA.
+            <strong>Creem</strong> — procesatorul de plăți și vânzătorul
+            înregistrat. Primește adresa ta de email și datele necesare
+            tranzacției pentru a încasa plata, a emite documentul fiscal și
+            a-ți permite gestionarea abonamentului.
           </li>
         </ul>
         <p>

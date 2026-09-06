@@ -138,6 +138,7 @@ async function handleCompleted(event: GatewayEvent): Promise<Response> {
       provider_event_id: event.id,
       provider_session_id: event.sessionId,
       provider_subscription_id: event.subscriptionId,
+      provider_customer_id: event.customerId,
       amount_cents: event.amountCents,
       currency: event.currency,
     })
@@ -222,6 +223,7 @@ async function handleRenewed(event: GatewayEvent): Promise<Response> {
       .update({
         period_end: event.periodEnd,
         provider_event_id: event.id,
+        provider_customer_id: event.customerId,
         amount_cents: event.amountCents,
         currency: event.currency,
       })
@@ -245,6 +247,7 @@ async function handleRenewed(event: GatewayEvent): Promise<Response> {
         reviewed_notes: `Reînnoire abonament (${event.id})`,
         provider_event_id: event.id,
         provider_subscription_id: event.subscriptionId,
+        provider_customer_id: event.customerId,
         period_end: event.periodEnd,
         amount_cents: event.amountCents,
         currency: event.currency,

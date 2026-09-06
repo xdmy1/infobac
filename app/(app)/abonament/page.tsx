@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ArrowRight, Crown, Sparkles, Calendar } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { SubscriptionStatusCard } from "@/components/app/subscription-status-card";
+import { ManageSubscriptionButton } from "@/components/app/manage-subscription-button";
+import { isCardCheckoutEnabled } from "@/lib/payments";
+import { siteConfig } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
 import {
   getActiveSubscription,
@@ -84,6 +87,34 @@ export default async function AbonamentPage() {
       <Reveal variant="fade-up" delay={0.2}>
         <SubscriptionStatusCard subscription={active} />
       </Reveal>
+
+      {/* Self-service billing. Creem requires that a customer can cancel from
+          inside the product rather than by contacting support. */}
+      {isCardCheckoutEnabled && (
+        <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-base font-semibold">Facturare și anulare</p>
+              <p className="mt-1 max-w-lg text-sm text-muted-foreground">
+                Anulează abonamentul, schimbă cardul sau descarcă facturile în
+                portalul procesatorului. După anulare, accesul rămâne activ
+                până la finalul perioadei deja plătite.
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                Ai nevoie de ajutor? Scrie-ne la{" "}
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="font-medium text-foreground underline underline-offset-4"
+                >
+                  {siteConfig.contact.email}
+                </a>
+                .
+              </p>
+            </div>
+            <ManageSubscriptionButton className="shrink-0" />
+          </div>
+        </section>
+      )}
 
       {active && active.plan !== "semester" && (
         <section className="rounded-2xl border border-accent/40 bg-card p-5 md:p-6">

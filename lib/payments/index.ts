@@ -18,5 +18,5 @@ export type {
  */
 export const gateway: PaymentGateway = creemGateway;
 
-/** Whether to offer card payment at all. False → only the manual MIA flow. */
+/** Whether card checkout is usable. False → the buy page shows a notice. */
 export const isCardCheckoutEnabled = gateway.isConfigured;
