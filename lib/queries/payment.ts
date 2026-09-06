@@ -46,8 +46,13 @@ export async function getMyPaymentRequests(
 }
 
 /**
- * Admin-only: returns all pending payment requests with the requester's
- * email + name (joined via profiles) and a signed URL for the proof.
+ * Admin-only: pending payment requests awaiting a human decision.
+ *
+ * Card rows are deliberately excluded. A `provider = 'creem'` row is created
+ * the moment someone opens the hosted checkout, so a pending one means the
+ * payment was abandoned or never completed — approving it would hand out free
+ * access for money that never arrived. Real card payments approve themselves
+ * from the webhook and show up under history.
  *
  * RLS lets admins SELECT all rows because of the
  * `payment_requests_select_admin` policy in migration 0007.
@@ -59,6 +64,7 @@ export async function getPendingPaymentRequests(
     .from("payment_requests")
     .select("*")
     .eq("status", "pending")
+    .eq("provider", "manual")
     .order("created_at", { ascending: false });
 
   if (error) {

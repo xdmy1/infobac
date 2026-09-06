@@ -5,12 +5,7 @@ import { toast } from "sonner";
 import { CheckCircle2, CreditCard, Lock, RefreshCw } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { CourseIcon } from "@/components/shared/course-icon";
-import {
-  VisaIcon,
-  MastercardIcon,
-  ApplePayIcon,
-  GooglePayIcon,
-} from "@/components/shared/social-icons";
+import { PaymentMarks } from "@/components/shared/payment-marks";
 import { cn } from "@/lib/utils";
 import { startCardCheckoutAction } from "@/lib/actions/checkout";
 import { allCoursesMeta, type CourseSlug } from "@/lib/content/courses";
@@ -23,23 +18,13 @@ interface CheckoutFormProps {
   initialCourseSlug?: CourseSlug;
   /** Whether the user must pick a course (true for the module plan). */
   requiresCourseSelection: boolean;
-  /** Creem sandbox — badge it so nobody mistakes a test charge for real. */
-  cardTestMode?: boolean;
 }
-
-const marks = [
-  { label: "Visa", Icon: VisaIcon },
-  { label: "Mastercard", Icon: MastercardIcon },
-  { label: "Apple Pay", Icon: ApplePayIcon },
-  { label: "Google Pay", Icon: GooglePayIcon },
-] as const;
 
 export function CheckoutForm({
   plan,
   amountMDL,
   initialCourseSlug,
   requiresCourseSelection,
-  cardTestMode = false,
 }: CheckoutFormProps) {
   const [isPending, startTransition] = useTransition();
   const [courseSlug, setCourseSlug] = useState<CourseSlug | "">(
@@ -59,13 +44,16 @@ export function CheckoutForm({
 
     startTransition(async () => {
       try {
-        // On success the action redirects to the hosted checkout and this
-        // promise never resolves — a returned value always means failure.
         const result = await startCardCheckoutAction({
           plan,
           courseSlug: requiresCourseSelection && courseSlug ? courseSlug : null,
         });
-        if (result && !result.ok) toast.error(result.error);
+        if (!result.ok) {
+          toast.error(result.error);
+          return;
+        }
+        // Full navigation, not router.push — Creem is a different origin.
+        window.location.assign(result.url);
       } catch (err) {
         console.warn("[checkout] card start failed:", err);
         toast.error("Nu am putut deschide plata. Reîncearcă în câteva minute.");
@@ -122,37 +110,20 @@ export function CheckoutForm({
       )}
 
       <div className="rounded-2xl border border-border bg-card p-4 sm:p-5">
-        <div className="flex items-start gap-3">
-          <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-            <CreditCard className="size-4" strokeWidth={2.25} />
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold">
-              Plata cu cardul
-              {cardTestMode && (
-                <span className="ml-2 rounded-full bg-warning/15 px-2 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-warning">
-                  Test
-                </span>
-              )}
-            </p>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-sm font-bold">Plata cu cardul</p>
             <p className="mt-0.5 text-xs text-muted-foreground">
               Accesul se activează automat, în câteva secunde.
             </p>
           </div>
+          <PaymentMarks className="flex shrink-0 items-center gap-2" />
         </div>
 
-        <ul className="mt-4 flex flex-wrap items-center gap-2">
-          {marks.map(({ label, Icon }) => (
-            <li key={label}>
-              <Icon
-                role="img"
-                aria-label={label}
-                aria-hidden={undefined}
-                className="h-7 w-auto text-foreground/85"
-              />
-            </li>
-          ))}
-        </ul>
+        <p className="mt-3 text-[11px] text-muted-foreground">
+          Apple Pay și Google Pay apar la checkout pe dispozitivele
+          compatibile.
+        </p>
 
         <button
           type="button"

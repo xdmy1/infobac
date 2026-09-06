@@ -5,11 +5,8 @@ import {
   YoutubeIcon,
   TikTokIcon,
   TelegramIcon,
-  VisaIcon,
-  MastercardIcon,
-  ApplePayIcon,
-  GooglePayIcon,
 } from "@/components/shared/social-icons";
+import { PaymentMarks } from "@/components/shared/payment-marks";
 import { siteConfig } from "@/lib/site";
 import { footerNav } from "@/lib/nav";
 import { cn } from "@/lib/utils";
@@ -19,15 +16,6 @@ const socials = [
   { label: "TikTok", href: siteConfig.social.tiktok, Icon: TikTokIcon },
   { label: "YouTube", href: siteConfig.social.youtube, Icon: YoutubeIcon },
   { label: "Telegram", href: siteConfig.social.telegram, Icon: TelegramIcon },
-] as const;
-
-// Only the marks Creem's checkout can actually present. Adding one it does
-// not offer would be a claim the payment page then contradicts.
-const paymentMarks = [
-  { label: "Visa", Icon: VisaIcon },
-  { label: "Mastercard", Icon: MastercardIcon },
-  { label: "Apple Pay", Icon: ApplePayIcon },
-  { label: "Google Pay", Icon: GooglePayIcon },
 ] as const;
 
 export function Footer() {
@@ -102,19 +90,9 @@ export function Footer() {
           <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
             Plată securizată
           </p>
-          <ul className="flex flex-wrap items-center justify-center gap-2">
-            {paymentMarks.map(({ label, Icon }) => (
-              <li key={label}>
-                <Icon
-                  role="img"
-                  aria-label={label}
-                  aria-hidden={undefined}
-                  className="h-7 w-auto text-foreground/85"
-                />
-              </li>
-            ))}
-          </ul>
+          <PaymentMarks className="flex flex-wrap items-center justify-center gap-2" />
           <p className="max-w-md text-center text-[11px] leading-relaxed text-muted-foreground/80">
+            Acceptăm și Apple Pay și Google Pay, pe dispozitivele compatibile.
             Plățile sunt procesate de Creem, care figurează ca vânzător
             înregistrat (merchant of record) și emite documentul fiscal.
             Tranzacția are loc în euro, pe conexiune criptată — InfoBac nu

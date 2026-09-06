@@ -27,9 +27,12 @@ export function ManageSubscriptionButton({
       onClick={() =>
         startTransition(async () => {
           try {
-            // Redirects on success, so a returned value always means failure.
             const result = await openBillingPortalAction();
-            if (result && !result.ok) toast.error(result.error);
+            if (!result.ok) {
+              toast.error(result.error);
+              return;
+            }
+            window.location.assign(result.url);
           } catch (err) {
             console.warn("[billing] portal open failed:", err);
             toast.error("Nu am putut deschide portalul. Reîncearcă.");

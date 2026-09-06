@@ -5,7 +5,7 @@ import { ArrowLeft, ShieldCheck, Clock } from "lucide-react";
 import { CheckoutForm } from "@/components/app/checkout-form";
 import { pricingPlans, type PlanId } from "@/lib/content";
 import { siteConfig } from "@/lib/site";
-import { gateway, isCardCheckoutEnabled } from "@/lib/payments";
+import { isCardCheckoutEnabled } from "@/lib/payments";
 import type { CourseSlug } from "@/lib/content/courses";
 
 interface PageProps {
@@ -89,7 +89,6 @@ export default async function CheckoutPage({
           amountMDL={planData.priceMDL}
           initialCourseSlug={initialCourse}
           requiresCourseSelection={!!planData.requiresCourseSelection}
-          cardTestMode={gateway.isTestMode}
         />
       ) : (
         <div className="rounded-2xl border border-border bg-card p-5 text-sm text-muted-foreground">

@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { gateway, isCardCheckoutEnabled } from "@/lib/payments";
@@ -13,8 +12,8 @@ import {
 
 export type StartCardCheckoutResult =
   | { ok: false; error: string; fieldErrors?: Record<string, string[]> }
-  // On success the action redirects, so callers never observe an ok:true.
-  | { ok: true };
+  /** The hosted checkout to send the browser to. */
+  | { ok: true; url: string };
 
 /**
  * Creates a pending `payment_requests` row, opens a Creem checkout session
@@ -120,12 +119,16 @@ export async function startCardCheckoutAction(
     };
   }
 
-  // Outside the try — redirect() signals by throwing, and catching it here
-  // would swallow the navigation.
-  redirect(checkoutUrl);
+  // Returned rather than redirect()-ed: redirect() signals by throwing
+  // NEXT_REDIRECT, and crossing the server-action boundary that lands in the
+  // caller's catch block, which flashed an error toast at the exact moment
+  // the browser was navigating to Creem. The client does the navigation.
+  return { ok: true, url: checkoutUrl };
 }
 
-export type BillingPortalResult = { ok: false; error: string } | { ok: true };
+export type BillingPortalResult =
+  | { ok: false; error: string }
+  | { ok: true; url: string };
 
 /**
  * Opens Creem's self-service portal, where the customer can cancel the
@@ -185,5 +188,5 @@ export async function openBillingPortalAction(): Promise<BillingPortalResult> {
     };
   }
 
-  redirect(portalUrl);
+  return { ok: true, url: portalUrl };
 }
