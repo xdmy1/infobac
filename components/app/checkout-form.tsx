@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { startCardCheckoutAction } from "@/lib/actions/checkout";
 import { allCoursesMeta, type CourseSlug } from "@/lib/content/courses";
 import { pricingPlans, type PlanId } from "@/lib/content";
+import { track } from "@/lib/analytics/events";
 
 interface CheckoutFormProps {
   plan: PlanId;
@@ -52,6 +53,10 @@ export function CheckoutForm({
           toast.error(result.error);
           return;
         }
+        // Recorded before the browser leaves for the provider — the last
+        // thing we can see. Whether it turns into a payment is answered by
+        // checkout_completed, which the webhook sends server-side.
+        track("checkout_started", { plan, amount_mdl: amountMDL });
         // Full navigation, not router.push — Creem is a different origin.
         window.location.assign(result.url);
       } catch (err) {

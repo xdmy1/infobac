@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import { createAdminClient, isServiceRoleConfigured } from "@/lib/supabase/admin";
 import { gateway, isCardCheckoutEnabled, type GatewayEvent } from "@/lib/payments";
+import { trackServer } from "@/lib/analytics/server";
 import { sendPaymentSuccessEmail, sendOwnerPaymentEmail } from "@/lib/payments/notify";
 import { pricingPlans } from "@/lib/content";
 import { allCoursesMeta } from "@/lib/content/courses";
@@ -127,6 +128,14 @@ async function handleCompleted(event: GatewayEvent): Promise<Response> {
         p_course_slug: row.selected_course_slug,
       });
   if (grantErr) throw grantErr;
+
+  // Recorded server-side on purpose: this is the one event that closes the
+  // funnel, and it must not depend on the student's browser still being open
+  // or on an ad blocker letting the request through.
+  await trackServer(row.user_id, "checkout_completed", {
+    plan: row.plan as PlanId,
+    amount_mdl: row.amount_mdl,
+  });
 
   // Access exists now. From here on, failures must not produce a non-2xx —
   // a retry would re-grant and re-send the email.

@@ -10,6 +10,7 @@ import {
   cancelSubscriptionAction,
   openBillingPortalAction,
 } from "@/lib/actions/checkout";
+import { track } from "@/lib/analytics/events";
 
 function formatDate(iso: string | null): string | null {
   if (!iso) return null;
@@ -68,6 +69,7 @@ export function SubscriptionManager({
           setConfirming(false);
           return;
         }
+        track("subscription_canceled", { plan: null });
         const until = formatDate(r.endsAt);
         toast.success(
           r.alreadyCanceled

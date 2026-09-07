@@ -6,6 +6,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/shared/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { CookieBanner } from "@/components/shared/cookie-banner";
+import { AnalyticsIdentity } from "@/components/shared/analytics-identity";
 import { siteConfig } from "@/lib/site";
 
 const inter = Inter({
@@ -117,33 +118,35 @@ export default function RootLayout({
         >
           {children}
           <Toaster position="top-right" richColors closeButton />
+          <AnalyticsIdentity />
         </ThemeProvider>
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <>
             {/*
-              Google Consent Mode v2: default-deny analytics_storage so GA
-              fires in cookieless / consent-pending mode until the cookie
-              banner flips it to "granted". Reads stored consent on load so
-              returning visitors don't re-decide.
+              Google Consent Mode v2. Analytics storage is granted up front
+              and advertising storage stays denied — we run no ads and want no
+              ad profiles built from this traffic. The banner informs rather
+              than gates (see components/shared/cookie-banner.tsx); anyone who
+              opts out through the privacy policy is excluded before this runs.
             */}
             <Script id="ga-consent-default" strategy="beforeInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 window.gtag = gtag;
+                var analytics = 'granted';
+                try {
+                  if (typeof localStorage !== 'undefined' &&
+                      localStorage.getItem('analytics-opt-out') === '1') {
+                    analytics = 'denied';
+                  }
+                } catch (e) { /* localStorage may be blocked; stay granted */ }
                 gtag('consent', 'default', {
                   'ad_storage': 'denied',
                   'ad_user_data': 'denied',
                   'ad_personalization': 'denied',
-                  'analytics_storage': 'denied',
-                  'wait_for_update': 500
+                  'analytics_storage': analytics
                 });
-                try {
-                  var stored = (typeof localStorage !== 'undefined') ? localStorage.getItem('cookie-consent') : null;
-                  if (stored === 'accepted') {
-                    gtag('consent', 'update', { analytics_storage: 'granted' });
-                  }
-                } catch (e) { /* localStorage may be blocked; stay denied */ }
               `}
             </Script>
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />

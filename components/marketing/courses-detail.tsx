@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { TrackedLink } from "@/components/shared/tracked-link";
 import { ArrowRight, FileText, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -125,16 +126,18 @@ function CourseDetailSection({
             </dl>
 
             <div className="flex flex-wrap gap-3 pt-2">
-              <Link
+              <TrackedLink
                 href={`/inregistrare?from=cursuri&plan=all`}
                 className={cn(
                   buttonVariants(),
                   "h-11 gap-1.5 px-5 text-sm font-medium"
                 )}
+                event="signup_cta_clicked"
+                properties={{ location: "courses-detail", plan: "all" }}
               >
                 Înscrie-te la {step.title}
                 <ArrowRight className="size-4" />
-              </Link>
+              </TrackedLink>
               <Link
                 href="#preturi"
                 className={cn(

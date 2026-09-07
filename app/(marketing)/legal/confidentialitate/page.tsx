@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/marketing/legal-doc";
+import { AnalyticsOptOut } from "@/components/shared/analytics-opt-out";
 import { siteConfig } from "@/lib/site";
 import { BreadcrumbJsonLd, WebPageJsonLd } from "@/lib/seo/json-ld";
 
@@ -138,8 +139,12 @@ export default function ConfidentialitatePage() {
             hosting.
           </li>
           <li>
+            <strong>PostHog</strong> (UE, Frankfurt) — analiza utilizării
+            site-ului. Vezi secțiunea 7.
+          </li>
+          <li>
             <strong>Google LLC</strong> (US, cu Standard Contractual Clauses)
-            — Google Analytics 4 (cu consimțământ).
+            — Google Analytics 4, statistici agregate.
           </li>
           <li>
             <strong>Creem</strong> — procesatorul de plăți și vânzătorul
@@ -210,19 +215,69 @@ export default function ConfidentialitatePage() {
             întunecat / luminos. Dezactivabile.
           </li>
           <li>
-            <strong>Analitice (Google Analytics 4)</strong> — se activează
-            doar dacă acordi consimțământul prin banner-ul afișat la prima
-            vizită. IP-ul tău e anonimizat. Refuzul nu afectează funcționarea
-            platformei.
+            <strong>Analitice</strong> — pentru statistici de utilizare.
+            Detaliate în secțiunea următoare, cu buton de oprire.
           </li>
         </ul>
         <p>
-          Nu folosim cookie-uri de tracking pentru reclame third-party.
+          Nu folosim cookie-uri de tracking pentru reclame third-party și nu
+          construim profiluri publicitare.
+        </p>
+      </section>
+
+      <section id="analitice">
+        <h2>7. Analiza utilizării site-ului</h2>
+        <p>
+          Ca să înțelegem ce funcționează și ce nu, măsurăm cum e folosit
+          site-ul. Măsurarea pornește pentru toți vizitatorii, ca statistică
+          de audiență — banner-ul de la prima vizită te informează, nu îți
+          cere permisiunea. O poți opri oricând, cu butonul de mai jos.
+        </p>
+        <p>Concret, înregistrăm:</p>
+        <ul>
+          <li>
+            paginile vizitate, ordinea lor și cât timp stai pe fiecare;
+          </li>
+          <li>
+            de unde ai ajuns la noi — linkul sau motorul de căutare care
+            te-a trimis;
+          </li>
+          <li>
+            tipul de dispozitiv, browserul, sistemul de operare și țara
+            (dedusă din adresa IP, pe care nu o stocăm);
+          </li>
+          <li>
+            interacțiunile din pagină — pe ce ai apăsat și unde ai derulat,
+            inclusiv o reconstituire vizuală a sesiunii;
+          </li>
+          <li>
+            momentele importante din platformă: crearea contului, deschiderea
+            unei lecții, întâlnirea unei lecții blocate, începerea unei plăți.
+          </li>
+        </ul>
+        <p>
+          <strong>Ce nu înregistrăm:</strong> conținutul câmpurilor de
+          formular. Tot ce tastezi — email, parolă, date de card, răspunsuri
+          la quiz-uri — e mascat în browser înainte ca înregistrarea să
+          plece de pe dispozitivul tău. Nu vedem parole și nu vedem date de
+          plată; plata se face integral pe serverele procesatorului.
+        </p>
+        <p>
+          Instrumentele folosite sunt <strong>PostHog</strong> (găzduit în
+          Uniunea Europeană, la Frankfurt) și <strong>Google Analytics 4</strong>{" "}
+          pentru statistici agregate. Dacă ai cont, datele de utilizare sunt
+          legate de contul tău, ca să putem înțelege parcursul complet; dacă
+          nu ai cont, rămân legate de un identificator anonim din browser.
+        </p>
+        <AnalyticsOptOut />
+        <p>
+          Poți cere oricând ștergerea datelor tale de utilizare scriindu-ne
+          la adresa din secțiunea de contact.
         </p>
       </section>
 
       <section>
-        <h2>7. Securitate</h2>
+        <h2>8. Securitate</h2>
         <p>
           Datele tale sunt criptate la transport (HTTPS pe toate paginile) și
           la stocare (la nivelul Supabase). Parolele sunt hash-uite cu
@@ -232,7 +287,7 @@ export default function ConfidentialitatePage() {
       </section>
 
       <section>
-        <h2>8. Perioada de retenție</h2>
+        <h2>9. Perioada de retenție</h2>
         <ul>
           <li>
             <strong>Cont activ</strong> — pe toată durata abonamentului.
@@ -252,7 +307,7 @@ export default function ConfidentialitatePage() {
       </section>
 
       <section>
-        <h2>9. Minori</h2>
+        <h2>10. Minori</h2>
         <p>
           Pentru utilizatorii sub 16 ani, prelucrarea datelor necesită
           consimțământul părintelui sau tutorelui legal. Putem cere
@@ -261,7 +316,7 @@ export default function ConfidentialitatePage() {
       </section>
 
       <section>
-        <h2>10. Modificări ale acestei politici</h2>
+        <h2>11. Modificări ale acestei politici</h2>
         <p>
           Vom notifica orice schimbare materială prin email și banner pe
           site, cu cel puțin 14 zile înainte de intrarea în vigoare.
@@ -269,7 +324,7 @@ export default function ConfidentialitatePage() {
       </section>
 
       <section>
-        <h2>11. Contact</h2>
+        <h2>12. Contact</h2>
         <p>
           Responsabil cu protecția datelor (DPO):{" "}
           <a href={`mailto:${siteConfig.contact.email}`}>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { TrackedLink } from "@/components/shared/tracked-link";
 import { motion } from "motion/react";
 import { ArrowRight, ArrowDown, CheckCircle2 } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -78,7 +79,7 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 1.4 }}
               className="flex flex-col gap-3 sm:flex-row"
             >
-              <Link
+              <TrackedLink
                 href="/inregistrare"
                 className={cn(
                   buttonVariants({ size: "lg" }),
@@ -86,12 +87,14 @@ export function Hero() {
                   "before:absolute before:inset-0 before:rounded-lg before:bg-gradient-to-r before:from-primary before:to-primary-hover before:opacity-0 before:transition-opacity hover:before:opacity-100",
                   "relative overflow-hidden"
                 )}
+                event="signup_cta_clicked"
+                properties={{ location: "hero" }}
               >
                 <span className="relative z-10 flex items-center gap-2">
                   Vezi prețuri
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </span>
-              </Link>
+              </TrackedLink>
               <Link
                 href="#pathway"
                 className={cn(

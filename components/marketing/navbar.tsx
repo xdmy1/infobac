@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { TrackedLink } from "@/components/shared/tracked-link";
 import { Menu, ArrowRight, LayoutDashboard } from "lucide-react";
 import { Logo } from "@/components/shared/logo";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
@@ -83,8 +84,10 @@ export function Navbar({ isLoggedIn = false }: NavbarProps) {
               >
                 <span className="pointer-events-none">Login</span>
               </Link>
-              <Link
+              <TrackedLink
                 href="/inregistrare"
+                event="signup_cta_clicked"
+                properties={{ location: "navbar" }}
                 className={cn(
                   buttonVariants(),
                   "h-8 gap-1.5 px-3.5 text-[13px] font-medium"
@@ -94,7 +97,7 @@ export function Navbar({ isLoggedIn = false }: NavbarProps) {
                   Creează cont
                   <ArrowRight className="size-3.5" />
                 </span>
-              </Link>
+              </TrackedLink>
             </>
           )}
         </div>

@@ -4,6 +4,7 @@ import { CourseIcon } from "@/components/shared/course-icon";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { CourseMeta } from "@/lib/content/courses/types";
+import { TrackView } from "@/components/shared/track-view";
 
 interface Props {
   course: CourseMeta;
@@ -18,6 +19,12 @@ interface Props {
 export function TestPaywall({ course, whatLocked }: Props) {
   return (
     <div className="mx-auto w-full max-w-2xl px-3 py-12 sm:px-4 sm:py-16 md:px-6 md:py-20 lg:px-8">
+      {/* Tests sit behind the same wall as lessons; lesson_order 0 marks the
+          block as "the tests", which have no order of their own. */}
+      <TrackView
+        event="paywall_hit"
+        properties={{ course: course.slug, lesson_order: 0 }}
+      />
       <Link
         href={`/curs/${course.slug}`}
         className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"

@@ -14,6 +14,7 @@ import { signupSchema, type SignupInput } from "@/lib/validations";
 import { signupAction } from "@/lib/actions/auth";
 import { pricingPlans, type PlanId } from "@/lib/content";
 import { GoogleButton, AuthDivider } from "./google-button";
+import { track } from "@/lib/analytics/events";
 
 interface SignupFormProps {
   preselectedPlan?: PlanId;
@@ -49,17 +50,27 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
 
   const isMinor = watch("isMinor");
 
+  // Which page sent them here, and whether they arrived with a plan already
+  // in mind. Answers "de unde au decis să facă cont" without guessing from
+  // the referrer, which is lost on a client-side navigation.
   useEffect(() => {
-    if (fromPath === "cursuri") {
-      // Subtle attribution; useful for analytics later but no UI noise.
-    }
-  }, [fromPath]);
+    track("signup_cta_clicked", {
+      location: "signup-page",
+      from_path: fromPath ?? "direct",
+      plan: preselectedPlan,
+    });
+  }, [fromPath, preselectedPlan]);
 
   const onSubmit = handleSubmit((values) => {
+    track("signup_started", { plan: preselectedPlan });
     startTransition(async () => {
       const result = await signupAction(values);
 
       if (result.ok) {
+        track("signup_completed", {
+          plan: preselectedPlan,
+          needs_parental_consent: Boolean(values.isMinor),
+        });
         if (result.needsConfirmation) {
           setConfirmationSent({ email: result.email });
           toast.success("Cont creat. Verifică-ți emailul.");

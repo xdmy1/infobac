@@ -24,12 +24,33 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
+  // PostHog's ingestion endpoints are on every ad-blocker list, and a blocked
+  // request is a visitor missing from the funnel. Serving analytics from our
+  // own origin through /ingest keeps the measurement first-party.
+  // The trailing slash on PostHog's paths must survive the proxy.
+  skipTrailingSlashRedirect: true,
   experimental: {
     serverActions: {
       // Default is 1 MB. Payment-proof screenshots from phones are routinely
       // 1–4 MB, so anything past 1 MB used to fail silently with a 413.
       bodySizeLimit: "8mb",
     },
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/flags",
+        destination: "https://eu.i.posthog.com/flags",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
+      },
+    ];
   },
   async headers() {
     return [

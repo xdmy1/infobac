@@ -1,10 +1,10 @@
-import Link from "next/link";
+import { TrackedLink } from "@/components/shared/tracked-link";
 import { ArrowRight, Check } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
 import { pricingPlans } from "@/lib/content";
 
-export function Pricing() {
+export function Pricing({ location = "pricing-section" }: { location?: string } = {}) {
   const moduleP = pricingPlans.find((p) => p.id === "module")!;
   const all = pricingPlans.find((p) => p.id === "all")!;
   const semester = pricingPlans.find((p) => p.id === "semester")!;
@@ -37,13 +37,13 @@ export function Pricing() {
 
         <Reveal staggerChildren={0.1} className="grid gap-4 md:grid-cols-3">
           <RevealItem variant="fade-up">
-            <PlanCard plan={moduleP} variant="standard" />
+            <PlanCard plan={moduleP} variant="standard" location={location} />
           </RevealItem>
           <RevealItem variant="fade-up">
-            <PlanCard plan={all} variant="featured" />
+            <PlanCard plan={all} variant="featured" location={location} />
           </RevealItem>
           <RevealItem variant="fade-up">
-            <PlanCard plan={semester} variant="standard" emphasizeLabel />
+            <PlanCard plan={semester} variant="standard" location={location} emphasizeLabel />
           </RevealItem>
         </Reveal>
 
@@ -73,10 +73,13 @@ export function Pricing() {
 function PlanCard({
   plan,
   variant,
+  location,
   emphasizeLabel = false,
 }: {
   plan: (typeof pricingPlans)[number];
   variant: "standard" | "featured";
+  /** Where this card is rendered, so the funnel can tell the landing section from /preturi. */
+  location: string;
   /** When true, shows the BEST VALUE label without changing the visual. */
   emphasizeLabel?: boolean;
 }) {
@@ -137,8 +140,10 @@ function PlanCard({
         </p>
       )}
 
-      <Link
+      <TrackedLink
         href={`/abonament/cumpara/${plan.id}`}
+        event="plan_cta_clicked"
+        properties={{ plan: plan.id, location }}
         className={cn(
           "group/cta mt-7 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors",
           isFeatured
@@ -148,7 +153,7 @@ function PlanCard({
       >
         <span>{plan.cta}</span>
         <ArrowRight className="size-4 transition-transform group-hover/cta:translate-x-0.5" />
-      </Link>
+      </TrackedLink>
 
       <ul className="mt-7 space-y-2.5 border-t border-border pt-6">
         {plan.features.map((f, i) => {

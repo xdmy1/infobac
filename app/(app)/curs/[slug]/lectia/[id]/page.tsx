@@ -12,6 +12,7 @@ import { getCourseContent } from "@/lib/content/courses";
 import { getCompletedLessonSlugs } from "@/lib/queries/progress-slug";
 import { createClient } from "@/lib/supabase/server";
 import { isPreviewMode } from "@/lib/preview-mode";
+import { TrackView } from "@/components/shared/track-view";
 
 interface PageProps {
   params: Promise<{ slug: string; id: string }>;
@@ -55,7 +56,17 @@ export default async function LessonPage({ params }: PageProps) {
 
   // Gate: locked lessons (past free-preview) require an active subscription.
   if (!lesson.isPreview && !hasAccess) {
-    return <PaywallView slug={slug} courseTitle={content.meta.title} lessonTitle={lesson.title} courseIcon={content.meta.icon} courseSlug={content.meta.slug} />;
+    // The single most useful thing to know about someone who signed up and
+    // never paid: which lesson they were reaching for when they were stopped.
+    return (
+      <>
+        <TrackView
+          event="paywall_hit"
+          properties={{ course: slug, lesson_order: lesson.orderIndex }}
+        />
+        <PaywallView slug={slug} courseTitle={content.meta.title} lessonTitle={lesson.title} courseIcon={content.meta.icon} courseSlug={content.meta.slug} />
+      </>
+    );
   }
 
   const sorted = [...content.lessons].sort(
@@ -67,6 +78,14 @@ export default async function LessonPage({ params }: PageProps) {
 
   return (
     <>
+      <TrackView
+        event="lesson_opened"
+        properties={{
+          course: slug,
+          lesson_order: lesson.orderIndex,
+          is_preview: lesson.isPreview,
+        }}
+      />
       <div className="mx-auto w-full max-w-3xl min-w-0 px-3 py-8 sm:px-4 md:px-6 md:py-14 lg:px-8">
         <Reveal variant="fade-down">
           <nav
