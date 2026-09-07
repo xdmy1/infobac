@@ -1,7 +1,13 @@
 "use client";
 
-import { motion, useInView, type Variants } from "motion/react";
-import { useRef, type ReactNode, type CSSProperties } from "react";
+import {
+  motion,
+  useInView,
+  useIsomorphicLayoutEffect,
+  useReducedMotion,
+  type Variants,
+} from "motion/react";
+import { useRef, useState, type ReactNode, type CSSProperties } from "react";
 
 export type RevealVariant =
   | "fade-up"
@@ -11,32 +17,64 @@ export type RevealVariant =
   | "scale-in"
   | "slide-right";
 
+/**
+ * `hidden` carries `duration: 0`. It is only ever entered in the pre-paint
+ * commit right after mount (see `useRevealAnimation`), so it must snap —
+ * animating *into* it would fade the content out in front of the reader.
+ */
+const snap = { duration: 0 } as const;
+
 const variantsMap: Record<RevealVariant, Variants> = {
   "fade-up": {
-    hidden: { opacity: 0, y: 28 },
+    hidden: { opacity: 0, y: 28, transition: snap },
     visible: { opacity: 1, y: 0 },
   },
   "fade-down": {
-    hidden: { opacity: 0, y: -16 },
+    hidden: { opacity: 0, y: -16, transition: snap },
     visible: { opacity: 1, y: 0 },
   },
   "fade-blur": {
-    hidden: { opacity: 0, filter: "blur(16px)", y: 12 },
+    hidden: { opacity: 0, filter: "blur(16px)", y: 12, transition: snap },
     visible: { opacity: 1, filter: "blur(0px)", y: 0 },
   },
   "fade-in": {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, transition: snap },
     visible: { opacity: 1 },
   },
   "scale-in": {
-    hidden: { opacity: 0, scale: 0.94 },
+    hidden: { opacity: 0, scale: 0.94, transition: snap },
     visible: { opacity: 1, scale: 1 },
   },
   "slide-right": {
-    hidden: { opacity: 0, x: -28 },
+    hidden: { opacity: 0, x: -28, transition: snap },
     visible: { opacity: 1, x: 0 },
   },
 };
+
+/**
+ * Whether this render may hide content in order to animate it in.
+ *
+ * Always false on the server and through hydration, so the markup ships
+ * *visible*: a reader without JavaScript, a crawler, and a screenshot taken
+ * before the observers fire all get the content rather than an empty page.
+ * That is not a hypothetical — a payment provider reviewing the pricing page
+ * saw exactly that.
+ *
+ * It flips in a layout effect, i.e. in the commit right after mount and
+ * before the browser paints, so a JS-enabled visitor still sees the reveal
+ * play from its hidden state with no flash of the finished layout. Readers
+ * who asked for less motion simply keep the visible markup.
+ */
+function useRevealAnimation(): boolean {
+  const prefersReducedMotion = useReducedMotion();
+  const [animated, setAnimated] = useState(false);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!prefersReducedMotion) setAnimated(true);
+  }, [prefersReducedMotion]);
+
+  return animated;
+}
 
 type RevealTag = "div" | "section" | "article" | "ul" | "ol" | "li" | "p" | "span" | "header" | "footer";
 
@@ -92,6 +130,7 @@ export function Reveal({
 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once, amount });
+  const animated = useRevealAnimation();
   const MotionTag = motionMap[as];
 
   const containerVariants: Variants = staggerChildren
@@ -109,8 +148,10 @@ export function Reveal({
   return (
     <MotionTag
       ref={ref as never}
-      initial="hidden"
-      animate={inView ? "visible" : "hidden"}
+      // Never "hidden": that would put opacity:0 in the server markup, which
+      // is the whole bug. The hidden state is entered after mount instead.
+      initial={false}
+      animate={animated && !inView ? "hidden" : "visible"}
       variants={containerVariants}
       transition={
         staggerChildren

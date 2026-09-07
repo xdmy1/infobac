@@ -124,12 +124,13 @@ function CardProgrameExacta() {
 
       <ul className="mt-8 grow space-y-0">
         {items.map((item, i) => (
-          <motion.li
+          <Reveal
             key={i}
-            initial={{ opacity: 0, x: -4 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, delay: 0.15 + i * 0.04 }}
+            as="li"
+            variant="fade-in"
+            duration={0.4}
+            delay={0.15 + i * 0.04}
+            amount={0.3}
             className={cn(
               "flex items-baseline gap-3 border-b border-border/60 py-2.5 text-sm",
               item.relevant
@@ -146,7 +147,7 @@ function CardProgrameExacta() {
                 {item.weight}
               </span>
             )}
-          </motion.li>
+          </Reveal>
         ))}
       </ul>
     </article>

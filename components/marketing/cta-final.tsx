@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
@@ -53,11 +52,11 @@ export function CtaFinal() {
           </RevealItem>
         </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+        <Reveal
+          variant="fade-up"
+          delay={0.6}
+          duration={0.8}
+          amount={0.3}
           className="mt-12 flex flex-col items-center gap-5"
         >
           <Link
@@ -79,7 +78,7 @@ export function CtaFinal() {
             <ShieldCheck className="size-3.5 text-success" />
             Date protejate · Anulezi oricând · 60 secunde să te înscrii
           </p>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

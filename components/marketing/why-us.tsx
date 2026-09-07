@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
@@ -147,15 +146,12 @@ export function WhyUs() {
 
 function ContrastRow({ row, index }: { row: ContrastRow; index: number }) {
   return (
-    <motion.li
-      initial={{ opacity: 0, y: 8 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      transition={{
-        duration: 0.5,
-        delay: 0.05 + index * 0.05,
-        ease: [0.21, 0.47, 0.32, 0.98],
-      }}
+    <Reveal
+      as="li"
+      variant="fade-up"
+      duration={0.5}
+      delay={0.05 + index * 0.05}
+      amount={0.4}
       className="group grid grid-cols-12 items-center gap-4 px-6 py-5 md:px-10 md:py-6"
     >
       <div className="col-span-1 flex flex-col gap-1">
@@ -197,6 +193,6 @@ function ContrastRow({ row, index }: { row: ContrastRow; index: number }) {
           </p>
         )}
       </div>
-    </motion.li>
+    </Reveal>
   );
 }

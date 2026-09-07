@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
@@ -158,12 +155,11 @@ function PlanCard({
           const isInherited =
             f.startsWith("Tot din") || f.startsWith("TOT din");
           return (
-            <motion.li
+            // Static, like the price above it: what a plan includes is part of
+            // the offer, so it must survive a reader with no JavaScript and a
+            // screenshot taken before any observer has fired.
+            <li
               key={i}
-              initial={{ opacity: 0, x: -4 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
               className={cn(
                 "flex items-start gap-2.5 text-sm",
                 isInherited ? "font-medium text-foreground" : "text-muted-foreground"
@@ -177,7 +173,7 @@ function PlanCard({
                 )}
               />
               <span>{f}</span>
-            </motion.li>
+            </li>
           );
         })}
       </ul>
