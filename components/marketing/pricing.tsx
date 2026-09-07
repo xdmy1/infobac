@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowRight, Check } from "lucide-react";
-import { CountUp } from "@/components/shared/count-up";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { cn } from "@/lib/utils";
 import { pricingPlans } from "@/lib/content";
@@ -112,8 +111,10 @@ function PlanCard({
       </div>
 
       <div className="mt-7 flex items-baseline gap-1.5">
+        {/* Static on purpose: the price is the one number that must be
+            readable in the markup itself — no JS, no count-up, no scroll. */}
         <span className="font-mono text-5xl font-bold tabular-nums tracking-tighter">
-          <CountUp to={plan.priceMDL} />
+          {plan.priceMDL}
         </span>
         <div className="flex flex-col leading-none">
           <span className="text-xs font-semibold">MDL</span>

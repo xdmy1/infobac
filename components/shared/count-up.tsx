@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useInView, useMotionValue, useSpring } from "motion/react";
+import {
+  useInView,
+  useIsomorphicLayoutEffect,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "motion/react";
 
 interface CountUpProps {
   to: number;
@@ -17,8 +23,13 @@ interface CountUpProps {
 }
 
 /**
- * Animates a number from 0 to `to` when scrolled into view.
- * Uses a damped spring so the count settles naturally.
+ * Counts up to `to` when scrolled into view, using a damped spring.
+ *
+ * The final value is what gets rendered on the server and what stays on
+ * screen if the count never runs — no JS, reduced motion, or an element the
+ * IntersectionObserver never reports. A counter must never be readable as a
+ * literal `0`: crawlers, screenshots and compliance scanners see the markup,
+ * not the animation.
  */
 export function CountUp({
   to,
@@ -30,23 +41,31 @@ export function CountUp({
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
+  const prefersReducedMotion = useReducedMotion();
   const motionValue = useMotionValue(0);
   const spring = useSpring(motionValue, {
     damping: 30,
     stiffness: 80,
     mass: 1,
   });
-  const [display, setDisplay] = useState("0");
+  const [display, setDisplay] = useState(() => to.toFixed(decimals));
+  const [running, setRunning] = useState(false);
+
+  // Drop to the start value and kick off the spring in the same pre-paint
+  // commit, so the swap from final value to 0 is never painted.
+  useIsomorphicLayoutEffect(() => {
+    if (!inView || prefersReducedMotion) return;
+    setRunning(true);
+    setDisplay((0).toFixed(decimals));
+    motionValue.set(to);
+  }, [inView, prefersReducedMotion, to, decimals, motionValue]);
 
   useEffect(() => {
-    if (inView) motionValue.set(to);
-  }, [inView, to, motionValue]);
-
-  useEffect(() => {
+    if (!running) return;
     return spring.on("change", (latest) => {
       setDisplay(latest.toFixed(decimals));
     });
-  }, [spring, decimals]);
+  }, [running, spring, decimals]);
 
   // Suppress unused duration warning — spring uses its own physics.
   void duration;
