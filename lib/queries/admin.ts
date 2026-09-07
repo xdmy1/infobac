@@ -1,6 +1,10 @@
 import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
+import {
+  subscriptionState,
+  type SubscriptionState,
+} from "@/lib/subscription-state";
 
 type Client = SupabaseClient<Database>;
 
@@ -22,21 +26,14 @@ export interface AdminUserSummary {
   lastActivityAt: string | null;
 }
 
-export type EffectiveStatus =
-  | SubscriptionRow["status"]
-  | "expired";
+/** @see lib/subscription-state — same derivation the student's own page uses. */
+export type EffectiveStatus = SubscriptionState;
 
-/** A subscription's real state: "expired" once its period end has passed. */
 function effectiveStatus(
   sub: SubscriptionRow | null,
   now: number,
 ): EffectiveStatus | null {
-  if (!sub) return null;
-  if (sub.status === "canceled") return "canceled";
-  const end = sub.current_period_end
-    ? new Date(sub.current_period_end).getTime()
-    : null;
-  return end !== null && end <= now ? "expired" : sub.status;
+  return sub ? subscriptionState(sub, now) : null;
 }
 
 export interface AdminUserDetail {
@@ -172,20 +169,12 @@ export async function getUserDetail(
 
   return {
     profile: profile.data,
-    subscriptions: (subs.data ?? []).map((s) => {
-      // The status column isn't swept when a period lapses. Derive the real
-      // state from the end date so admin sees "expired" the day it lapses.
-      const end = s.current_period_end
-        ? new Date(s.current_period_end).getTime()
-        : null;
-      const effectiveStatus: EffectiveStatus =
-        s.status === "canceled"
-          ? "canceled"
-          : end !== null && end <= Date.now()
-            ? "expired"
-            : s.status;
-      return { ...s, effectiveStatus };
-    }),
+    // The status column isn't swept when a period lapses, so admin sees the
+    // derived state — "expired" the day it lapses.
+    subscriptions: (subs.data ?? []).map((s) => ({
+      ...s,
+      effectiveStatus: subscriptionState(s),
+    })),
     courseAccess:
       (access.data as unknown as AdminUserDetail["courseAccess"]) ?? [],
     attempts: attempts.data ?? [],

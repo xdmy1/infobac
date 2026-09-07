@@ -232,15 +232,24 @@ export async function openBillingPortalAction(): Promise<BillingPortalResult> {
 
 export type CancelResult =
   | { ok: false; error: string }
-  | { ok: true; endsAt: string | null };
+  /**
+   * `endsAt` is when access stops; `alreadyCanceled` means the provider had no
+   * live subscription left and we only caught our own records up.
+   */
+  | { ok: true; endsAt: string | null; alreadyCanceled: boolean };
 
 /**
  * One-click cancel from inside the product.
  *
  * Cancels at period end ("scheduled"), so access stays live until the time the
- * user already paid for — matching what the UI promises. Our subscriptions row
- * is flagged canceled while keeping its period end, so the card can show "no
- * more renewals" without cutting access.
+ * student already paid for — matching what the UI promises. Our own row is
+ * flagged canceled while keeping its period end, so the card can show "no more
+ * renewals" without cutting access.
+ *
+ * The local write goes through `cancel_my_subscription` (0013). It used to be
+ * a plain UPDATE on `subscriptions` from the caller's client, but that table
+ * has no UPDATE policy for `authenticated`: the write matched zero rows and
+ * reported no error, so Creem knew about the cancellation and we did not.
  */
 export async function cancelSubscriptionAction(): Promise<CancelResult> {
   const resolved = await resolveCustomerId();
@@ -254,10 +263,6 @@ export async function cancelSubscriptionAction(): Promise<CancelResult> {
     return { ok: false, error: "Procesatorul nu răspunde. Reîncearcă." };
   }
 
-  if (subs.length === 0) {
-    return { ok: false, error: "Nu ai un abonament activ de anulat." };
-  }
-
   let endsAt: string | null = null;
   try {
     for (const sub of subs) {
@@ -269,16 +274,34 @@ export async function cancelSubscriptionAction(): Promise<CancelResult> {
     return { ok: false, error: "Anularea nu a reușit. Reîncearcă." };
   }
 
-  // Reflect the intent locally. Access (course_access.expires_at) is left as
-  // is, so it lapses naturally at period end.
+  // Runs even when the provider had nothing live left: that is the shape of an
+  // earlier cancel that never made it into our database, and pressing the
+  // button again is exactly how a student would try to fix it.
   const supabase = await createClient();
-  await supabase
-    .from("subscriptions")
-    .update({ status: "canceled" })
-    .eq("user_id", resolved.userId)
-    .eq("status", "active");
+  const { data: canceled, error: cancelErr } = await supabase.rpc(
+    "cancel_my_subscription",
+  );
 
+  if (cancelErr) {
+    console.warn("[billing] local cancel failed:", cancelErr.message);
+    return {
+      ok: false,
+      error:
+        "Am oprit reînnoirea la procesator, dar starea nu s-a salvat. Reîncearcă.",
+    };
+  }
+
+  const rows = canceled ?? [];
+  if (subs.length === 0 && rows.length === 0) {
+    return { ok: false, error: "Nu ai un abonament activ de anulat." };
+  }
+
+  endsAt =
+    endsAt ?? rows.find((r) => r.ends_at)?.ends_at ?? null;
+
+  // Access (course_access.expires_at) is left as is, so it lapses naturally at
+  // period end.
   revalidatePath("/abonament");
   revalidatePath("/dashboard");
-  return { ok: true, endsAt };
+  return { ok: true, endsAt, alreadyCanceled: subs.length === 0 };
 }

@@ -8,10 +8,15 @@ import { isCardCheckoutEnabled } from "@/lib/payments";
 import { siteConfig } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
 import {
-  getActiveSubscription,
+  getCurrentSubscription,
   getAllSubscriptions,
   type SubscriptionRow,
 } from "@/lib/queries/subscription";
+import {
+  subscriptionState,
+  SUBSCRIPTION_STATE_LABEL,
+  type SubscriptionState,
+} from "@/lib/subscription-state";
 import { isPreviewMode, previewSubscription } from "@/lib/preview-mode";
 import { cn } from "@/lib/utils";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
@@ -27,14 +32,7 @@ const PLAN_LABEL: Record<SubscriptionRow["plan"], string> = {
   semester: "Pachet 6 luni",
 };
 
-const STATUS_LABEL: Record<SubscriptionRow["status"], string> = {
-  active: "Activ",
-  trialing: "Activ",
-  canceled: "Anulat",
-  expired: "Expirat",
-};
-
-const STATUS_BADGE: Record<SubscriptionRow["status"], string> = {
+const STATUS_BADGE: Record<SubscriptionState, string> = {
   active: "bg-success/15 text-success",
   trialing: "bg-primary/15 text-primary",
   canceled: "bg-muted text-muted-foreground",
@@ -53,21 +51,27 @@ function formatDate(iso: string | null): string {
 }
 
 export default async function AbonamentPage() {
-  let active: SubscriptionRow | null;
+  let current: SubscriptionRow | null;
   let history: SubscriptionRow[];
 
   if (isPreviewMode) {
-    active = previewSubscription;
+    current = previewSubscription;
     history = [previewSubscription];
   } else {
     const supabase = await createClient();
-    const [a, h] = await Promise.all([
-      getActiveSubscription(supabase).catch(() => null),
+    const [c, h] = await Promise.all([
+      getCurrentSubscription(supabase).catch(() => null),
       getAllSubscriptions(supabase).catch(() => [] as SubscriptionRow[]),
     ]);
-    active = a;
+    current = c;
     history = h;
   }
+
+  // `current` is only ever a live row, so a canceled status means "paid up
+  // until the end date, not renewing" — the state the student needs spelled
+  // out, in words, on the page they cancelled from.
+  const isCanceled = current?.status === "canceled";
+  const accessUntil = current ? formatDate(current.current_period_end) : "—";
 
   return (
     <div className="mx-auto max-w-4xl space-y-10 px-4 py-10 md:px-6 md:py-14 lg:px-8">
@@ -85,20 +89,29 @@ export default async function AbonamentPage() {
       </Reveal>
 
       <Reveal variant="fade-up" delay={0.2}>
-        <SubscriptionStatusCard subscription={active} />
+        <SubscriptionStatusCard subscription={current} />
       </Reveal>
 
       {/* Self-service billing. Creem requires that a customer can cancel from
           inside the product rather than by contacting support. */}
       {isCardCheckoutEnabled && (
-        <section className="rounded-2xl border border-border bg-card p-5 md:p-6">
+        <section
+          className={cn(
+            "rounded-2xl border bg-card p-5 md:p-6",
+            isCanceled ? "border-destructive/40" : "border-border"
+          )}
+        >
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-base font-semibold">Facturare și anulare</p>
+              <p className="text-base font-semibold">
+                {isCanceled ? "Abonament anulat" : "Facturare și anulare"}
+              </p>
               <p className="mt-1 max-w-lg text-sm text-muted-foreground">
-                Anulează abonamentul dintr-un clic. Accesul rămâne activ până
-                la finalul perioadei deja plătite. Pentru schimbarea cardului
-                sau facturi, deschide portalul procesatorului.
+                {isCanceled
+                  ? `Nu se mai reînnoiește și cardul nu mai e taxat. Accesul rămâne activ până la ${accessUntil}, apoi se oprește. Te poți abona din nou oricând.`
+                  : current
+                    ? "Anulează abonamentul dintr-un clic. Accesul rămâne activ până la finalul perioadei deja plătite. Pentru schimbarea cardului sau facturi, deschide portalul procesatorului."
+                    : "Nu ai un abonament activ de anulat. Pentru facturi sau schimbarea cardului, deschide portalul procesatorului."}
               </p>
               <p className="mt-2 text-xs text-muted-foreground">
                 Ai nevoie de ajutor? Scrie-ne la{" "}
@@ -110,13 +123,28 @@ export default async function AbonamentPage() {
                 </a>
                 .
               </p>
+              {isCanceled && (
+                <Link
+                  href="/preturi"
+                  className={cn(
+                    buttonVariants(),
+                    "mt-4 h-10 gap-1.5 px-4 text-sm font-medium"
+                  )}
+                >
+                  Abonează-te din nou
+                  <ArrowRight className="size-4" />
+                </Link>
+              )}
             </div>
-            <SubscriptionManager canceled={active?.status === "canceled"} />
+            <SubscriptionManager
+              canceled={isCanceled}
+              hasSubscription={Boolean(current)}
+            />
           </div>
         </section>
       )}
 
-      {active && active.plan !== "semester" && (
+      {current && !isCanceled && current.plan !== "semester" && (
         <section className="rounded-2xl border border-accent/40 bg-card p-5 md:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -157,7 +185,9 @@ export default async function AbonamentPage() {
           </div>
         ) : (
           <ul className="overflow-hidden rounded-2xl border border-border bg-card">
-            {history.map((s, i) => (
+            {history.map((s, i) => {
+              const state = subscriptionState(s);
+              return (
               <li
                 key={s.id}
                 className={cn(
@@ -185,21 +215,21 @@ export default async function AbonamentPage() {
                 <span
                   className={cn(
                     "rounded-full px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wider",
-                    STATUS_BADGE[s.status]
+                    STATUS_BADGE[state]
                   )}
                 >
-                  {STATUS_LABEL[s.status]}
+                  {SUBSCRIPTION_STATE_LABEL[state]}
                 </span>
               </li>
-            ))}
+              );
+            })}
           </ul>
         )}
       </section>
 
       <section className="rounded-2xl border border-border bg-muted/30 p-5">
         <p className="text-sm text-muted-foreground">
-          Pentru anulare, schimbare plan sau întrebări de facturare, scrie-ne
-          pe{" "}
+          Pentru schimbarea planului sau întrebări de facturare, scrie-ne pe{" "}
           <a
             href="mailto:hello@infobac.md"
             className="font-medium text-foreground underline-offset-4 hover:underline"

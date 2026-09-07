@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, PlayCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile, getCurrentUser } from "@/lib/queries/user";
-import { getActiveSubscription } from "@/lib/queries/subscription";
+import { getCurrentSubscription } from "@/lib/queries/subscription";
 import { getCompletedLessonSlugs } from "@/lib/queries/progress-slug";
 import { getOverallStats } from "@/lib/queries/stats";
 import {
@@ -86,7 +86,7 @@ export default async function DashboardPage() {
 
     const [profile, sub, overallStats] = await Promise.all([
       getCurrentProfile(supabase),
-      getActiveSubscription(supabase).catch(() => null),
+      getCurrentSubscription(supabase).catch(() => null),
       getOverallStats(
         supabase,
         allCoursesMeta.map((c) => c.slug),

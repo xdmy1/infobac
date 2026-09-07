@@ -68,6 +68,9 @@ export function SubscriptionStatusCard({
     );
   }
 
+  // The query only returns a row that is still live, so a canceled status
+  // means "paid up until the end date, but not renewing" — never "no access".
+  const isCanceled = subscription.status === "canceled";
   const isSemester = subscription.plan === "semester";
   const expires = formatDate(subscription.current_period_end);
   const Icon = isSemester ? Crown : Sparkles;
@@ -76,18 +79,23 @@ export function SubscriptionStatusCard({
     <div
       className={cn(
         "relative overflow-hidden rounded-2xl border p-5",
-        isSemester
-          ? "border-accent/40 bg-card"
-          : "border-primary/30 bg-card"
+        isCanceled
+          ? "border-border bg-card"
+          : isSemester
+            ? "border-accent/40 bg-card"
+            : "border-primary/30 bg-card"
       )}
     >
-      <div
-        aria-hidden
-        className={cn(
-          "pointer-events-none absolute -inset-x-4 -inset-y-6 -z-0 blur-3xl",
-          isSemester ? "bg-accent/20" : "bg-primary/15"
-        )}
-      />
+      {/* A cancelled plan keeps the card, loses the glow — it is winding down. */}
+      {!isCanceled && (
+        <div
+          aria-hidden
+          className={cn(
+            "pointer-events-none absolute -inset-x-4 -inset-y-6 -z-0 blur-3xl",
+            isSemester ? "bg-accent/20" : "bg-primary/15"
+          )}
+        />
+      )}
 
       <div className="relative flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
@@ -102,15 +110,22 @@ export function SubscriptionStatusCard({
             }}
             className={cn(
               "inline-flex size-11 items-center justify-center rounded-xl",
-              isSemester
-                ? "bg-accent/20 text-accent-foreground"
-                : "bg-primary/15 text-primary"
+              isCanceled
+                ? "bg-muted text-muted-foreground"
+                : isSemester
+                  ? "bg-accent/20 text-accent-foreground"
+                  : "bg-primary/15 text-primary"
             )}
           >
             <Icon className="size-5" />
           </motion.span>
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            <p
+              className={cn(
+                "text-xs font-bold uppercase tracking-wider",
+                isCanceled ? "text-destructive" : "text-muted-foreground"
+              )}
+            >
               {STATUS_LABEL[subscription.status]}
             </p>
             <p className="text-base font-semibold">
@@ -119,9 +134,11 @@ export function SubscriptionStatusCard({
             {expires && (
               <p className="flex items-center gap-1 text-xs text-muted-foreground">
                 <Clock className="size-3" />
-                {isSemester
-                  ? `Acces până la ${expires}`
-                  : `Următoarea reînnoire: ${expires}`}
+                {isCanceled
+                  ? `Nu se reînnoiește · acces până la ${expires}`
+                  : isSemester
+                    ? `Acces până la ${expires}`
+                    : `Următoarea reînnoire: ${expires}`}
               </p>
             )}
           </div>

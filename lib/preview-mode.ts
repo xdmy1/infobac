@@ -149,6 +149,7 @@ export const previewSubscription: SubscriptionRow = {
   current_period_end: new Date(
     Date.now() + 21 * 24 * 60 * 60 * 1000
   ).toISOString(),
+  canceled_at: null,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
 };

@@ -89,14 +89,17 @@ export interface Database {
           status: SubscriptionStatus;
           current_period_start: string;
           current_period_end: string | null;
+          /** When the customer asked to cancel; null if they never did (0013). */
+          canceled_at: string | null;
           created_at: string;
           updated_at: string;
         };
         Insert: Omit<
           Database["public"]["Tables"]["subscriptions"]["Row"],
-          "id" | "created_at" | "updated_at"
+          "id" | "canceled_at" | "created_at" | "updated_at"
         > & {
           id?: string;
+          canceled_at?: string | null;
           created_at?: string;
           updated_at?: string;
         };
@@ -358,6 +361,17 @@ export interface Database {
           p_course_slug: string | null;
         };
         Returns: undefined;
+      };
+      // Cancels the CALLER's own live subscriptions at period end, and returns
+      // the rows it changed. `subscriptions` has no UPDATE policy for
+      // `authenticated`, so this security-definer function is the only way a
+      // customer can record their own cancellation. See 0013.
+      cancel_my_subscription: {
+        Args: Record<string, never>;
+        Returns: Array<{
+          canceled_plan: SubscriptionPlan;
+          ends_at: string | null;
+        }>;
       };
       // service_role only — grants access up to an explicit expiry rather than
       // a plan-derived interval, so renewals track the billed period. See 0011.
