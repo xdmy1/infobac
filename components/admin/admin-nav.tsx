@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, Receipt } from "lucide-react";
+import { Users, Receipt, ChartNoAxesCombined } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface AdminNavProps {
@@ -32,6 +32,12 @@ export function AdminNav({ pendingPaymentsCount }: AdminNavProps) {
       href: "/admin/plati",
       label: "Plăți",
       icon: <Receipt className="size-3.5" />,
+      match: "startsWith",
+    },
+    {
+      href: "/admin/analitice",
+      label: "Analitice",
+      icon: <ChartNoAxesCombined className="size-3.5" />,
       match: "startsWith",
     },
   ];
