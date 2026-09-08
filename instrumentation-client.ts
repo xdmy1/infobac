@@ -1,5 +1,11 @@
 import posthog from "posthog-js";
 
+declare global {
+  interface Window {
+    posthog?: typeof posthog;
+  }
+}
+
 /**
  * Analytics bootstrap. Next runs this after the document loads but before
  * React hydrates, so the first pageview and its referrer are captured even if
@@ -57,4 +63,8 @@ if (key) {
   if (hasOptedOut()) {
     posthog.opt_out_capturing();
   }
+
+  // PostHog's Toolbar and its browser-console debugging both look for the
+  // instance here. Importing the SDK as a module does not set it.
+  window.posthog = posthog;
 }
