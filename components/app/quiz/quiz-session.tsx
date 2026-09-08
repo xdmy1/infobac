@@ -28,6 +28,7 @@ import {
 } from "./quiz-types";
 import { QuestionCard } from "./question-card";
 import { submitExamAttemptAction } from "@/lib/actions/quiz-attempt";
+import { track } from "@/lib/analytics/events";
 
 interface QuizSessionProps {
   mode: QuizMode;
@@ -204,6 +205,7 @@ export function QuizSession({
 
     setExamResult({ score, correctCount, total, passed });
     setSubmitted(true);
+    track("quiz_finished", { course: courseSlug, score_percent: score });
 
     startTransition(async () => {
       await submitExamAttemptAction({

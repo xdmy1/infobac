@@ -28,6 +28,10 @@ export interface AnalyticsEvents {
   paywall_hit: { course: string; lesson_order: number };
   lesson_opened: { course: string; lesson_order: number; is_preview: boolean };
   quiz_finished: { course: string; score_percent: number };
+  /** A lesson was marked done — the clearest signal that someone is actually studying. */
+  lesson_completed: { course: string; lesson: string };
+  contact_submitted: Record<string, never>;
+  account_deleted: Record<string, never>;
   subscription_canceled: { plan: PlanId | null };
 }
 

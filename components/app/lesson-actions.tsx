@@ -8,6 +8,7 @@ import { ArrowLeft, ArrowRight, Check, CircleCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { markLessonCompleteAction } from "@/lib/actions/lesson";
+import { track } from "@/lib/analytics/events";
 
 interface LessonActionsProps {
   courseSlug: string;
@@ -33,6 +34,7 @@ export function LessonActions({
       const result = await markLessonCompleteAction(courseSlug, lessonSlug);
       if (result.ok) {
         setCompleted(true);
+        track("lesson_completed", { course: courseSlug, lesson: lessonSlug });
         toast.success(
           result.mode === "preview"
             ? "Marcată ca terminată (preview — nu se salvează)."

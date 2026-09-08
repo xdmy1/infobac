@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient, isServiceRoleConfigured } from "@/lib/supabase/admin";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { gateway, isCardCheckoutEnabled } from "@/lib/payments";
+import { trackServer } from "@/lib/analytics/server";
 
 export type DeleteAccountResult = { ok: false; error: string } | { ok: true };
 
@@ -47,6 +48,11 @@ export async function deleteAccountAction(): Promise<DeleteAccountResult> {
       console.warn("[account] subscription cancel during delete failed:", err);
     }
   }
+
+  // Recorded before the account is gone: the action finishes with a redirect,
+  // which throws past any client-side handler, and in a moment there will be
+  // no user id left to attribute it to.
+  await trackServer(user.id, "account_deleted", {});
 
   const admin = createAdminClient();
   const { error } = await admin.auth.admin.deleteUser(user.id);

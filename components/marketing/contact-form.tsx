@@ -16,6 +16,7 @@ import {
   type ContactInput,
 } from "@/lib/validations";
 import { submitContact } from "@/lib/actions/contact";
+import { track } from "@/lib/analytics/events";
 
 const errorMsg =
   "text-xs font-medium text-destructive";
@@ -47,6 +48,7 @@ export function ContactForm() {
       const result = await submitContact(data);
 
       if (result.ok) {
+        track("contact_submitted", {});
         toast.success(
           result.mode === "sent"
             ? "Mesaj trimis. Îți răspundem în câteva ore."
