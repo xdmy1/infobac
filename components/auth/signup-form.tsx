@@ -10,7 +10,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { signupSchema, type SignupInput } from "@/lib/validations";
+import {
+  signupSchema,
+  type SignupInput,
+  type SignupFormValues,
+} from "@/lib/validations";
 import { signupAction } from "@/lib/actions/auth";
 import { pricingPlans, type PlanId } from "@/lib/content";
 import { GoogleButton, AuthDivider } from "./google-button";
@@ -33,22 +37,29 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
     watch,
     formState: { errors },
     setError,
-  } = useForm<SignupInput>({
+  } = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       fullName: "",
       email: "",
       password: "",
       terms: false,
-      // Default to adult; minors flip the radio explicitly so we don't
-      // accidentally classify everyone as needing parental consent.
-      isMinor: false,
+      // Deliberately no default. Neither radio renders as checked, so a
+      // default of `false` would record anyone who skipped the question as an
+      // adult without them ever saying so — and parental consent hangs off
+      // this answer. Undefined makes the schema ask.
+      isMinor: undefined,
       parentalConsent: false,
       parentEmail: "",
     },
   });
 
-  const isMinor = watch("isMinor");
+  // The radio group yields the string "true"/"false", so this cannot be used
+  // as a truthy check: "false" is truthy, and the parental-consent block used
+  // to appear for adults too. The schema coerces on submit; this is the same
+  // conversion for rendering.
+  const isMinorRaw = watch("isMinor");
+  const isMinor = isMinorRaw === true || isMinorRaw === "true";
 
   // Which page sent them here, and whether they arrived with a plan already
   // in mind. Answers "de unde au decis să facă cont" without guessing from
@@ -69,7 +80,7 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
       if (result.ok) {
         track("signup_completed", {
           plan: preselectedPlan,
-          needs_parental_consent: Boolean(values.isMinor),
+          needs_parental_consent: values.isMinor === true || values.isMinor === "true",
         });
         if (result.needsConfirmation) {
           setConfirmationSent({ email: result.email });
@@ -219,9 +230,7 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
               value="false"
               disabled={isPending}
               className="mt-0.5 size-4 cursor-pointer border-border text-primary focus:ring-2 focus:ring-ring focus:ring-offset-1 focus:ring-offset-card"
-              {...register("isMinor", {
-                setValueAs: (v) => v === "true" || v === true,
-              })}
+              {...register("isMinor")}
             />
             <span className="text-muted-foreground">
               Am 18 ani sau mai mult
@@ -233,9 +242,7 @@ export function SignupForm({ preselectedPlan, fromPath }: SignupFormProps) {
               value="true"
               disabled={isPending}
               className="mt-0.5 size-4 cursor-pointer border-border text-primary focus:ring-2 focus:ring-ring focus:ring-offset-1 focus:ring-offset-card"
-              {...register("isMinor", {
-                setValueAs: (v) => v === "true" || v === true,
-              })}
+              {...register("isMinor")}
             />
             <span className="text-muted-foreground">
               Sunt minor (sub 18 ani)

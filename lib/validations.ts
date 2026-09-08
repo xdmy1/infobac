@@ -71,9 +71,17 @@ export const signupSchema = z
     terms: z
       .boolean()
       .refine((v) => v === true, "Trebuie să accepți termenii."),
-    isMinor: z.boolean({
-      message: "Te rugăm să indici dacă ai sau nu 18 ani.",
-    }),
+    // A radio group hands back the checked input's `value` attribute — the
+    // string "true" or "false", never a boolean. react-hook-form's
+    // `setValueAs` does not apply to radios, so the conversion has to happen
+    // here. Without it every submission failed validation on this field no
+    // matter which option was picked, and email signup was impossible.
+    isMinor: z.preprocess(
+      (v) => (v === "true" ? true : v === "false" ? false : v),
+      z.boolean({
+        message: "Te rugăm să indici dacă ai sau nu 18 ani.",
+      }),
+    ),
     parentalConsent: z.boolean(),
     parentEmail: z
       .string()
@@ -93,7 +101,10 @@ export const signupSchema = z
     }
   });
 
+/** The validated shape — `isMinor` is a real boolean by the time it is parsed. */
 export type SignupInput = z.infer<typeof signupSchema>;
+/** What the form itself holds, before parsing: a radio group yields strings. */
+export type SignupFormValues = z.input<typeof signupSchema>;
 
 export const loginSchema = z.object({
   email: z
