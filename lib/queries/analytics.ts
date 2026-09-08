@@ -1,5 +1,6 @@
 import "server-only";
 import { hogqlAll, scalar, type QueryResult } from "@/lib/analytics/posthog-api";
+import { siteConfig } from "@/lib/site";
 
 /**
  * Everything the admin analytics page shows, in one round of parallel queries.
@@ -53,6 +54,17 @@ export interface AnalyticsData {
 export async function getAnalytics(days: Period): Promise<AnalyticsData> {
   const since = `now() - INTERVAL ${days} DAY`;
 
+  // A visit that refers from our own domain is internal navigation, not a
+  // traffic source. Folded into "direct", the way every analytics tool does it.
+  const host = (() => {
+    try {
+      return new URL(siteConfig.url).hostname.replace(/^www\./, "");
+    } catch {
+      return "infobac.md";
+    }
+  })();
+  const ownDomains = `('$direct', '', 'direct', '${host}', 'www.${host}')`;
+
   const q = await hogqlAll({
     kpis: `
       SELECT
@@ -92,12 +104,26 @@ export async function getAnalytics(days: Period): Promise<AnalyticsData> {
 
     // Where they came from.
     referrers: `
-      SELECT
-        coalesce(nullIf(properties.$referring_domain, ''), 'direct') AS source,
-        count(DISTINCT properties.$session_id) AS sessions,
-        count(DISTINCT person_id) AS people
-      FROM events
-      WHERE event = '$pageview' AND timestamp >= ${since}
+      SELECT source, count() AS sessions, count(DISTINCT person) AS people FROM (
+        SELECT
+          properties.$session_id AS sid,
+          any(person_id) AS person,
+          -- The referrer of the FIRST pageview of the visit. Reading it off
+          -- every pageview makes the site its own top traffic source, because
+          -- each internal navigation refers from the previous page.
+          argMin(
+            multiIf(
+              properties.$referring_domain IN ${ownDomains}, 'direct',
+              properties.$referring_domain IS NULL, 'direct',
+              properties.$referring_domain
+            ),
+            timestamp
+          ) AS source
+        FROM events
+        WHERE event = '$pageview' AND timestamp >= ${since}
+          AND properties.$session_id IS NOT NULL
+        GROUP BY sid
+      )
       GROUP BY source ORDER BY sessions DESC LIMIT 20`,
 
     // The page each visit started on.
