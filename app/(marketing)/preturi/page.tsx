@@ -3,6 +3,9 @@ import { ArrowUpRight, Mail } from "lucide-react";
 import { Pricing } from "@/components/marketing/pricing";
 import { PricingCompare } from "@/components/marketing/pricing-compare";
 import { TrialBanner } from "@/components/marketing/trial-banner";
+import { shouldOfferTrial } from "@/lib/queries/trial";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 import { CtaFinal } from "@/components/marketing/cta-final";
 import {
   Accordion,
@@ -37,7 +40,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  let offerTrial = false;
+  if (isSupabaseConfigured) {
+    try {
+      offerTrial = await shouldOfferTrial(await createClient());
+    } catch {
+      offerTrial = false;
+    }
+  }
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -52,7 +64,7 @@ export default function PricingPage() {
       <Pricing />
       {/* Directly under the plan cards: the price has just landed, and this is
           the answer to what it makes someone hesitate about. */}
-      <TrialBanner />
+      {offerTrial && <TrialBanner />}
       <PricingCompare />
 
       <section className="border-t border-border py-24 md:py-32">

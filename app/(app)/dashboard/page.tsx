@@ -5,12 +5,18 @@ import { ArrowRight, BookOpen, PlayCircle } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentProfile, getCurrentUser } from "@/lib/queries/user";
 import { getCurrentSubscription } from "@/lib/queries/subscription";
+import {
+  getTrialStatus,
+  TRIAL_UNKNOWN,
+  type TrialStatus,
+} from "@/lib/queries/trial";
 import { getCompletedLessonSlugs } from "@/lib/queries/progress-slug";
 import { getOverallStats } from "@/lib/queries/stats";
 import {
   isPreviewMode,
   previewProfile,
   previewSubscription,
+  previewTrialStatus,
 } from "@/lib/preview-mode";
 import {
   allCoursesMeta,
@@ -72,21 +78,24 @@ function emptyOverallStats(): OverallStats {
 export default async function DashboardPage() {
   let firstName = "elev";
   let subscription: SubscriptionRow | null = null;
+  let trial: TrialStatus = TRIAL_UNKNOWN;
   let stats: OverallStats = emptyOverallStats();
   const completedBySlug: Record<string, number> = {};
 
   if (isPreviewMode) {
     firstName = previewProfile.full_name.split(" ")[0] ?? "elev";
     subscription = previewSubscription;
+    trial = previewTrialStatus;
     for (const c of allCoursesMeta) completedBySlug[c.slug] = 0;
   } else {
     const supabase = await createClient();
     const user = await getCurrentUser(supabase);
     if (!user) return null;
 
-    const [profile, sub, overallStats] = await Promise.all([
+    const [profile, sub, trialStatus, overallStats] = await Promise.all([
       getCurrentProfile(supabase),
       getCurrentSubscription(supabase).catch(() => null),
+      getTrialStatus(supabase).catch(() => TRIAL_UNKNOWN),
       getOverallStats(
         supabase,
         allCoursesMeta.map((c) => c.slug),
@@ -97,6 +106,7 @@ export default async function DashboardPage() {
       (user.user_metadata?.full_name as string | undefined)?.split(" ")[0] ??
       "elev";
     subscription = sub;
+    trial = trialStatus;
     stats = overallStats;
 
     await Promise.all(
@@ -155,7 +165,7 @@ export default async function DashboardPage() {
           </Link>
         </header>
 
-        <SubscriptionStatusCard subscription={subscription} />
+        <SubscriptionStatusCard subscription={subscription} trial={trial} />
 
         {/* Big numbers */}
         <StatsHero

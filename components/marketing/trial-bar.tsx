@@ -1,18 +1,16 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 import { TrackedLink } from "@/components/shared/tracked-link";
-import { freeTrial, isTrialOfferOpen } from "@/lib/content";
+import { freeTrial } from "@/lib/content";
 
 /**
  * The thin offer strip that sits above the navbar.
  *
- * It renders nothing once the offer window closes, so the bar disappears on
- * its own on 16 September without anyone deploying. The marketing layout is
- * already dynamic — it reads the session cookie — so this date check runs per
- * request rather than being frozen into a build.
+ * Purely presentational: the layout decides whether to render it, because
+ * "should this person see the offer" needs the session and a database read.
+ * Someone mid-trial, someone who already used it and someone who has paid all
+ * get nothing here.
  */
 export function TrialBar() {
-  if (!isTrialOfferOpen()) return null;
-
   return (
     <div className="w-full border-b border-primary/20 bg-primary/10">
       <TrackedLink

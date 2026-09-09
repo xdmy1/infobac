@@ -6,6 +6,9 @@ import { ArrowRight, Crown, Sparkles, Clock } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { SubscriptionRow } from "@/lib/queries/subscription";
+import type { TrialStatus } from "@/lib/queries/trial";
+import { allCoursesMeta } from "@/lib/content/courses";
+import { freeTrial } from "@/lib/content";
 
 const PLAN_LABEL: Record<SubscriptionRow["plan"], string> = {
   module: "Un modul",
@@ -33,11 +36,75 @@ function formatDate(iso: string | null): string | null {
 
 interface SubscriptionStatusCardProps {
   subscription: SubscriptionRow | null;
+  /** Omitted where the trial is irrelevant; a running one takes the card. */
+  trial?: TrialStatus | null;
 }
 
 export function SubscriptionStatusCard({
   subscription,
+  trial,
 }: SubscriptionStatusCardProps) {
+  // A running trial IS the student's current access, so it owns this card.
+  // Falling through to "Niciun abonament activ" told someone who had just
+  // pressed the button that nothing had happened.
+  if (!subscription && trial?.isRunning) {
+    const days = trial.daysLeft;
+    const courseTitle = allCoursesMeta
+      .find((c) => c.slug === trial.courseSlug)
+      ?.title.split(" — ")[0];
+    const until = formatDate(trial.endsAt);
+
+    return (
+      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-card p-5">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -inset-x-4 -inset-y-6 -z-0 bg-primary/15 blur-3xl"
+        />
+        <div className="relative flex flex-wrap items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <motion.span
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{
+                type: "spring",
+                damping: 12,
+                stiffness: 200,
+                delay: 0.2,
+              }}
+              className="inline-flex size-11 items-center justify-center rounded-xl bg-primary/15 text-primary"
+            >
+              <Sparkles className="size-5" />
+            </motion.span>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wider text-primary">
+                Perioadă de probă
+              </p>
+              <p className="text-base font-semibold">
+                {freeTrial.days} zile gratis
+                {courseTitle ? ` · ${courseTitle}` : ""}
+              </p>
+              <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                <Clock className="size-3" />
+                {days} {days === 1 ? "zi rămasă" : "zile rămase"}
+                {until ? ` · acces până la ${until}` : ""} · fără card
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/preturi"
+            className={cn(
+              buttonVariants(),
+              "h-10 gap-2 px-4 text-sm font-medium",
+            )}
+          >
+            Vezi prețuri
+            <ArrowRight className="size-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   if (!subscription) {
     return (
       <div className="rounded-2xl border border-border bg-card p-5">

@@ -2,7 +2,7 @@ import { ArrowRight, CreditCard, Sparkles } from "lucide-react";
 import { TrackedLink } from "@/components/shared/tracked-link";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 import { buttonVariants } from "@/components/ui/button";
-import { freeTrial, isTrialOfferOpen } from "@/lib/content";
+import { freeTrial } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 /**
@@ -13,11 +13,10 @@ import { cn } from "@/lib/utils";
  * the moment the price lands, and it leads with the card promise rather than
  * with the seven days — "how much" is the question being asked.
  *
- * Disappears on its own when the offer window closes.
+ * Purely presentational, like the bar above the navbar: the page decides
+ * whether this person still has an offer to take.
  */
 export function TrialBanner() {
-  if (!isTrialOfferOpen()) return null;
-
   return (
     <section className="border-t border-border py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8">

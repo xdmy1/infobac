@@ -162,6 +162,7 @@ export const previewSubscription: SubscriptionRow = {
  */
 export const previewTrialStatus: TrialStatus = {
   offerOpen: true,
+  signedIn: true,
   eligible: false,
   startedAt: null,
   endsAt: null,

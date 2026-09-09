@@ -103,7 +103,7 @@ export default async function AbonamentPage() {
       </Reveal>
 
       <Reveal variant="fade-up" delay={0.2}>
-        <SubscriptionStatusCard subscription={current} />
+        <SubscriptionStatusCard subscription={current} trial={trial} />
       </Reveal>
 
       <TrialCard status={trial} />

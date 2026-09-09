@@ -9,6 +9,8 @@ type Client = SupabaseClient<Database>;
 export interface TrialStatus {
   /** True while the offer window in lib/content.ts is still open. */
   offerOpen: boolean;
+  /** False for a visitor with no session — they can still claim, after signup. */
+  signedIn: boolean;
   /** The caller has never started a trial and holds no live access. */
   eligible: boolean;
   /** Set once a trial has been started, whether it is still running or not. */
@@ -23,12 +25,13 @@ export interface TrialStatus {
 }
 
 /**
- * The "say nothing" state: no offer, no eligibility, no countdown. Used for a
- * signed-out caller and as the fallback when the read fails, so a database
- * hiccup hides the banner rather than promising access we cannot grant.
+ * The "say nothing" state: no offer, no eligibility, no countdown. Used as the
+ * fallback when a read fails, so a database hiccup hides the offer rather than
+ * promising access we cannot grant.
  */
 export const TRIAL_UNKNOWN: TrialStatus = {
   offerOpen: false,
+  signedIn: false,
   eligible: false,
   startedAt: null,
   endsAt: null,
@@ -51,13 +54,18 @@ function daysBetween(from: Date, to: Date): number {
  * inside the database, so a stale read can only ever cost a friendly error.
  */
 export async function getTrialStatus(client: Client): Promise<TrialStatus> {
+  const now = new Date();
+  const offerOpen = isTrialOfferOpen(now);
+
   const {
     data: { user },
   } = await client.auth.getUser();
-  if (!user) return TRIAL_UNKNOWN;
 
-  const now = new Date();
-  const offerOpen = isTrialOfferOpen(now);
+  // A visitor with no session has used nothing up, so the offer still applies
+  // to them — they just have to make an account before they can claim it.
+  if (!user) {
+    return { ...TRIAL_UNKNOWN, offerOpen, eligible: offerOpen };
+  }
 
   const { data: trial } = await client
     .from("trials")
@@ -78,6 +86,7 @@ export async function getTrialStatus(client: Client): Promise<TrialStatus> {
 
     return {
       offerOpen,
+      signedIn: true,
       eligible: false,
       startedAt: trial.started_at,
       endsAt,
@@ -97,6 +106,7 @@ export async function getTrialStatus(client: Client): Promise<TrialStatus> {
 
   return {
     offerOpen,
+    signedIn: true,
     eligible: offerOpen && (count ?? 0) === 0,
     startedAt: null,
     endsAt: null,
@@ -104,4 +114,17 @@ export async function getTrialStatus(client: Client): Promise<TrialStatus> {
     isRunning: false,
     daysLeft: 0,
   };
+}
+
+/**
+ * Whether to advertise the trial at all — the answer for the bar above the
+ * navbar and for the block on the pricing page.
+ *
+ * Someone who has already started their week, already used it up, or already
+ * paid must not keep being sold a free trial. Advertising it to them is noise
+ * at best, and at worst an offer that would be refused the moment they click.
+ */
+export async function shouldOfferTrial(client: Client): Promise<boolean> {
+  const status = await getTrialStatus(client).catch(() => TRIAL_UNKNOWN);
+  return status.offerOpen && status.eligible;
 }
