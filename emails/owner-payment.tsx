@@ -71,7 +71,7 @@ function Row({ label, value }: { label: string; value: string }) {
 
 OwnerPaymentEmail.PreviewProps = {
   planName: "Toate modulele",
-  amountMDL: 550,
+  amountMDL: 540,
   amountCharged: "€28.00",
   customerName: "Andrei Preview",
   customerEmail: "andrei@example.com",

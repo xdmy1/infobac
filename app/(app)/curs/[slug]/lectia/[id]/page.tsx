@@ -186,8 +186,8 @@ function PaywallView({
         </h1>
         <p className="mt-3 text-pretty text-sm text-muted-foreground md:text-base">
           Primele 2 lecții sunt gratuite. Pentru restul, ai nevoie de un
-          abonament — Un modul (250 MDL), Toate (550 MDL/lună) sau Pe 6 luni
-          (950 MDL).
+          abonament — Un modul (240 MDL), Toate (540 MDL/lună) sau Pe 6 luni
+          (900 MDL).
         </p>
 
         <div className="mt-7 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
@@ -199,7 +199,7 @@ function PaywallView({
             )}
           >
             <CourseIcon slug={courseSlug} src={courseIcon} size={16} />
-            Cumpără {courseTitle.split(" — ")[0]} · 250 MDL
+            Cumpără {courseTitle.split(" — ")[0]} · 240 MDL
             <ArrowRight className="size-3.5" />
           </Link>
           <Link

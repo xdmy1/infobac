@@ -39,11 +39,11 @@ export default function SubscriptionExpiringEmail({
 
       <Section style={emailStyles.card}>
         <Text style={{...emailStyles.paragraph, fontWeight: 600, margin: "0 0 8px 0"}}>
-          💡 Sugestie: planul „Pe 6 luni"
+          💡 Sugestie: planul „Pe 6 luni”
         </Text>
         <Text style={{...emailStyles.paragraphMuted, margin: 0}}>
-          Pentru 950 MDL plată unică ai acces 6 luni la toate cursurile —
-          efectiv ~158 MDL/lună, cea mai bună valoare per lună.
+          Pentru 900 MDL plată unică ai acces 6 luni la toate cursurile —
+          efectiv ~150 MDL/lună, cea mai bună valoare per lună.
         </Text>
       </Section>
 

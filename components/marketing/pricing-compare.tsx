@@ -51,7 +51,7 @@ export function PricingCompare() {
                   >
                     Un modul
                     <span className="block text-[10px] font-normal text-muted-foreground/70">
-                      250 MDL/lună
+                      240 MDL/lună
                     </span>
                   </th>
                   <th
@@ -60,7 +60,7 @@ export function PricingCompare() {
                   >
                     Toate
                     <span className="block text-[10px] font-normal text-primary/70">
-                      550 MDL/lună
+                      540 MDL/lună
                     </span>
                   </th>
                   <th
@@ -69,7 +69,7 @@ export function PricingCompare() {
                   >
                     6 luni
                     <span className="block text-[10px] font-normal text-muted-foreground/70">
-                      950 MDL
+                      900 MDL
                     </span>
                   </th>
                 </tr>

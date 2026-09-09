@@ -7,7 +7,7 @@ import type { PlanId } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Înregistrează-te",
   description:
-    "Creează un cont InfoBac. Alegi planul după înregistrare — de la 250 MDL/lună sau 950 MDL pe 6 luni.",
+    "Creează un cont InfoBac. Alegi planul după înregistrare — de la 240 MDL/lună sau 900 MDL pe 6 luni.",
   alternates: { canonical: "/inregistrare" },
 };
 

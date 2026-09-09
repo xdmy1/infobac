@@ -39,7 +39,7 @@ export function CtaFinal() {
               Fă primul pas.
               <br />
               <span className="bg-gradient-to-br from-accent via-accent to-accent-hover bg-clip-text text-transparent">
-                De la 250 MDL/lună.
+                De la 240 MDL/lună.
               </span>
             </h2>
           </RevealItem>

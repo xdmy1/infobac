@@ -57,7 +57,7 @@ export function TestPaywall({ course, whatLocked }: Props) {
             )}
           >
             <CourseIcon slug={course.slug} src={course.icon} size={16} />
-            Doar {course.title.split(" — ")[0]} · 250 MDL
+            Doar {course.title.split(" — ")[0]} · 240 MDL
             <ArrowRight className="size-3.5" />
           </Link>
           <Link
@@ -67,7 +67,7 @@ export function TestPaywall({ course, whatLocked }: Props) {
               "h-11 gap-2 px-5 text-sm",
             )}
           >
-            Toate cursurile · 550 MDL
+            Toate cursurile · 540 MDL
           </Link>
         </div>
       </div>

@@ -20,15 +20,15 @@ import {
 } from "@/lib/seo/json-ld";
 
 export const metadata: Metadata = {
-  title: "Prețuri — de la 250 MDL/lună pentru BAC informatică",
+  title: "Prețuri — de la 240 MDL/lună pentru BAC informatică",
   description:
-    "3 planuri pentru pregătirea BAC informatică Moldova: Un modul 250 MDL/lună, Toate modulele 550 MDL/lună (popular), Pe 6 luni 950 MDL (~158 MDL/lună). Plata cu cardul, activare instantă.",
+    "3 planuri pentru pregătirea BAC informatică Moldova: Un modul 240 MDL/lună, Toate modulele 540 MDL/lună (popular), Pe 6 luni 900 MDL (~150 MDL/lună). Plata cu cardul, activare instantă.",
   alternates: {
     canonical: "/preturi",
     languages: { "ro-MD": "/preturi" },
   },
   openGraph: {
-    title: "Prețuri InfoBac — de la 250 MDL/lună",
+    title: "Prețuri InfoBac — de la 240 MDL/lună",
     description:
       "3 planuri pentru BAC informatică Moldova: Un modul, Toate modulele, Pe 6 luni. Plata cu cardul.",
     url: `${siteConfig.url}/preturi`,

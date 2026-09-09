@@ -158,7 +158,7 @@ export default function PaymentSuccessEmail({
 PaymentSuccessEmail.PreviewProps = {
   name: "Andrei",
   plan: "Toate modulele",
-  amountMDL: 550,
+  amountMDL: 540,
   invoiceUrl: "https://infobac.md/factura/preview",
   accessUntil: "28 octombrie 2026",
 } satisfies PaymentSuccessEmailProps;

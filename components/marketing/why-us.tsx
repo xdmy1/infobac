@@ -19,7 +19,7 @@ const rows: ContrastRow[] = [
     label: "Preț",
     before: "~1.000 EUR",
     beforeNote: "per program",
-    after: "950 MDL",
+    after: "900 MDL",
     afterNote: "pachetul de 6 luni",
   },
   {

@@ -153,7 +153,7 @@ export function buildCourse(step: PathwayStep) {
     offers: {
       "@type": "Offer",
       category: "Subscription",
-      price: 250,
+      price: 240,
       priceCurrency: "MDL",
       availability: "https://schema.org/InStock",
       url: `${siteConfig.url}/preturi`,
@@ -396,7 +396,7 @@ export function buildHowTo() {
     estimatedCost: {
       "@type": "MonetaryAmount",
       currency: "MDL",
-      value: "950",
+      value: "900",
     },
     supply: pathway.map((s) => ({
       "@type": "HowToSupply",

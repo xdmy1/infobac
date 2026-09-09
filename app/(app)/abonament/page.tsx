@@ -156,7 +156,7 @@ export default async function AbonamentPage() {
                   Trec la pachetul de 6 luni.
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  950 MDL plată unică = ~158 MDL/lună. Mai ieftin decât
+                  900 MDL plată unică = ~150 MDL/lună. Mai ieftin decât
                   oricare plan lunar.
                 </p>
               </div>

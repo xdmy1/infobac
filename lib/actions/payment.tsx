@@ -11,11 +11,11 @@ import { sendEmail } from "@/lib/resend";
 import { pricingPlans, type PlanId } from "@/lib/content";
 import PaymentSuccessEmail from "@/emails/payment-success";
 
-const PRICE_BY_PLAN: Record<PlanId, number> = {
-  module: 250,
-  all: 550,
-  semester: 950,
-};
+// Derived, never duplicated: lib/content.ts is the single source of truth
+// for what a plan costs, so a price change there cannot drift from the email.
+const PRICE_BY_PLAN: Record<PlanId, number> = Object.fromEntries(
+  pricingPlans.map((p) => [p.id, p.priceMDL]),
+) as Record<PlanId, number>;
 
 function planDisplayName(planId: PlanId): string {
   return pricingPlans.find((p) => p.id === planId)?.name ?? planId;

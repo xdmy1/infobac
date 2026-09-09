@@ -158,6 +158,6 @@ export default function PaymentPendingEmail({
 PaymentPendingEmail.PreviewProps = {
   name: "Andrei",
   planName: "Toate modulele",
-  amountMDL: 550,
+  amountMDL: 540,
   selectedCourse: undefined,
 } satisfies PaymentPendingEmailProps;

@@ -104,7 +104,7 @@ export const comparison = {
   us: {
     title: "InfoBac",
     items: [
-      "De la 250 MDL/lună sau 950 MDL pe 6 luni",
+      "De la 240 MDL/lună sau 900 MDL pe 6 luni",
       "Înveți în ritmul tău, oricând",
       "100% online, de oriunde din MD",
       "Făcut de elevi care au luat 10 acum câteva luni",
@@ -202,8 +202,8 @@ export const pricingPlans: readonly PricingPlan[] = [
   {
     id: "module",
     name: "Un modul",
-    priceMDL: 250,
-    priceEUR: 13,
+    priceMDL: 240,
+    priceEUR: 12,
     priceUnit: "lună",
     description:
       "Acces la un singur curs ales — Python, SQL sau Networking.",
@@ -220,8 +220,8 @@ export const pricingPlans: readonly PricingPlan[] = [
   {
     id: "all",
     name: "Toate modulele",
-    priceMDL: 550,
-    priceEUR: 28,
+    priceMDL: 540,
+    priceEUR: 27,
     priceUnit: "lună",
     description: "Toate cele 3 cursuri. Tot ce-ți trebuie să iei 10.",
     badge: "POPULAR",
@@ -238,11 +238,11 @@ export const pricingPlans: readonly PricingPlan[] = [
   {
     id: "semester",
     name: "Pe 6 luni",
-    priceMDL: 950,
-    priceEUR: 49,
+    priceMDL: 900,
+    priceEUR: 45,
     priceUnit: "6 luni",
-    effectiveMonthlyMDL: 158,
-    description: "Toate modulele, 6 luni. ~158 MDL/lună efectiv.",
+    effectiveMonthlyMDL: 150,
+    description: "Toate modulele, 6 luni. ~150 MDL/lună efectiv.",
     badge: "BEST VALUE",
     cta: "Pachet semestru",
     features: [
@@ -309,7 +309,7 @@ export const faqItems: readonly FaqItem[] = [
   },
   {
     q: "Ce e pachetul de 6 luni?",
-    a: "Plătești o dată 950 MDL (≈49 EUR) și ai acces la toate cele 3 module timp de 6 luni — efectiv 158 MDL/lună, cea mai bună valoare. Recomandat pentru elevii care vor să-și seteze ritmul fără presiune lunară.",
+    a: "Plătești o dată 900 MDL (≈45 EUR) și ai acces la toate cele 3 module timp de 6 luni — efectiv 150 MDL/lună, cea mai bună valoare. Recomandat pentru elevii care vor să-și seteze ritmul fără presiune lunară.",
   },
 ] as const;
 
