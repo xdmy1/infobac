@@ -4,6 +4,7 @@ import { ArrowRight, Crown, Sparkles, Calendar } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { SubscriptionStatusCard } from "@/components/app/subscription-status-card";
 import { SubscriptionManager } from "@/components/app/subscription-manager";
+import { TrialCard } from "@/components/app/trial-card";
 import { isCardCheckoutEnabled } from "@/lib/payments";
 import { siteConfig } from "@/lib/site";
 import { createClient } from "@/lib/supabase/server";
@@ -13,11 +14,20 @@ import {
   type SubscriptionRow,
 } from "@/lib/queries/subscription";
 import {
+  getTrialStatus,
+  TRIAL_UNKNOWN,
+  type TrialStatus,
+} from "@/lib/queries/trial";
+import {
   subscriptionState,
   SUBSCRIPTION_STATE_LABEL,
   type SubscriptionState,
 } from "@/lib/subscription-state";
-import { isPreviewMode, previewSubscription } from "@/lib/preview-mode";
+import {
+  isPreviewMode,
+  previewSubscription,
+  previewTrialStatus,
+} from "@/lib/preview-mode";
 import { cn } from "@/lib/utils";
 import { Reveal, RevealItem } from "@/components/shared/reveal";
 
@@ -53,18 +63,22 @@ function formatDate(iso: string | null): string {
 export default async function AbonamentPage() {
   let current: SubscriptionRow | null;
   let history: SubscriptionRow[];
+  let trial: TrialStatus;
 
   if (isPreviewMode) {
     current = previewSubscription;
     history = [previewSubscription];
+    trial = previewTrialStatus;
   } else {
     const supabase = await createClient();
-    const [c, h] = await Promise.all([
+    const [c, h, t] = await Promise.all([
       getCurrentSubscription(supabase).catch(() => null),
       getAllSubscriptions(supabase).catch(() => [] as SubscriptionRow[]),
+      getTrialStatus(supabase).catch(() => TRIAL_UNKNOWN),
     ]);
     current = c;
     history = h;
+    trial = t;
   }
 
   // `current` is only ever a live row, so a canceled status means "paid up
@@ -91,6 +105,8 @@ export default async function AbonamentPage() {
       <Reveal variant="fade-up" delay={0.2}>
         <SubscriptionStatusCard subscription={current} />
       </Reveal>
+
+      <TrialCard status={trial} />
 
       {/* Self-service billing. Creem requires that a customer can cancel from
           inside the product rather than by contacting support. */}

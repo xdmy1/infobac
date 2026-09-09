@@ -10,6 +10,7 @@
 
 import type { CourseProgressSummary } from "@/lib/queries/progress";
 import type { SubscriptionRow } from "@/lib/queries/subscription";
+import type { TrialStatus } from "@/lib/queries/trial";
 import type { ProfileRow } from "@/lib/queries/user";
 import type { MyCourseRow, LessonRow } from "@/lib/queries/courses";
 import type { Database, QuizOption } from "@/lib/supabase/types";
@@ -152,6 +153,21 @@ export const previewSubscription: SubscriptionRow = {
   canceled_at: null,
   created_at: new Date().toISOString(),
   updated_at: new Date().toISOString(),
+};
+
+/**
+ * The preview student holds an active "all" plan, so the honest trial state is
+ * "nothing to try out". Showing a running trial here would render a pair of
+ * states that cannot coexist and make the mock lie about the product.
+ */
+export const previewTrialStatus: TrialStatus = {
+  offerOpen: true,
+  eligible: false,
+  startedAt: null,
+  endsAt: null,
+  courseSlug: null,
+  isRunning: false,
+  daysLeft: 0,
 };
 
 // -----------------------------------------------------------------------------

@@ -4,7 +4,10 @@ import Link, { type LinkProps } from "next/link";
 import type { ReactNode } from "react";
 import { track, currentPath, type AnalyticsEvents } from "@/lib/analytics/events";
 
-type TrackableEvent = "signup_cta_clicked" | "plan_cta_clicked";
+type TrackableEvent =
+  | "signup_cta_clicked"
+  | "plan_cta_clicked"
+  | "trial_cta_clicked";
 
 /**
  * A link that records which call-to-action was pressed, and from which page.

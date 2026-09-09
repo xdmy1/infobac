@@ -30,6 +30,10 @@ export interface AnalyticsEvents {
   quiz_finished: { course: string; score_percent: number };
   /** A lesson was marked done — the clearest signal that someone is actually studying. */
   lesson_completed: { course: string; lesson: string };
+  /** The free-trial bar or its page sent someone to the module picker. */
+  trial_cta_clicked: { location: string; from_path: string };
+  /** Seven free days started. No card was involved, so this never becomes a payment on its own. */
+  trial_started: { course: string };
   contact_submitted: Record<string, never>;
   account_deleted: Record<string, never>;
   subscription_canceled: { plan: PlanId | null };

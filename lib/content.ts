@@ -256,6 +256,41 @@ export const pricingPlans: readonly PricingPlan[] = [
 ] as const;
 
 // -----------------------------------------------------------------------------
+// FREE TRIAL — 7 zile, fără card
+//
+// `offerEndsAt` mirrors public.trial_offer_ends_at() from migration 0015. The
+// database decides whether a trial may start; this copy only drives the banner
+// and the countdown, so a stale value here can never hand out access.
+// -----------------------------------------------------------------------------
+
+export const freeTrial = {
+  days: 7,
+  /** 15 septembrie 2026 inclusiv, ora Chișinăului. */
+  offerEndsAt: "2026-09-16T00:00:00+03:00",
+  /** Short enough to fit the thin bar above the navbar on a phone. */
+  barText: "7 zile gratis, fără card",
+  barCta: "Începe",
+  headline: "Șapte zile gratis. Fără card.",
+  subhead:
+    "Alegi un modul, apeși un buton și intri. Lecții, quiz-uri și simulări, tot ce e înăuntru, timp de 7 zile. Nu ceri card, nu introduci card, nu se reînnoiește nimic.",
+  /** The three promises, in the order they answer the student's doubts. */
+  points: [
+    "Fără card — nu ți se cere nimic la început și nimic la final",
+    "Acces complet la modulul ales: lecții, quiz-uri, simulări de examen",
+    "După 7 zile accesul se oprește singur. Dacă îți place, cumperi",
+  ],
+} as const;
+
+/**
+ * Whether the offer is still open, by the clock. Lives here rather than in a
+ * query module so client components can ask too — `public.trial_offer_ends_at()`
+ * is what actually decides, this only chooses what to render.
+ */
+export function isTrialOfferOpen(now: Date = new Date()): boolean {
+  return now.getTime() < new Date(freeTrial.offerEndsAt).getTime();
+}
+
+// -----------------------------------------------------------------------------
 // TESTIMONIALS — placeholder-uri realiste, marcate că vor fi înlocuite
 // -----------------------------------------------------------------------------
 

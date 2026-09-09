@@ -206,3 +206,14 @@ export const startCardCheckoutSchema = z
     },
   );
 export type StartCardCheckoutInput = z.infer<typeof startCardCheckoutSchema>;
+
+// -----------------------------------------------------------------------------
+// Free trial (7 zile, fără card)
+// -----------------------------------------------------------------------------
+
+export const startTrialSchema = z.object({
+  courseSlug: z.enum(["python", "sql", "devices"], {
+    message: "Alege un modul ca să pornești cele 7 zile.",
+  }),
+});
+export type StartTrialInput = z.infer<typeof startTrialSchema>;

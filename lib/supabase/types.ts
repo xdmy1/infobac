@@ -25,7 +25,8 @@ export type AccessSource =
   | "subscription"
   | "manual"
   | "gift"
-  | "scholarship";
+  | "scholarship"
+  | "trial";
 
 export type UserRole = "student" | "admin";
 
@@ -299,6 +300,24 @@ export interface Database {
         >;
         Relationships: [];
       };
+      // One row per person, forever — `user_id` is the primary key, which is
+      // what makes "one free trial per account" a database guarantee. Written
+      // only by start_free_trial(); `authenticated` may read its own row. 0015.
+      trials: {
+        Row: {
+          user_id: string;
+          course_id: string;
+          started_at: string;
+          ends_at: string;
+          created_at: string;
+        };
+        Insert: Omit<
+          Database["public"]["Tables"]["trials"]["Row"],
+          "started_at" | "created_at"
+        > & { started_at?: string; created_at?: string };
+        Update: Partial<Database["public"]["Tables"]["trials"]["Insert"]>;
+        Relationships: [];
+      };
     };
     Views: {
       my_courses: {
@@ -372,6 +391,19 @@ export interface Database {
           canceled_plan: SubscriptionPlan;
           ends_at: string | null;
         }>;
+      };
+      // Grants the CALLER seven days on one course, source 'trial'. Refuses a
+      // second trial, a caller who already has live access, and anything after
+      // the offer window closes — each with its own exception. See 0015.
+      start_free_trial: {
+        Args: { p_course_slug: string };
+        Returns: Array<{ course_slug: string; ends_at: string }>;
+      };
+      // The authoritative close of the offer window; lib/content.ts mirrors it
+      // for display only.
+      trial_offer_ends_at: {
+        Args: Record<string, never>;
+        Returns: string;
       };
       // service_role only — grants access up to an explicit expiry rather than
       // a plan-derived interval, so renewals track the billed period. See 0011.

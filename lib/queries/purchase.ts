@@ -82,11 +82,14 @@ export async function getPurchaseBlock(
 
   const { data: course } = await client
     .from("my_courses")
-    .select("title, expires_at, is_active")
+    .select("title, expires_at, is_active, source")
     .eq("slug", courseSlug)
     .maybeSingle();
 
-  if (course?.is_active) {
+  // A running trial is the one kind of live access that must NOT block the
+  // sale — trying the module and then buying it is the whole point of the
+  // seven days. Every other source means the student already owns it.
+  if (course?.is_active && course.source !== "trial") {
     const until = fmt(course.expires_at);
     const name = course.title?.split(" — ")[0] ?? "acest curs";
     return {

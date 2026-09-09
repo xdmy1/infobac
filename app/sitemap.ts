@@ -25,6 +25,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }[] = [
     { path: "", priority: 1.0, changeFrequency: "weekly" },
     { path: "/preturi", priority: 0.95, changeFrequency: "monthly" },
+    // Time-boxed offer page. It stays valid after the window closes — it just
+    // says the offer ended and points at the plans — so it is safe to index.
+    { path: "/incearca-gratis", priority: 0.9, changeFrequency: "weekly" },
     { path: "/cursuri", priority: 0.95, changeFrequency: "monthly" },
     { path: "/blog", priority: 0.85, changeFrequency: "weekly" },
     { path: "/faq", priority: 0.75, changeFrequency: "monthly" },
