@@ -54,7 +54,7 @@ export function UserMenu({ fullName, email }: UserMenuProps) {
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" sideOffset={8} className="w-56">
-        <div className="flex flex-col px-2 py-1.5">
+        <div className="flex flex-col gap-0.5 px-2 py-2">
           <span className="truncate text-sm font-semibold text-foreground">
             {fullName}
           </span>
@@ -64,16 +64,23 @@ export function UserMenu({ fullName, email }: UserMenuProps) {
         </div>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem render={<Link href="/" />}>
+        <DropdownMenuItem
+          className="w-full gap-2 px-2 py-2"
+          render={<Link href="/" />}
+        >
           <Home className="size-4" />
           Pagina principală
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
+        {/* w-full is load-bearing: a <button> shrinks to fit even as a flex
+            container, so without it the destructive highlight stops short of
+            the menu edge while the <Link> item next to it spans the full row. */}
         <DropdownMenuItem
           variant="destructive"
           disabled={isPending}
+          className="w-full gap-2 px-2 py-2"
           render={<button type="button" onClick={handleLogout} />}
         >
           <LogOut className="size-4" />
