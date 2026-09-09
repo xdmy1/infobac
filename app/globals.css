@@ -160,6 +160,17 @@
   --sidebar-accent-foreground: #0f172a;
   --sidebar-border: #e2e8f0;
   --sidebar-ring: #4f46e5;
+
+  /* --- Relief -----------------------------------------------------------
+     The site's surfaces are lit from above: a hairline of light along the
+     top edge, then a gradient running light to dark down the face. Both
+     live in `background-image` as two stacked layers, never in box-shadow,
+     so an element that sets its own shadow utility keeps it. */
+  --relief-edge: rgb(255 255 255 / 0.95);
+  --relief-top: rgb(255 255 255 / 0.55);
+  --relief-bottom: rgb(15 23 42 / 0.05);
+  --relief-drop: 0 1px 2px rgb(15 23 42 / 0.05), 0 6px 16px -8px rgb(15 23 42 / 0.12);
+  --relief-drop-sm: 0 1px 1px rgb(15 23 42 / 0.06), 0 2px 6px -3px rgb(15 23 42 / 0.14);
 }
 
 .dark {
@@ -214,6 +225,14 @@
   --sidebar-accent-foreground: #fafafa;
   --sidebar-border: #27272a;
   --sidebar-ring: #6366f1;
+
+  /* Same light source, far less of it: on a near-black ground a white sheen
+     turns milky long before it reads as depth. */
+  --relief-edge: rgb(255 255 255 / 0.10);
+  --relief-top: rgb(255 255 255 / 0.055);
+  --relief-bottom: rgb(0 0 0 / 0.22);
+  --relief-drop: 0 1px 2px rgb(0 0 0 / 0.45), 0 8px 20px -10px rgb(0 0 0 / 0.6);
+  --relief-drop-sm: 0 1px 2px rgb(0 0 0 / 0.5), 0 3px 8px -4px rgb(0 0 0 / 0.55);
 }
 
 @layer base {
@@ -296,5 +315,69 @@
 
   .ring-focus {
     @apply ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Relief — the one place the raised look is defined
+   ---------------------------------------------------------------------------
+   Every surface on the site is lit from directly above: a one-pixel line of
+   light along the top edge, then a face that runs light to dark downwards.
+
+   Both layers live in `background-image`, stacked, and never in `box-shadow`.
+   That is deliberate. `bg-card` and friends set `background-color`, so a
+   gradient laid over them composites instead of fighting them, and any element
+   that sets `shadow-sm` or `hover:shadow-md` keeps its own shadow rather than
+   having it silently replaced here.
+
+   The drop shadow does use box-shadow, so it sits in the components layer:
+   utilities beat components in Tailwind's cascade, which means an explicit
+   shadow utility on a card still wins.
+
+   Attached to the surface utilities by name rather than applied at 70-odd call
+   sites. Hover and focus variants compile to their own class names
+   (`hover\:bg-muted`), so none of this leaks into a hover fill.
+--------------------------------------------------------------------------- */
+
+@layer utilities {
+  .relief,
+  .bg-card,
+  .bg-popover,
+  .bg-surface {
+    background-image:
+      linear-gradient(to bottom, var(--relief-edge) 0 1px, transparent 1px),
+      linear-gradient(to bottom, var(--relief-top), var(--relief-bottom));
+  }
+
+  /* Controls: the same light, on a shorter face, so the sheen does not wash
+     out a small button the way a full-height gradient would. */
+  .relief-control {
+    background-image:
+      linear-gradient(to bottom, var(--relief-edge) 0 1px, transparent 1px),
+      linear-gradient(to bottom, var(--relief-top), transparent 55%),
+      linear-gradient(to bottom, transparent 45%, var(--relief-bottom));
+  }
+
+  /* A pressed control loses its lighting: the face flattens and the top edge
+     goes out, which is what "pushed in" looks like. */
+  .relief-control:active:not([aria-haspopup]) {
+    background-image: linear-gradient(
+      to bottom,
+      var(--relief-bottom),
+      transparent 60%
+    );
+    box-shadow: none;
+  }
+}
+
+@layer components {
+  .bg-card,
+  .bg-popover,
+  .bg-surface {
+    box-shadow: var(--relief-drop);
+  }
+
+  .relief-control {
+    box-shadow: var(--relief-drop-sm);
   }
 }

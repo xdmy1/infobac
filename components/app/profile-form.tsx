@@ -131,7 +131,7 @@ export function ProfileForm({ defaults }: ProfileFormProps) {
             id="grade"
             disabled={isPending}
             className={cn(
-              "h-10 w-full rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground shadow-sm outline-none transition-colors",
+              "relief-control h-10 w-full rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground outline-none transition-colors",
               "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40",
               "disabled:cursor-not-allowed disabled:opacity-50"
             )}

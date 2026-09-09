@@ -108,7 +108,7 @@ export function ContactForm() {
           disabled={isPending}
           aria-invalid={!!errors.topic}
           className={cn(
-            "h-10 w-full rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground shadow-sm outline-none transition-colors",
+            "relief-control h-10 w-full rounded-lg border border-border bg-background px-3 text-sm font-medium text-foreground outline-none transition-colors",
             "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40",
             "disabled:cursor-not-allowed disabled:opacity-50",
             "aria-invalid:border-destructive aria-invalid:ring-destructive/30"
