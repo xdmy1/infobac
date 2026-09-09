@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { Pricing } from "@/components/marketing/pricing";
 import { PricingCompare } from "@/components/marketing/pricing-compare";
+import { TrialBanner } from "@/components/marketing/trial-banner";
 import { CtaFinal } from "@/components/marketing/cta-final";
 import {
   Accordion,
@@ -49,6 +50,9 @@ export default function PricingPage() {
       <OffersJsonLd plans={pricingPlans} />
       <PreturiHero />
       <Pricing />
+      {/* Directly under the plan cards: the price has just landed, and this is
+          the answer to what it makes someone hesitate about. */}
+      <TrialBanner />
       <PricingCompare />
 
       <section className="border-t border-border py-24 md:py-32">
